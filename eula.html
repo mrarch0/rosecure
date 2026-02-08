@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RoSecure End User License Agreement - Terms for using our software and services.">
+    <meta name="theme-color" content="#1f4dff">
+    <title>RoSecure - EULA</title>
+    <link rel="icon" type="image/png" href="rosecurelogo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0d0d12;
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* Floating Dynamic Island Header */
+        .header-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            padding: 12px 24px;
+            background: rgba(10, 10, 15, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            backdrop-filter: blur(20px);
+        }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-img { width: 28px; height: 28px; border-radius: 6px; }
+        .logo-text { font-size: 15px; font-weight: 600; color: #fff; }
+        .nav { display: flex; gap: 4px; }
+        .nav-link {
+            padding: 8px 14px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover { color: #fff; background: rgba(255, 255, 255, 0.1); }
+        .header-right { display: flex; align-items: center; gap: 8px; }
+        .discord-btn {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+        }
+        .discord-btn:hover { background: rgba(88, 101, 242, 0.2); color: #5865F2; }
+        .github-btn {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .github-btn:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 32px 80px;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px; left: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 60%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-title {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -1.5px;
+            margin-bottom: 16px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.4) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Animation Classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .animate-from-bottom { transform: translateY(40px); }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+
+        /* Legal Content */
+        .legal-section {
+            padding: 0 32px 100px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .legal-updated {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 40px;
+        }
+        .legal-text h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 40px 0 16px;
+            color: #fff;
+        }
+        .legal-text h2:first-child { margin-top: 0; }
+        .legal-text p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .legal-text ul {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        .legal-text li {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+        .legal-text a {
+            color: #5865F2;
+            text-decoration: none;
+        }
+        .legal-text a:hover { text-decoration: underline; }
+        .legal-acceptance-box {
+            margin-top: 40px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+        }
+        .legal-acceptance-box p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 48px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .footer-container { max-width: 1200px; margin: 0 auto; }
+        .footer-main {
+            display: grid;
+            grid-template-columns: 280px repeat(4, 1fr);
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+        .footer-brand { display: flex; align-items: center; gap: 12px; }
+        .footer-brand img { width: 40px; height: 40px; border-radius: 8px; }
+        .footer-brand-text { font-size: 16px; font-weight: 700; }
+        .footer-column h4 {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 10px; }
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+        .footer-column a:hover { color: #fff; }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .footer-copyright {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.6;
+        }
+        .footer-tagline { font-size: 12px; color: rgba(255, 255, 255, 0.4); }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-btn {
+            display: none;
+            width: 36px; height: 36px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+        }
+        .mobile-menu-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+        .mobile-menu-btn svg { width: 18px; height: 18px; }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(10, 10, 15, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            padding: 16px;
+            z-index: 999;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .mobile-nav.open { display: flex; }
+        .mobile-nav a {
+            padding: 14px 18px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+        .mobile-nav a:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
+
+        @media (max-width: 1024px) {
+            .footer-main { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .header-wrapper { width: 95%; }
+            .header { gap: 16px; padding: 10px 16px; }
+            .nav { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .hero { padding: 140px 20px 60px; }
+            .hero-title { font-size: 32px; }
+            .legal-section { padding: 0 20px 80px; }
+            .footer { padding: 40px 20px 30px; }
+            .footer-main { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+        }
+
+        /* Construction Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            padding: 44px 36px;
+            background: rgba(18, 18, 24, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-icon { font-size: 48px; margin-bottom: 20px; line-height: 1; }
+        .modal-title {
+            font-size: 20px; font-weight: 700; margin-bottom: 6px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.6) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .modal-text { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-bottom: 24px; }
+        .modal-close {
+            padding: 10px 24px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 50px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .modal-close:hover { background: rgba(255,255,255,0.15); }
+    </style>
+</head>
+<body>
+    <div class="header-wrapper">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <img src="rosecurelogo.png" alt="RoSecure" class="logo-img">
+                <span class="logo-text">RoSecure</span>
+            </a>
+            <nav class="nav">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="volunteer.html" class="nav-link">Volunteer</a>
+                <a href="donate.html" class="nav-link">Donate</a>
+                <a href="#" class="nav-link" onclick="event.preventDefault();document.getElementById('constructionModal').classList.add('open')">Dashboard</a>
+            </nav>
+            <div class="header-right">
+                <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="discord-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.947 2.418-2.157 2.418z"/></svg>
+                </a>
+                <a href="https://github.com/mrarch0" target="_blank" class="github-btn" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <button class="mobile-menu-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+            </div>
+        </header>
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="about.html">About</a>
+        <a href="volunteer.html">Volunteer</a>
+        <a href="donate.html">Donate</a>
+        <a href="#" onclick="event.preventDefault();document.getElementById('constructionModal').classList.add('open')">Dashboard</a>
+        <a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord</a>
+        <a href="https://github.com/mrarch0" target="_blank">GitHub</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">End User License Agreement</h1>
+            <p class="hero-description">Terms governing your use of RoSecure services and software.</p>
+        </div>
+    </section>
+
+    <section class="legal-section">
+        <p class="legal-updated">Last Updated: January 14, 2026</p>
+
+        <div class="legal-text">
+            <h2>1. Agreement to Terms</h2>
+            <p>This End User License Agreement ("EULA") is a legal agreement between you ("User" or "you") and RoSecure Technologies ("RoSecure," "we," "us," or "our") governing your use of RoSecure services, tools, APIs, and related software (collectively, the "Services").</p>
+            <p>By accessing or using our Services, you acknowledge that you have read, understood, and agree to be bound by this EULA. If you do not agree, do not use our Services.</p>
+
+            <h2>2. License Grant</h2>
+            <p>Subject to your compliance with this EULA, RoSecure grants you a limited, non-exclusive, non-transferable, revocable license to:</p>
+            <ul>
+                <li>Access and use our web-based services for personal, non-commercial purposes</li>
+                <li>Use our tools to verify users, links, and servers</li>
+                <li>Submit reports to our threat database</li>
+                <li>Access our educational resources and guides</li>
+            </ul>
+
+            <h2>3. License Restrictions</h2>
+            <p>You agree NOT to:</p>
+            <ul>
+                <li>Copy, modify, distribute, or create derivative works of our Services</li>
+                <li>Reverse engineer, decompile, or disassemble any part of our Services</li>
+                <li>Remove or alter any proprietary notices or labels</li>
+                <li>Use our Services for any unlawful purpose</li>
+                <li>Attempt to gain unauthorized access to our systems or data</li>
+                <li>Use automated tools to scrape or extract data without permission</li>
+                <li>Resell, sublicense, or commercially exploit our Services</li>
+                <li>Submit false reports or manipulate our database</li>
+            </ul>
+
+            <h2>4. User Conduct</h2>
+            <p>You are responsible for your use of the Services and agree to:</p>
+            <ul>
+                <li>Provide accurate information in all submissions</li>
+                <li>Maintain the confidentiality of any API keys or credentials</li>
+                <li>Report any security vulnerabilities responsibly</li>
+                <li>Not interfere with other users' access to the Services</li>
+                <li>Comply with all applicable laws and regulations</li>
+            </ul>
+
+            <h2>5. Intellectual Property</h2>
+            <p>All rights, title, and interest in and to the Services, including all intellectual property rights, are and will remain the exclusive property of RoSecure Technologies. This EULA does not grant you any rights to our trademarks, service marks, or logos.</p>
+
+            <h2>6. Data Collection and Privacy</h2>
+            <p>Your use of the Services is also governed by our Privacy Policy. By using our Services, you consent to the collection and use of information as described in our Privacy Policy, including:</p>
+            <ul>
+                <li>Collection of usage data and analytics</li>
+                <li>Storage of report submissions</li>
+                <li>Maintenance of our threat database</li>
+                <li>Retention of data as necessary to protect the community</li>
+            </ul>
+
+            <h2>7. Database Entry and Flagging</h2>
+            <p>You acknowledge and agree that:</p>
+            <ul>
+                <li>Users may be added to our threat database based on verified reports</li>
+                <li>Database entries may be retained indefinitely</li>
+                <li>Being flagged may restrict your ability to request data removal</li>
+                <li>Our decisions regarding database entries are final after appeal</li>
+            </ul>
+
+            <h2>8. Disclaimer of Warranties</h2>
+            <p>THE SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. ROSECURE DOES NOT WARRANT THAT THE SERVICES WILL BE UNINTERRUPTED, ERROR-FREE, OR COMPLETELY SECURE.</p>
+
+            <h2>9. Limitation of Liability</h2>
+            <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL ROSECURE TECHNOLOGIES BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM:</p>
+            <ul>
+                <li>Your access to or use of (or inability to access or use) the Services</li>
+                <li>Any conduct or content of any third party on the Services</li>
+                <li>Any content obtained from the Services</li>
+                <li>Unauthorized access, use, or alteration of your transmissions or content</li>
+            </ul>
+
+            <h2>10. Indemnification</h2>
+            <p>You agree to indemnify, defend, and hold harmless RoSecure Technologies and its officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses arising out of or in any way connected with your access to or use of the Services or your violation of this EULA.</p>
+
+            <h2>11. Termination</h2>
+            <p>This EULA is effective until terminated. Your rights under this EULA will terminate automatically without notice if you fail to comply with any of its terms. Upon termination:</p>
+            <ul>
+                <li>Your license to use the Services will immediately cease</li>
+                <li>You must cease all use of the Services</li>
+                <li>We may retain data as necessary to protect the community</li>
+            </ul>
+
+            <h2>12. Changes to EULA</h2>
+            <p>We reserve the right to modify this EULA at any time. We will notify you of any material changes by posting the updated EULA on our website and updating the "Last Updated" date. Your continued use of the Services after such changes constitutes acceptance of the modified EULA.</p>
+
+            <h2>13. Governing Law and Disputes</h2>
+            <p>This EULA shall be governed by and construed in accordance with applicable laws. Any disputes arising out of or relating to this EULA or the Services shall be resolved through good faith negotiation between the parties.</p>
+
+            <h2>14. Severability</h2>
+            <p>If any provision of this EULA is held to be invalid or unenforceable, such provision shall be struck and the remaining provisions shall remain in full force and effect.</p>
+
+            <h2>15. Entire Agreement</h2>
+            <p>This EULA, together with our Privacy Policy and Terms of Service, constitutes the entire agreement between you and RoSecure Technologies regarding the Services and supersedes all prior agreements and understandings.</p>
+
+            <h2>16. Contact Information</h2>
+            <p>For questions about this EULA, please contact us at <a href="mailto:hello@rosecure.org">hello@rosecure.org</a>.</p>
+
+            <div class="legal-acceptance-box">
+                <p><strong>By using RoSecure Services, you acknowledge that you have read, understood, and agree to be bound by this End User License Agreement, our Terms of Service, and our Privacy Policy.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <img src="rosecurelogo.png" alt="RoSecure">
+                    <span class="footer-brand-text">RoSecure Technologies</span>
+                </div>
+                <div class="footer-column">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="volunteer.html">Volunteer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="transparency.html">Transparency</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord Server</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="eula.html">EULA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    &copy; 2026 RoSecure Technologies. All Rights Reserved.<br>
+                    Not affiliated with Discord Inc. or Roblox Corporation.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll animation observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    <!-- Construction Modal -->
+    <div class="modal-overlay" id="constructionModal" onclick="if(event.target===this)this.classList.remove('open')">
+        <div class="modal">
+            <div class="modal-icon">🚧</div>
+            <h2 class="modal-title">This page is still under construction!</h2>
+            <p class="modal-text">We apologize for any inconvenience. The dashboard is currently being built and will be available soon.</p>
+            <button class="modal-close" onclick="document.getElementById('constructionModal').classList.remove('open')">Got it</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6969a0e8a0ad53197e361dd5/1jf29p49d';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how RoSecure moderates and protects communities using our 12-factor detection system.">
+    <meta name="theme-color" content="#1f4dff">
+    <title>RoSecure - How We Moderate</title>
+    <link rel="icon" type="image/png" href="rosecurelogo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0d0d12;
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Floating Dynamic Island Header */
+        .header-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            padding: 12px 24px;
+            background: rgba(10, 10, 15, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            backdrop-filter: blur(20px);
+        }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-img { width: 28px; height: 28px; border-radius: 6px; }
+        .logo-text { font-size: 15px; font-weight: 600; color: #fff; }
+        .nav { display: flex; gap: 4px; }
+        .nav-link {
+            padding: 8px 14px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
+        .header-right { display: flex; align-items: center; gap: 8px; }
+        .discord-btn {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+        }
+        .discord-btn:hover { background: rgba(88, 101, 242, 0.2); color: #5865F2; }
+        .github-btn {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .github-btn:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
+
+        /* 3D Tilt Animation Classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .animate-tilt-left {
+            transform: perspective(1000px) rotateY(15deg) rotateX(5deg) translateX(-40px) scale(0.95);
+            transform-origin: right center;
+        }
+        .animate-tilt-right {
+            transform: perspective(1000px) rotateY(-15deg) rotateX(5deg) translateX(40px) scale(0.95);
+            transform-origin: left center;
+        }
+        .animate-tilt-up {
+            transform: perspective(1000px) rotateX(10deg) translateY(60px) scale(0.95);
+            transform-origin: center bottom;
+        }
+        .animate-from-left { transform: translateX(-60px); }
+        .animate-from-right { transform: translateX(60px); }
+        .animate-from-bottom { transform: translateY(40px); }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateX(0) translateY(0) scale(1);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 160px 32px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px; left: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(100, 60, 180, 0.2) 0%, transparent 60%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -100px; right: -200px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(60, 120, 180, 0.15) 0%, transparent 60%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-title {
+            font-size: 44px;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+            max-width: 700px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.5) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-description {
+            font-size: 17px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 100px 48px;
+            position: relative;
+        }
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        }
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        .section-subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 12 Factors Grid */
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .factor-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 28px 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .factor-card:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+        }
+        .factor-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .factor-icon svg {
+            width: 32px;
+            height: 32px;
+            color: #fff;
+        }
+        .factor-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .factor-desc {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+        }
+
+        /* Classification Section */
+        .classification-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .class-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 32px 28px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .class-card:hover {
+            transform: translateY(-4px);
+        }
+        .class-card.green {
+            border-color: rgba(34, 197, 94, 0.3);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(34, 197, 94, 0.02) 100%);
+        }
+        .class-card.yellow {
+            border-color: rgba(234, 179, 8, 0.3);
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.08) 0%, rgba(234, 179, 8, 0.02) 100%);
+        }
+        .class-card.red {
+            border-color: rgba(239, 68, 68, 0.3);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.02) 100%);
+        }
+        .class-indicator {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .class-indicator svg {
+            width: 32px;
+            height: 32px;
+        }
+        .class-card.green .class-indicator svg { color: #22c55e; filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.4)); }
+        .class-card.yellow .class-indicator svg { color: #eab308; filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.4)); }
+        .class-card.red .class-indicator svg { color: #ef4444; filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.4)); }
+        .class-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .class-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+        }
+
+        /* How We Learn Section */
+        .learn-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px 44px;
+        }
+        .learn-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .learn-text {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+        .learn-list {
+            list-style: none;
+            margin-top: 24px;
+        }
+        .learn-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .learn-list li:last-child { border-bottom: none; }
+        .learn-list-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            color: #fff;
+        }
+        .learn-list-content {
+            flex: 1;
+        }
+        .learn-list-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .learn-list-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -200px;
+            width: 600px; height: 100%;
+            background: radial-gradient(ellipse at center, rgba(100, 60, 180, 0.12) 0%, transparent 60%);
+            filter: blur(60px);
+            pointer-events: none;
+        }
+        .cta-content { position: relative; z-index: 1; }
+        .cta-title {
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+        .cta-text {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 32px;
+        }
+        .cta-buttons { display: flex; gap: 16px; justify-content: center; }
+        .btn-primary {
+            padding: 14px 28px;
+            background: #fff;
+            border: 1px solid #fff;
+            border-radius: 50px;
+            color: #0d0d12;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover { background: rgba(255, 255, 255, 0.85); }
+        .btn-secondary {
+            padding: 14px 28px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.5); }
+
+        /* Footer */
+        .footer {
+            padding: 80px 48px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .footer-container { max-width: 1200px; margin: 0 auto; }
+        .footer-main {
+            display: grid;
+            grid-template-columns: 280px repeat(4, 1fr);
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+        .footer-brand { display: flex; align-items: center; gap: 12px; }
+        .footer-brand img { width: 48px; height: 48px; border-radius: 10px; }
+        .footer-brand-text { font-size: 20px; font-weight: 700; }
+        .footer-column h4 {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 12px; }
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .footer-column a:hover { color: #fff; }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .footer-copyright {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            max-width: 500px;
+            line-height: 1.6;
+        }
+        .footer-tagline { font-size: 13px; color: rgba(255, 255, 255, 0.4); }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+        }
+        .mobile-menu-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+        .mobile-menu-btn svg { width: 18px; height: 18px; }
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(10, 10, 15, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            padding: 16px;
+            z-index: 999;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .mobile-nav.open { display: flex; }
+        .mobile-nav a {
+            padding: 12px 16px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+        .mobile-nav a:hover, .mobile-nav a.active { background: rgba(255, 255, 255, 0.08); color: #fff; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .factors-grid { grid-template-columns: repeat(2, 1fr); }
+            .classification-grid { grid-template-columns: 1fr; }
+            .footer-main { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .header-wrapper { width: 95%; }
+            .header { gap: 16px; padding: 10px 16px; }
+            .nav { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .hero { padding: 140px 20px 80px; }
+            .hero-title { font-size: 36px; }
+            .content-section { padding: 80px 20px; }
+            .factors-grid { grid-template-columns: 1fr; }
+            .learn-box { padding: 28px 24px; }
+            .cta-section { padding: 80px 20px; }
+            .cta-title { font-size: 28px; }
+            .cta-buttons { flex-direction: column; width: 100%; }
+            .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+            .footer { padding: 60px 20px 30px; }
+            .footer-main { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .animate-from-left, .animate-from-right { transform: translateY(40px); }
+        }
+
+        /* Construction Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            padding: 44px 36px;
+            background: rgba(18, 18, 24, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-icon { font-size: 48px; margin-bottom: 20px; line-height: 1; }
+        .modal-title {
+            font-size: 20px; font-weight: 700; margin-bottom: 6px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.6) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .modal-text { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-bottom: 24px; }
+        .modal-close {
+            padding: 10px 24px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 50px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .modal-close:hover { background: rgba(255,255,255,0.15); }
+    </style>
+</head>
+<body>
+    <div class="header-wrapper">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <img src="rosecurelogo.png" alt="RoSecure" class="logo-img">
+                <span class="logo-text">RoSecure</span>
+            </a>
+            <nav class="nav">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="volunteer.html" class="nav-link">Volunteer</a>
+                <a href="donate.html" class="nav-link">Donate</a>
+                <a href="#" class="nav-link" onclick="event.preventDefault();document.getElementById('constructionModal').classList.add('open')">Dashboard</a>
+            </nav>
+            <div class="header-right">
+                <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="discord-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.947 2.418-2.157 2.418z"/></svg>
+                </a>
+                <a href="https://github.com/mrarch0" target="_blank" class="github-btn" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <button class="mobile-menu-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+            </div>
+        </header>
+    </div>
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="about.html">About</a>
+        <a href="volunteer.html">Volunteer</a>
+        <a href="donate.html">Donate</a>
+        <a href="#" onclick="event.preventDefault();document.getElementById('constructionModal').classList.add('open')">Dashboard</a>
+        <a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord</a>
+        <a href="https://github.com/mrarch0" target="_blank">GitHub</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">How We Moderate</h1>
+            <p class="hero-description">
+                Our systems run on 15 factors to detect sexually explicit material and other harmful content. Learn how we identify, classify, and respond to threats.
+            </p>
+        </div>
+    </section>
+
+    <!-- 12 Factors Section -->
+    <section class="content-section">
+        <div class="section-header animate-on-scroll animate-from-bottom">
+            <h2 class="section-title">15 Detection Factors</h2>
+            <p class="section-subtitle">Our multi-layered approach analyzes content across these key factors to ensure accurate detection.</p>
+        </div>
+        <div class="factors-grid">
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" /></svg>
+                </div>
+                <h3 class="factor-title">Keyword Analysis</h3>
+                <p class="factor-desc">Pattern matching against known harmful terms and phrases</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
+                </div>
+                <h3 class="factor-title">Image Recognition</h3>
+                <p class="factor-desc">AI-powered visual content analysis for explicit material</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                </div>
+                <h3 class="factor-title">User History</h3>
+                <p class="factor-desc">Past behavior patterns and previous violations</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
+                </div>
+                <h3 class="factor-title">Link Scanning</h3>
+                <p class="factor-desc">URL analysis for phishing and malicious sites</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" /></svg>
+                </div>
+                <h3 class="factor-title">Context Analysis</h3>
+                <p class="factor-desc">Understanding message context and intent</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+                <h3 class="factor-title">Account Age</h3>
+                <p class="factor-desc">New account detection and verification</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
+                </div>
+                <h3 class="factor-title">Behavior Patterns</h3>
+                <p class="factor-desc">Unusual activity and spam detection</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" /></svg>
+                </div>
+                <h3 class="factor-title">Database Matching</h3>
+                <p class="factor-desc">Cross-reference with known offender databases</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
+                </div>
+                <h3 class="factor-title">Hash Matching</h3>
+                <p class="factor-desc">Known CSAM and harmful content hash detection</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
+                </div>
+                <h3 class="factor-title">Community Reports</h3>
+                <p class="factor-desc">User-submitted reports and verification</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>
+                </div>
+                <h3 class="factor-title">Cross-Platform Intel</h3>
+                <p class="factor-desc">Shared intelligence from partner networks</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" /></svg>
+                </div>
+                <h3 class="factor-title">Human Review</h3>
+                <p class="factor-desc">Manual verification by trained moderators</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
+                </div>
+                <h3 class="factor-title">Group Scanning</h3>
+                <p class="factor-desc">Analyzing group memberships for harmful associations</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
+                </div>
+                <h3 class="factor-title">Friends List Scanning</h3>
+                <p class="factor-desc">Identifying connections to known bad actors</p>
+            </div>
+            <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>
+                </div>
+                <h3 class="factor-title">Law Enforcement</h3>
+                <p class="factor-desc">Cooperation with authorities on serious violations</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classification Section -->
+    <section class="content-section">
+        <div class="section-header animate-on-scroll animate-from-bottom">
+            <h2 class="section-title">Content Classification</h2>
+            <p class="section-subtitle">Our systems categorize content into three levels based on violation severity and evidence clarity.</p>
+        </div>
+        <div class="classification-grid">
+            <div class="class-card green animate-on-scroll animate-tilt-left delay-1">
+                <div class="class-indicator">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+                <h3 class="class-title">Likely Safe</h3>
+                <p class="class-desc">Content that passes all checks and shows no signs of violations. Monitored by our systems but requires no action.</p>
+            </div>
+            <div class="class-card yellow animate-on-scroll animate-from-bottom delay-2">
+                <div class="class-indicator">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+                </div>
+                <h3 class="class-title">Mixed</h3>
+                <p class="class-desc">Content with past offender history, ambiguous context, or no clear evidence. Flagged for human review before any action.</p>
+            </div>
+            <div class="class-card red animate-on-scroll animate-tilt-right delay-3">
+                <div class="class-indicator">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" /></svg>
+                </div>
+                <h3 class="class-title">Content Violation</h3>
+                <p class="class-desc">Clear violations detected with high confidence. Immediate action taken including blocking and potential reporting to authorities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Learn Section -->
+    <section class="content-section">
+        <div class="content-container animate-on-scroll animate-tilt-up">
+            <div class="learn-box">
+                <h2 class="learn-title">How We Learn & Improve</h2>
+                <p class="learn-text">
+                    Our detection systems continuously evolve through machine learning, community feedback, and collaboration with safety organizations. Here's how we stay ahead of threats:
+                </p>
+                <ul class="learn-list">
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" /></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Keyword Libraries</h4>
+                            <p class="learn-list-desc">Constantly updated dictionaries of harmful terms, including evasion tactics and coded language used by bad actors.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Pattern Recognition</h4>
+                            <p class="learn-list-desc">AI models trained on confirmed violations to identify similar content and behavioral patterns.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Community Feedback</h4>
+                            <p class="learn-list-desc">Appeals and false positive reports help us refine our detection accuracy and reduce errors.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Partner Intelligence</h4>
+                            <p class="learn-list-desc">Collaboration with NCMEC, platform trust teams, and other safety organizations to share threat intelligence.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content animate-on-scroll animate-tilt-up">
+            <h2 class="cta-title">Questions about our moderation?</h2>
+            <p class="cta-text">Reach out to our team, submit an appeal, or visit our FAQ for more information.</p>
+            <div class="cta-buttons">
+                <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="btn-primary">Join Discord</a>
+                <a href="faq.html" class="btn-secondary">Read FAQ</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <img src="rosecurelogo.png" alt="RoSecure">
+                    <span class="footer-brand-text">RoSecure Technologies</span>
+                </div>
+                <div class="footer-column">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="volunteer.html">Volunteer</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="moderation.html">Moderation</a></li>
+                        <li><a href="transparency.html">Transparency</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord Server</a></li>
+                        <li><a href="https://rosecurestatus.betteruptime.com/" target="_blank">System Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="eula.html">EULA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    &copy; 2026 RoSecure Technologies. All Rights Reserved.<br>
+                    Not affiliated with Discord Inc. or Roblox Corporation.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll animation observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    <!-- Construction Modal -->
+    <div class="modal-overlay" id="constructionModal" onclick="if(event.target===this)this.classList.remove('open')">
+        <div class="modal">
+            <div class="modal-icon">🚧</div>
+            <h2 class="modal-title">This page is still under construction!</h2>
+            <p class="modal-text">We apologize for any inconvenience. The dashboard is currently being built and will be available soon.</p>
+            <button class="modal-close" onclick="document.getElementById('constructionModal').classList.remove('open')">Got it</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6969a0e8a0ad53197e361dd5/1jf29p49d';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+</body>
+</html>

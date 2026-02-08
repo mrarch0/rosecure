@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for file in mission.html team.html contact.html overview.html protection.html scams.html threats.html report.html guides.html tools.html faq.html)",
+      "Bash(do sed -i 's|<img src=\"\"rosecurelogo.png\"\" alt=\"\"RoSecure Logo\"\" width=\"\"32\"\" height=\"\"32\"\">|<svg width=\"\"32\"\" height=\"\"32\"\" viewBox=\"\"0 0 32 32\"\" fill=\"\"none\"\" xmlns=\"\"http://www.w3.org/2000/svg\"\"><rect width=\"\"32\"\" height=\"\"32\"\" rx=\"\"6\"\" fill=\"\"#1f4dff\"\"/><path d=\"\"M16 8L10 12V18C10 21 12.5 23 16 24C19.5 23 22 21 22 18V12L16 8Z\"\" fill=\"\"white\"\"/></svg>|g' \"$file\")",
+      "Bash(done)",
+      "Bash(do sed -i '/<title>/a\\\\    <link rel=\"\"icon\"\" type=\"\"image/png\"\" href=\"\"rosecurelogo.png\"\">' \"$file\")",
+      "Bash(do sed -i 's|<svg width=\"\"32\"\" height=\"\"32\"\" viewBox=\"\"0 0 32 32\"\" fill=\"\"none\"\" xmlns=\"\"http://www.w3.org/2000/svg\"\"><rect width=\"\"32\"\" height=\"\"32\"\" rx=\"\"6\"\" fill=\"\"#1f4dff\"\"/><path d=\"\"M16 8L10 12V18C10 21 12.5 23 16 24C19.5 23 22 21 22 18V12L16 8Z\"\" fill=\"\"white\"\"/></svg>|<img src=\"\"rosecurelogo.png\"\" alt=\"\"RoSecure Logo\"\" width=\"\"32\"\" height=\"\"32\"\">|g' \"$file\")",
+      "Bash(for file in index.html contact.html faq.html guides.html mission.html overview.html protection.html report.html scams.html team.html threats.html tools.html)",
+      "Bash(do sed -i 's|href=\"\"#terms\"\"|href=\"\"terms.html\"\"|g; s|href=\"\"#privacy\"\"|href=\"\"privacy.html\"\"|g; s|href=\"\"#accessibility\"\"|href=\"\"accessibility.html\"\"|g' \"$file\")",
+      "Bash(del mission.html team.html contact.html overview.html protection.html scams.html threats.html guides.html tools.html faq.html privacy.html terms.html accessibility.html privacychoices.html)",
+      "Bash(del \"c:\\\\Users\\\\Marsh\\\\OneDrive\\\\Desktop\\\\RoSecure\\\\security.html\" \"c:\\\\Users\\\\Marsh\\\\OneDrive\\\\Desktop\\\\RoSecure\\\\report.html\")",
+      "Bash(ls:*)",
+      "Bash(grep:*)",
+      "Bash(del \"c:\\\\Users\\\\Marsh\\\\OneDrive\\\\Desktop\\\\RoSecure\\\\resources.html\")",
+      "Bash(node --check:*)",
+      "WebFetch(domain:roverify.org)",
+      "Bash(dir:*)"
+    ]
+  }
+}

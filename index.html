@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RoSecure protects Roblox and Discord communities from scams, threats, and malicious actors. Free verification and safety tools for server admins.">
+    <meta name="theme-color" content="#1f4dff">
+    <title>RoSecure - Community Safety Platform</title>
+    <link rel="icon" type="image/png" href="rosecurelogo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0d0d12;
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Floating Dynamic Island Header */
+        .header-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            padding: 12px 24px;
+            background: rgba(10, 10, 15, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            backdrop-filter: blur(20px);
+        }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-img { width: 28px; height: 28px; border-radius: 6px; }
+        .logo-text { font-size: 15px; font-weight: 600; color: #fff; }
+        .nav { display: flex; gap: 4px; }
+        .nav-link {
+            padding: 8px 14px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
+        .header-right { display: flex; align-items: center; gap: 8px; }
+        .discord-btn {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+        }
+        .discord-btn:hover { background: rgba(88, 101, 242, 0.2); color: #5865F2; }
+        .github-btn {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .github-btn:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 32px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px; left: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(100, 60, 180, 0.2) 0%, transparent 60%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -100px; right: -200px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(60, 120, 180, 0.15) 0%, transparent 60%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-title {
+            font-size: 44px;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+            max-width: 700px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.5) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        .hero-buttons { display: flex; gap: 12px; justify-content: center; }
+        .btn-primary {
+            padding: 14px 28px;
+            background: #fff;
+            border: 1px solid #fff;
+            border-radius: 50px;
+            color: #0d0d12;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover { background: rgba(255, 255, 255, 0.85); }
+        .btn-secondary {
+            padding: 14px 28px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.5); }
+
+        /* 3D Tilt Animation Classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .animate-tilt-left {
+            transform: perspective(1000px) rotateY(15deg) rotateX(5deg) translateX(-40px) scale(0.95);
+            transform-origin: right center;
+        }
+        .animate-tilt-right {
+            transform: perspective(1000px) rotateY(-15deg) rotateX(5deg) translateX(40px) scale(0.95);
+            transform-origin: left center;
+        }
+        .animate-tilt-up {
+            transform: perspective(1000px) rotateX(10deg) translateY(60px) scale(0.95);
+            transform-origin: center bottom;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateX(0) translateY(0) scale(1);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        /* Feature box enhanced 3D hover */
+        .feature-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px 44px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        }
+        .feature-box:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Feature Sections */
+        .feature-section {
+            padding: 120px 48px;
+            position: relative;
+        }
+        .feature-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        }
+        .feature-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .feature-title {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .feature-title .muted {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.3) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .feature-description {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.7;
+            margin-bottom: 28px;
+            max-width: 550px;
+        }
+        .feature-list {
+            list-style: none;
+        }
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .feature-list li:last-child { margin-bottom: 0; }
+        .feature-list li svg {
+            width: 20px;
+            height: 20px;
+            color: rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 140px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px; height: 600px;
+            background: radial-gradient(circle, rgba(100, 60, 180, 0.1) 0%, transparent 60%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .stats-container { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+        .stats-number {
+            font-size: 120px;
+            font-weight: 700;
+            letter-spacing: -4px;
+            line-height: 1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.6) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stats-label {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 40px;
+        }
+        .stats-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.8;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 160px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -200px;
+            width: 600px; height: 100%;
+            background: radial-gradient(ellipse at center, rgba(100, 60, 180, 0.12) 0%, transparent 60%);
+            filter: blur(60px);
+            pointer-events: none;
+        }
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            top: 0; right: -200px;
+            width: 600px; height: 100%;
+            background: radial-gradient(ellipse at center, rgba(60, 180, 150, 0.08) 0%, transparent 60%);
+            filter: blur(60px);
+            pointer-events: none;
+        }
+        .cta-content { position: relative; z-index: 1; }
+        .cta-title {
+            font-size: 52px;
+            font-weight: 600;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+        }
+        .cta-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 48px;
+        }
+        .cta-buttons { display: flex; gap: 16px; justify-content: center; }
+
+        /* Footer */
+        .footer {
+            padding: 80px 48px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .footer-container { max-width: 1200px; margin: 0 auto; }
+        .footer-main {
+            display: grid;
+            grid-template-columns: 280px repeat(4, 1fr);
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+        .footer-brand { display: flex; align-items: center; gap: 12px; }
+        .footer-brand img { width: 48px; height: 48px; border-radius: 10px; }
+        .footer-brand-text { font-size: 20px; font-weight: 700; }
+        .footer-column h4 {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 12px; }
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .footer-column a:hover { color: #fff; }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .footer-copyright {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            max-width: 500px;
+            line-height: 1.6;
+        }
+        .footer-tagline { font-size: 13px; color: rgba(255, 255, 255, 0.4); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-main { grid-template-columns: repeat(2, 1fr); }
+        }
+        /* Mobile Menu Toggle */
+        .mobile-menu-btn {
+            display: none;
+            width: 36px; height: 36px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+        }
+        .mobile-menu-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+        .mobile-menu-btn svg { width: 18px; height: 18px; }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(10, 10, 15, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            padding: 16px;
+            z-index: 999;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .mobile-nav.open { display: flex; }
+        .mobile-nav a {
+            padding: 14px 18px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+        .mobile-nav a:hover, .mobile-nav a.active { color: #fff; background: rgba(255, 255, 255, 0.08); }
+
+        @media (max-width: 768px) {
+            .header-wrapper { width: 95%; }
+            .header { gap: 16px; padding: 10px 16px; }
+            .nav { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .hero { padding: 120px 20px 60px; }
+            .hero-title { font-size: 36px; }
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+            .feature-section { padding: 80px 20px; }
+            .feature-box { padding: 32px 24px; }
+            .feature-title { font-size: 28px; }
+            .stats-section { padding: 100px 20px; }
+            .stats-number { font-size: 72px; }
+            .stats-label { font-size: 16px; }
+            .cta-section { padding: 100px 20px; }
+            .cta-title { font-size: 36px; }
+            .cta-buttons { flex-direction: column; }
+            .footer { padding: 60px 20px 30px; }
+            .footer-main { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .animate-from-left, .animate-from-right { transform: translateY(40px); }
+        }
+
+        /* Construction Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            padding: 44px 36px;
+            background: rgba(18, 18, 24, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-icon { font-size: 48px; margin-bottom: 20px; line-height: 1; }
+        .modal-title {
+            font-size: 20px; font-weight: 700; margin-bottom: 6px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.6) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .modal-badge {
+            display: inline-block; padding: 4px 12px; margin-bottom: 16px;
+            background: rgba(255, 180, 0, 0.12); border: 1px solid rgba(255, 180, 0, 0.25);
+            border-radius: 50px; font-size: 12px; font-weight: 600; color: #ffb400;
+        }
+        .modal-text { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-bottom: 24px; }
+        .modal-close {
+            padding: 10px 24px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 50px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .modal-close:hover { background: rgba(255,255,255,0.15); }
+    </style>
+</head>
+<body>
+    <div class="header-wrapper">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <img src="rosecurelogo.png" alt="RoSecure" class="logo-img">
+                <span class="logo-text">RoSecure</span>
+            </a>
+            <nav class="nav">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="volunteer.html" class="nav-link">Volunteer</a>
+                <a href="donate.html" class="nav-link">Donate</a>
+                <a href="#" class="nav-link" onclick="event.preventDefault();document.getElementById('constructionModal').classList.add('open')">Dashboard</a>
+            </nav>
+            <div class="header-right">
+                <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="discord-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.947 2.418-2.157 2.418z"/></svg>
+                </a>
+                <a href="https://github.com/mrarch0" target="_blank" class="github-btn" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <button class="mobile-menu-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+            </div>
+        </header>
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="about.html">About</a>
+        <a href="volunteer.html">Volunteer</a>
+        <a href="donate.html">Donate</a>
+        <a href="#" onclick="event.preventDefault();document.getElementById('constructionModal').classList.add('open')">Dashboard</a>
+        <a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord</a>
+        <a href="https://github.com/mrarch0" target="_blank">GitHub</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Supercharged safety solutions for your community.</h1>
+            <p class="hero-description">
+                Predators, scammers, bad actors. They shouldn't be anywhere near your server. We make sure they aren't.
+            </p>
+            <div class="hero-buttons">
+                <a href="https://discord.com/oauth2/authorize?client_id=1457385555103977502" target="_blank" class="btn-primary">Add RoSecure</a>
+                <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="btn-secondary">Join Discord</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature 1: Predator Protection -->
+    <section class="feature-section">
+        <div class="feature-container animate-on-scroll animate-tilt-left">
+            <div class="feature-box">
+                <h2 class="feature-title">Stop predators <span class="muted">before they cause harm.</span></h2>
+                <p class="feature-description">
+                    If someone's being weird with younger members, we catch it. Our system picks up on sketchy behavior and flags it before things escalate.
+                </p>
+                <ul class="feature-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Real-time threat detection
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Cross-platform database
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Instant alerts to server owners
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature 2: Scam Prevention -->
+    <section class="feature-section">
+        <div class="feature-container animate-on-scroll animate-tilt-right">
+            <div class="feature-box">
+                <h2 class="feature-title">Block scammers <span class="muted">automatically.</span></h2>
+                <p class="feature-description">
+                    We've got a database full of known scammers. If one of them tries to join your server, they get blocked on the spot. Simple as that.
+                </p>
+                <ul class="feature-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Verified scammer database
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Auto-ban known threats
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Community-driven reports
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature 3: Community Trust -->
+    <section class="feature-section">
+        <div class="feature-container animate-on-scroll animate-tilt-left">
+            <div class="feature-box">
+                <h2 class="feature-title">Build a safer <span class="muted">community.</span></h2>
+                <p class="feature-description">
+                    Some people just wanna cause problems. We look at their track record and if they've got a history of being toxic, they don't get in.
+                </p>
+                <ul class="feature-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Behavior pattern analysis
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Fair appeal process
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Transparent decision-making
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature 4: Easy Setup -->
+    <section class="feature-section">
+        <div class="feature-container animate-on-scroll animate-tilt-right">
+            <div class="feature-box">
+                <h2 class="feature-title">Setup in <span class="muted">seconds.</span></h2>
+                <p class="feature-description">
+                    Literally just invite the bot, and you're done. No config files, no setup wizards. It works right out of the box.
+                </p>
+                <ul class="feature-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        One-click installation
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Pre-configured settings
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Intuitive controls
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container animate-on-scroll animate-tilt-up">
+            <div class="stats-number">100%</div>
+            <p class="stats-description">
+                No subscriptions, no paid tiers, no catch. The whole thing is free and it's gonna stay that way.
+            </p>
+            <a href="https://discord.com/oauth2/authorize?client_id=1457385555103977502" target="_blank" class="btn-secondary">
+                Get Started
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <img src="rosecurelogo.png" alt="RoSecure">
+                    <span class="footer-brand-text">RoSecure Technologies</span>
+                </div>
+                <div class="footer-column">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="volunteer.html">Volunteer</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="moderation.html">Moderation</a></li>
+                        <li><a href="transparency.html">Transparency</a></li>
+                        <li><a href="docs.html">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord Server</a></li>
+                        <li><a href="https://rosecurestatus.betteruptime.com/" target="_blank">System Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="eula.html">EULA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    &copy; 2026 RoSecure Technologies. All Rights Reserved.<br>
+                    Not affiliated with Discord Inc. or Roblox Corporation.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll animation observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+    </script>
+
+    <!-- Construction Modal -->
+    <div class="modal-overlay" id="constructionModal" onclick="if(event.target===this)this.classList.remove('open')">
+        <div class="modal">
+            <div class="modal-icon">🚧</div>
+            <h2 class="modal-title">This page is still under construction!</h2>
+            <p class="modal-text">We apologize for any inconvenience. The dashboard is currently being built and will be available soon.</p>
+            <button class="modal-close" onclick="document.getElementById('constructionModal').classList.remove('open')">Got it</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6969a0e8a0ad53197e361dd5/1jf29p49d';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+</body>
+</html>
