@@ -1,7 +1,11 @@
-.git
-.github
-.claude
-node_modules
-.wrangler
+**/.git
+**/.git/**
+.git/**
+**/.github
+**/.claude
+**/node_modules
+**/.wrangler
 *.log
+**/*.log
 .gitignore
+_redirects
