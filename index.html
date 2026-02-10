@@ -741,22 +741,38 @@
     </div>
 
     <div class="modal-overlay" id="stagingWarning" style="display: none;">
-        <div class="modal" style="max-width: 500px; border: 2px solid rgba(255, 180, 0, 0.4);">
-            <div class="modal-icon" style="font-size: 56px;">⚠️</div>
-            <h2 class="modal-title" style="color: #ffb400; font-size: 24px; margin-bottom: 16px;">Staging Environment</h2>
-            <p class="modal-text" style="font-size: 15px; line-height: 1.8; margin-bottom: 8px;">
-                This site is degraded and used for testing purposes only.
+        <div class="modal">
+            <div class="modal-icon">⚠️</div>
+            <h2 class="modal-title">Staging Environment</h2>
+            <div class="modal-badge" style="background: rgba(255, 180, 0, 0.12); border-color: rgba(255, 180, 0, 0.25); color: #ffb400;">TESTING ONLY</div>
+            <p class="modal-text">
+                This is a staging environment used for testing and development purposes. Features may be incomplete or unstable.
             </p>
-            <p class="modal-text" style="font-size: 14px; font-weight: 600; color: rgba(255, 100, 100, 0.9); margin-bottom: 24px;">
-                Authorized participants only. Unauthorized use is strictly prohibited and may result in legal action.
+            <p class="modal-text" style="font-size: 13px; color: rgba(255, 180, 100, 0.7); margin-bottom: 20px;">
+                Authorized participants only. Unauthorized access is prohibited.
             </p>
-            <button class="modal-close" onclick="document.getElementById('stagingWarning').style.display='none'" style="background: rgba(255, 180, 0, 0.15); border-color: rgba(255, 180, 0, 0.3); padding: 12px 32px;">I Understand</button>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
+                <input type="checkbox" id="dontShowAgain" style="width: 16px; height: 16px; cursor: pointer;">
+                <label for="dontShowAgain" style="font-size: 13px; color: rgba(255, 255, 255, 0.6); cursor: pointer; user-select: none;">Don't show this again</label>
+            </div>
+            <button class="modal-close" onclick="closeStagingWarning()">Got it</button>
         </div>
     </div>
 
     <script>
+        function closeStagingWarning() {
+            const checkbox = document.getElementById('dontShowAgain');
+            if (checkbox && checkbox.checked) {
+                localStorage.setItem('hideStagingWarning', 'true');
+            }
+            document.getElementById('stagingWarning').style.display = 'none';
+        }
+
         if (window.location.hostname === 'staging.rosecure.org' || window.location.hostname.includes('staging')) {
-            document.getElementById('stagingWarning').style.display = 'flex';
+            const hideWarning = localStorage.getItem('hideStagingWarning');
+            if (!hideWarning) {
+                document.getElementById('stagingWarning').style.display = 'flex';
+            }
         }
     </script>
 
