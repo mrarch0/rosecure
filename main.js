@@ -6,18 +6,44 @@ export default {
     // Production lockdown - return lockdown page for main domain
     if (hostname === 'rosecure.org' || hostname === 'www.rosecure.org') {
       return new Response(getLockdownHTML(), {
-        headers: {
-          'Content-Type': 'text/html;charset=UTF-8',
-          'Cache-Control': 'no-store, no-cache, must-revalidate',
-          'X-Robots-Tag': 'noindex'
-        }
+        headers: getSecurityHeaders(true)
       });
     }
 
     // Serve normal assets for staging and other environments
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    const newResponse = new Response(response.body, response);
+
+    // Add security headers to all responses
+    const securityHeaders = getSecurityHeaders(false);
+    Object.entries(securityHeaders).forEach(([key, value]) => {
+      newResponse.headers.set(key, value);
+    });
+
+    return newResponse;
   }
 };
+
+function getSecurityHeaders(isLockdown) {
+  const headers = {
+    'Content-Type': 'text/html;charset=UTF-8',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'X-XSS-Protection': '1; mode=block',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
+    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://embed.tawk.to https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://embed.tawk.to wss://*.tawk.to; frame-src https://embed.tawk.to; object-src 'none'; base-uri 'self'; form-action 'self';",
+    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload'
+  };
+
+  if (isLockdown) {
+    headers['Cache-Control'] = 'no-store, no-cache, must-revalidate';
+    headers['X-Robots-Tag'] = 'noindex, nofollow';
+    headers['Content-Security-Policy'] = "default-src 'self'; script-src 'none'; style-src 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src https://staging.rosecure.org; connect-src 'none'; object-src 'none'; base-uri 'self';";
+  }
+
+  return headers;
+}
 
 function getLockdownHTML() {
   return `<!DOCTYPE html>
