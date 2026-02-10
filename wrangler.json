@@ -1,10 +1,10 @@
 {
-  "name": "rosecure",
+  "name": "rosecure-v2",
   "main": "main.js",
   "compatibility_date": "2026-02-10",
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
-    "ignore": [".git/**", ".github/**", ".claude/**", "node_modules/**", ".wrangler/**"]
+    "ignore": [".git/**", ".github/**", ".claude/**", "node_modules/**", ".wrangler/**", "_redirects"]
   }
 }
