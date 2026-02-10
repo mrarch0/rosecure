@@ -1,10 +1,4 @@
 # RoSecure robots.txt
+# Site under development - blocking all search engines
 User-agent: *
-Allow: /
-
-# Sitemap
-Sitemap: https://rosecure.org/sitemap.xml
-
-# Disallow pages from indexing
-Disallow: /roverify.html
-Disallow: /404.html
+Disallow: /
