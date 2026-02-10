@@ -1,0 +1,51 @@
+CLOUDFLARE PAGES SETTINGS - COPY THESE EXACTLY
+
+==============================================
+BUILD SETTINGS
+==============================================
+Framework preset:       None
+Build command:          (COMPLETELY EMPTY - DELETE ANYTHING THERE)
+Build output directory: /
+Root directory:         (EMPTY)
+
+==============================================
+BRANCH SETTINGS
+==============================================
+Production branch: master
+
+Preview branches:
+- staging
+
+==============================================
+CUSTOM DOMAINS
+==============================================
+Production (master):
+- rosecure.org
+- www.rosecure.org
+
+Staging (staging):
+- staging.rosecure.org
+
+==============================================
+HOW TO FIX YOUR CURRENT ERROR
+==============================================
+1. Go to Cloudflare Pages dashboard
+2. Select your rosecure project
+3. Go to Settings > Builds & deployments
+4. Click "Configure Production deployments"
+5. DELETE the build command (should be completely empty)
+6. Set Build output directory to: /
+7. Save
+8. Go to Deployments
+9. Click "Retry deployment" on latest failed deployment
+
+==============================================
+CUSTOM DOMAIN SETUP
+==============================================
+1. In Pages project, go to Custom domains
+2. Click "Set up a custom domain"
+3. Enter: rosecure.org (for production)
+4. Add CNAME record as instructed by Cloudflare
+5. Repeat for staging.rosecure.org (assign to staging branch)
+
+Done.
