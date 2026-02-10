@@ -16,11 +16,6 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://rosecure.org/safety-tips.html</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
     <loc>https://rosecure.org/donate.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>
@@ -52,6 +47,11 @@
   </url>
   <url>
     <loc>https://rosecure.org/eula.html</loc>
+    <priority>0.5</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://rosecure.org/transparency.html</loc>
     <priority>0.5</priority>
     <changefreq>yearly</changefreq>
   </url>
