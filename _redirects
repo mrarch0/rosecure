@@ -1,3 +1,2 @@
 # Cloudflare Pages Redirects
-# 404 fallback
-/* /index.html 404
+/* /index.html 200
