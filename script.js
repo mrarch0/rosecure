@@ -92,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
     searchButtons.forEach(button => {
         button.addEventListener('click', function() {
             // Add your search functionality here
-            console.log('Search clicked');
             // You can implement a search modal or redirect to a search page
         });
     });
