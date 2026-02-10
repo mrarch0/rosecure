@@ -740,6 +740,26 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="stagingWarning" style="display: none;">
+        <div class="modal" style="max-width: 500px; border: 2px solid rgba(255, 180, 0, 0.4);">
+            <div class="modal-icon" style="font-size: 56px;">⚠️</div>
+            <h2 class="modal-title" style="color: #ffb400; font-size: 24px; margin-bottom: 16px;">Staging Environment</h2>
+            <p class="modal-text" style="font-size: 15px; line-height: 1.8; margin-bottom: 8px;">
+                This site is degraded and used for testing purposes only.
+            </p>
+            <p class="modal-text" style="font-size: 14px; font-weight: 600; color: rgba(255, 100, 100, 0.9); margin-bottom: 24px;">
+                Authorized participants only. Unauthorized use is strictly prohibited and may result in legal action.
+            </p>
+            <button class="modal-close" onclick="document.getElementById('stagingWarning').style.display='none'" style="background: rgba(255, 180, 0, 0.15); border-color: rgba(255, 180, 0, 0.3); padding: 12px 32px;">I Understand</button>
+        </div>
+    </div>
+
+    <script>
+        if (window.location.hostname === 'staging.rosecure.org' || window.location.hostname.includes('staging')) {
+            document.getElementById('stagingWarning').style.display = 'flex';
+        }
+    </script>
+
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
