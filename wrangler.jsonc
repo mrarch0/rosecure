@@ -1,9 +1,0 @@
-{
-  "name": "rosecure",
-  "main": "index.js",
-  "compatibility_date": "2026-02-10",
-  "assets": {
-    "directory": "./",
-    "binding": "ASSETS"
-  }
-}
