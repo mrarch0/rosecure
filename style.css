@@ -385,9 +385,23 @@ body {
 }
 
 @media (max-width: 1024px) {
+    .header__container {
+        padding: 0 20px;
+    }
+
     .header__nav-link {
-        padding: 6px 12px;
+        padding: 6px 10px;
         font-size: 13px;
+    }
+
+    .btn-cta-md,
+    .btn-login {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+
+    .search-input {
+        width: 100px;
     }
 }
 
@@ -395,6 +409,7 @@ body {
     .header__container {
         height: 56px;
         padding: 0 16px;
+        justify-content: space-between;
     }
 
     .header__nav {
@@ -410,6 +425,7 @@ body {
         align-items: flex-start;
         padding: 20px;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         transform: translateX(-100%);
         transition: transform 0.3s ease;
         z-index: 999;
@@ -462,6 +478,11 @@ body {
         padding: 6px 12px;
         font-size: 12px;
         border-radius: 14px;
+        white-space: nowrap;
+    }
+
+    .header__search-box {
+        display: none;
     }
 
     .header__search-toggle__wrapper-mobile {
@@ -482,10 +503,53 @@ body {
 @media (max-width: 480px) {
     .header__container {
         padding: 0 12px;
+        height: 48px;
+    }
+
+    .header__logo img {
+        width: 24px;
+        height: 24px;
     }
 
     .logo-text {
-        font-size: 16px;
+        font-size: 15px;
+    }
+
+    .header__nav {
+        top: 48px;
+    }
+
+    .header__menu-toggle {
+        width: 38px;
+        height: 38px;
+    }
+
+    .header__right .btn-login,
+    .header__right .btn-cta-md {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+    .header__container {
+        padding: 0 10px;
+        gap: 8px;
+    }
+
+    .logo-text {
+        font-size: 14px;
+    }
+
+    .header__right {
+        gap: 4px;
+    }
+
+    .header__right .btn-login,
+    .header__right .btn-cta-md {
+        padding: 4px 8px;
+        font-size: 11px;
     }
 }
 
@@ -1468,8 +1532,24 @@ body {
 }
 
 @media (max-width: 1024px) {
+    .hero-section {
+        padding: 90px 24px 80px;
+    }
+
     .hero-title {
         font-size: 48px;
+    }
+
+    .hero-description {
+        font-size: 17px;
+    }
+
+    .about-section {
+        padding: 80px 24px;
+    }
+
+    .about-title {
+        font-size: 2.5rem;
     }
 
     .section-title {
@@ -1477,7 +1557,11 @@ body {
     }
 
     .section-title-center {
-        font-size: 40px;
+        font-size: 36px;
+    }
+
+    .section-description-center {
+        font-size: 17px;
     }
 
     .commitment-grid {
@@ -1486,8 +1570,8 @@ body {
     }
 
     .values-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
     }
 
     .section-title-left {
@@ -1495,14 +1579,39 @@ body {
     }
 
     .impact-features {
-        grid-template-columns: 1fr;
-        gap: 32px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
     }
 
     .features-section,
     .values-section,
     .impact-section {
-        padding: 80px 32px;
+        padding: 80px 24px;
+    }
+
+    .section-content,
+    .section-content-reverse {
+        gap: 40px;
+    }
+
+    .content-section {
+        padding: 80px 24px;
+    }
+
+    .cta-section {
+        padding: 80px 24px;
+    }
+
+    .cta-title {
+        font-size: 40px;
+    }
+
+    .legal-section {
+        padding: 80px 24px;
+    }
+
+    .legal-title {
+        font-size: 40px;
     }
 }
 
@@ -1517,17 +1626,23 @@ body {
     }
 
     .hero-title {
-        font-size: 36px;
+        font-size: 32px;
         letter-spacing: -1px;
     }
 
+    .hero-motto {
+        font-size: 18px;
+    }
+
     .hero-description {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .hero-buttons {
         flex-direction: column;
         width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
     }
 
     .btn-primary,
@@ -1535,6 +1650,19 @@ body {
         width: 100%;
         padding: 14px 24px;
         font-size: 15px;
+        text-align: center;
+    }
+
+    .about-section {
+        padding: 60px 20px;
+    }
+
+    .about-title {
+        font-size: 2rem;
+    }
+
+    .about-description {
+        font-size: 1rem;
     }
 
     .features-section,
@@ -1547,35 +1675,55 @@ body {
     .section-content,
     .section-content-reverse {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 32px;
     }
 
     .section-title {
-        font-size: 32px;
+        font-size: 28px;
     }
 
     .section-title-center {
-        font-size: 32px;
+        font-size: 28px;
+    }
+
+    .section-description-center {
+        font-size: 16px;
     }
 
     .section-title-left {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .section-description-left {
+        font-size: 1rem;
     }
 
     .commitment-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 16px;
     }
 
     .impact-features {
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 20px;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
     .commitment-box,
     .value-box,
     .impact-feature-box {
-        padding: 36px 24px;
+        padding: 32px 20px;
+    }
+
+    .commitment-icon,
+    .value-icon,
+    .impact-feature-icon {
+        width: 56px;
+        height: 56px;
     }
 
     .stat-number {
@@ -1583,36 +1731,61 @@ body {
     }
 
     .cta-title {
-        font-size: 32px;
+        font-size: 28px;
     }
 
     .cta-description {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .cta-buttons {
         flex-direction: column;
         width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
     }
 
     .btn-primary-large,
     .btn-secondary-large {
         width: 100%;
-        padding: 14px 32px;
-        font-size: 16px;
+        padding: 14px 28px;
+        font-size: 15px;
+        text-align: center;
+    }
+
+    /* Content sections */
+    .content-section {
+        padding: 60px 16px;
+    }
+
+    .content-title {
+        font-size: 28px;
+    }
+
+    .content-description {
+        font-size: 15px;
+    }
+
+    .content-visual {
+        padding: 16px;
+    }
+
+    .content-visual svg {
+        max-width: 200px;
     }
 
     /* Legal pages mobile */
     .legal-section {
-        padding: 80px 20px;
+        padding: 70px 20px;
     }
 
     .legal-title {
-        font-size: 32px;
+        font-size: 28px;
     }
 
     .legal-text h2 {
         font-size: 22px;
+        margin: 36px 0 16px 0;
     }
 
     .legal-text h3 {
@@ -1623,24 +1796,38 @@ body {
         font-size: 15px;
     }
 
+    .legal-text ul {
+        padding-left: 18px;
+    }
+
     /* Footer mobile */
+    .footer {
+        padding: 36px 0 28px;
+    }
+
     .footer__nav__list {
-        flex-direction: column;
-        gap: 32px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
     }
 
     .footer__container {
-        padding: 40px 20px;
+        padding: 0 20px;
+    }
+
+    .footer__nav {
+        margin-bottom: 32px;
     }
 
     .footer__secondary-links__wrapper {
         flex-direction: column;
-        gap: 20px;
+        gap: 16px;
         text-align: center;
     }
 
     .footer__secondary-links__list {
         justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
     }
 
     .footer__copyright-text {
@@ -1649,22 +1836,124 @@ body {
     }
 }
 
+/* Small phones */
 @media (max-width: 480px) {
+    .hero-section {
+        padding: 48px 14px;
+    }
+
     .hero-title {
-        font-size: 28px;
+        font-size: 26px;
     }
 
-    .legal-title {
-        font-size: 28px;
+    .hero-motto {
+        font-size: 16px;
     }
 
-    .btn-cta-md {
-        padding: 6px 14px;
-        font-size: 12px;
+    .hero-description {
+        font-size: 14px;
+    }
+
+    .about-section {
+        padding: 48px 16px;
+    }
+
+    .about-title {
+        font-size: 1.7rem;
+    }
+
+    .features-section,
+    .impact-section,
+    .values-section,
+    .cta-section {
+        padding: 48px 16px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .section-title-center {
+        font-size: 24px;
+    }
+
+    .section-title-left {
+        font-size: 1.5rem;
+    }
+
+    .commitment-box,
+    .value-box,
+    .impact-feature-box {
+        padding: 28px 18px;
+    }
+
+    .commitment-title,
+    .value-title,
+    .impact-feature-title {
+        font-size: 18px;
+    }
+
+    .commitment-description,
+    .value-description,
+    .impact-feature-text {
+        font-size: 14px;
+    }
+
+    .cta-title {
+        font-size: 24px;
     }
 
     .legal-section {
-        padding: 60px 16px;
+        padding: 56px 16px;
+    }
+
+    .legal-title {
+        font-size: 24px;
+    }
+
+    .legal-text h2 {
+        font-size: 20px;
+    }
+
+    .legal-text p,
+    .legal-text li {
+        font-size: 14px;
+    }
+
+    .footer__nav__list {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .btn-cta-md {
+        padding: 5px 12px;
+        font-size: 11px;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+    .hero-title {
+        font-size: 22px;
+    }
+
+    .section-title,
+    .section-title-center {
+        font-size: 22px;
+    }
+
+    .cta-title {
+        font-size: 22px;
+    }
+
+    .legal-title {
+        font-size: 22px;
+    }
+
+    .commitment-box,
+    .value-box,
+    .impact-feature-box {
+        padding: 24px 16px;
     }
 }
 
@@ -1835,24 +2124,53 @@ body {
 /* Responsive for Team Page */
 @media (max-width: 768px) {
     .team-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .team-card {
+        padding: 28px 20px;
+    }
+
+    .team-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .team-name {
+        font-size: 20px;
     }
 
     .team-members-section {
-        padding: 60px 16px;
+        padding: 48px 16px;
     }
 
     .careers-section {
-        padding: 80px 16px;
+        padding: 60px 16px;
     }
 
     .careers-title {
-        font-size: 36px;
+        font-size: 32px;
     }
 
     .careers-description {
-        font-size: 16px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .team-card {
+        padding: 24px 16px;
+    }
+
+    .team-avatar {
+        width: 80px;
+        height: 80px;
     }
 }
 
@@ -3309,8 +3627,17 @@ body {
 
 /* Responsive Styles for New Sections */
 @media (max-width: 1024px) {
+    .page-hero {
+        padding: 80px 24px 60px;
+    }
+
+    .page-hero-title {
+        font-size: 44px;
+    }
+
     .stats-container {
         grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
     }
 
     .features-grid {
@@ -3353,32 +3680,64 @@ body {
     .platform-logos {
         justify-content: flex-start;
     }
+
+    .guides-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .protection-tips-container {
+        grid-template-columns: 1fr;
+    }
+
+    .threat-detection-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .steps-container {
+        gap: 16px;
+    }
+
+    .step-item {
+        max-width: 220px;
+    }
+
+    .step-connector {
+        width: 40px;
+    }
 }
 
 @media (max-width: 768px) {
     .page-hero {
-        padding: 80px 16px 60px;
+        padding: 70px 16px 48px;
+    }
+
+    .page-hero-compact {
+        padding: 60px 16px 40px;
     }
 
     .page-hero-title {
-        font-size: 36px;
+        font-size: 32px;
     }
 
     .page-hero-description {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .stats-section {
-        padding: 40px 16px;
+        padding: 36px 16px;
     }
 
     .stats-container {
         grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
+        gap: 20px;
     }
 
     .stat-number {
-        font-size: 36px;
+        font-size: 32px;
+    }
+
+    .stat-label {
+        font-size: 12px;
     }
 
     .features-overview-section,
@@ -3392,16 +3751,21 @@ body {
     .report-types-section,
     .report-form-section,
     .report-guidelines-section {
-        padding: 60px 16px;
+        padding: 48px 16px;
     }
 
     .features-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .feature-box {
+        padding: 28px 20px;
     }
 
     .steps-container {
         flex-direction: column;
-        gap: 32px;
+        gap: 24px;
     }
 
     .step-connector {
@@ -3412,34 +3776,64 @@ body {
         max-width: 100%;
     }
 
+    .step-number {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+
     .protection-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .protection-card {
+        padding: 28px 20px;
     }
 
     .testimonials-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .contact-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .security-nav-section,
     .resources-nav-section,
     .legal-nav-section {
-        padding: 20px 16px;
+        padding: 16px;
         position: static;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .security-nav-container,
+    .resources-nav-container,
+    .legal-nav-container {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 8px;
     }
 
     .security-nav-item,
     .resources-nav-item,
     .legal-nav-item {
-        padding: 10px 16px;
+        padding: 10px 14px;
         font-size: 13px;
+        flex-shrink: 0;
     }
 
     .security-features-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .security-section-title,
+    .resources-section-title {
+        font-size: 28px;
     }
 
     .protection-tips-container {
@@ -3448,6 +3842,7 @@ body {
 
     .scam-types-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .threat-detection-grid {
@@ -3456,23 +3851,35 @@ body {
 
     .threat-stats {
         flex-direction: column;
-        gap: 32px;
+        gap: 24px;
+    }
+
+    .threat-stat-number {
+        font-size: 36px;
     }
 
     .guides-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .guide-card {
         flex-direction: column;
+        padding: 22px;
     }
 
     .tools-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .tool-card {
+        padding: 22px;
     }
 
     .report-types-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .guidelines-grid {
@@ -3485,6 +3892,52 @@ body {
 
     .emergency-links {
         flex-direction: column;
+    }
+
+    .emergency-section {
+        padding: 40px 16px;
+    }
+
+    .platform-logos {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .platform-logo-card {
+        padding: 28px;
+    }
+
+    .platform-title {
+        font-size: 28px;
+    }
+
+    .platforms-container {
+        gap: 32px;
+    }
+
+    .faq-question {
+        padding: 14px 16px;
+        font-size: 14px;
+    }
+
+    .faq-category h3 {
+        font-size: 20px;
+    }
+
+    .scam-prevention-tips {
+        padding: 24px 20px;
+    }
+
+    .report-notice {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 12px 14px;
+        font-size: 16px; /* Prevents zoom on iOS */
     }
 }
 
@@ -3869,7 +4322,7 @@ body {
 
 @media (max-width: 768px) {
     .api-section {
-        padding: 60px 16px;
+        padding: 48px 16px;
     }
 
     .api-section-title {
@@ -3877,7 +4330,7 @@ body {
     }
 
     .api-endpoint {
-        padding: 20px;
+        padding: 20px 16px;
     }
 
     .api-endpoint-header {
@@ -3886,25 +4339,141 @@ body {
         gap: 8px;
     }
 
-    .api-table {
+    .api-endpoint-path {
         font-size: 13px;
+        word-break: break-all;
+    }
+
+    .api-table {
+        font-size: 12px;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .api-table th,
     .api-table td {
-        padding: 8px 12px;
+        padding: 8px 10px;
+    }
+
+    .api-code-block {
+        font-size: 12px;
+        padding: 12px;
     }
 
     .team-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
     }
 
-    .faq-question {
-        padding: 16px 20px;
+    .team-card {
+        padding: 24px 16px;
+    }
+
+    .team-avatar {
+        width: 64px;
+        height: 64px;
+    }
+
+    .team-name {
+        font-size: 16px;
+    }
+
+    .team-role {
+        font-size: 13px;
+    }
+
+    .team-bio {
+        font-size: 13px;
+    }
+
+    .team-members-section {
+        padding: 48px 16px;
+    }
+
+    .careers-section {
+        padding: 60px 16px;
+    }
+
+    .careers-title {
+        font-size: 32px;
+    }
+
+    .careers-description {
         font-size: 15px;
     }
 
     .faq-answer {
-        padding: 0 20px 16px;
+        padding: 0 16px 14px;
+    }
+
+    .faq-answer p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-hero-title {
+        font-size: 26px;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-number {
+        font-size: 28px;
+    }
+
+    .security-section-title,
+    .resources-section-title {
+        font-size: 24px;
+    }
+
+    .careers-title {
+        font-size: 26px;
+    }
+
+    .api-section-title {
+        font-size: 20px;
+    }
+}
+
+/* Landscape phones for other pages */
+@media (max-width: 768px) and (orientation: landscape) {
+    .page-hero {
+        padding: 60px 20px 40px;
+    }
+
+    .hero-section {
+        padding: 48px 20px;
+    }
+
+    .features-section,
+    .impact-section,
+    .values-section,
+    .cta-section {
+        padding: 48px 20px;
+    }
+}
+
+/* iPad Pro range for other pages */
+@media (min-width: 1025px) and (max-width: 1366px) {
+    .hero-section {
+        padding: 100px 32px 80px;
+    }
+
+    .features-section,
+    .values-section,
+    .impact-section {
+        padding: 100px 32px;
+    }
+
+    .content-section {
+        padding: 80px 32px;
     }
 }
