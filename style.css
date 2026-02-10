@@ -1,4 +1,3 @@
-/* Roblox-style CSS for RoSecure */
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300;400;500;600;700;800&display=swap');
 
 * {
@@ -14,7 +13,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Page Load Animations */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -372,7 +370,6 @@ body {
     top: 6px;
 }
 
-/* Hamburger to X animation */
 .header__menu-toggle[aria-expanded="true"] .header__menu-toggle-icon-line {
     background: transparent;
 }
@@ -492,7 +489,6 @@ body {
     }
 }
 
-/* Legal Pages Styles */
 .legal-section {
     padding: 100px 32px;
     background: #000;
@@ -564,7 +560,6 @@ body {
     color: #666;
 }
 
-/* Footer Styles */
 .footer {
     background: #000;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -684,7 +679,6 @@ body {
     }
 }
 
-/* Main Content Styles */
 .main-content {
     flex: 1;
     width: 100%;
@@ -692,7 +686,6 @@ body {
     color: #fff;
 }
 
-/* Hero Section */
 .hero-section {
     padding: 120px 32px 100px 32px;
     position: relative;
@@ -815,7 +808,6 @@ body {
     opacity: 0.3;
 }
 
-/* Section Backgrounds */
 .section-black {
     background: #000;
     color: #fff;
@@ -831,7 +823,6 @@ body {
     color: #fff;
 }
 
-/* About Section */
 .about-section {
     padding: 120px 32px;
     background: #000;
@@ -879,7 +870,6 @@ body {
     font-weight: 600;
 }
 
-/* Features Section */
 .features-section {
     padding: 140px 32px;
     background: linear-gradient(180deg, #0a0a0a 0%, #000 100%);
@@ -1002,7 +992,6 @@ body {
     height: 100%;
 }
 
-/* Commitment Section */
 .commitment-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -1429,7 +1418,6 @@ body {
     color: #9ca3af;
 }
 
-/* CTA Section */
 .cta-section {
     padding: 100px 32px;
 }
@@ -1479,7 +1467,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* Responsive Styles */
 @media (max-width: 1024px) {
     .hero-title {
         font-size: 48px;
@@ -1681,7 +1668,6 @@ body {
     }
 }
 
-/* Notification Banner Styles */
 .notification {
     position: fixed;
     top: -100px;
@@ -1739,7 +1725,6 @@ body {
     }
 }
 
-/* Team Page Styles */
 .team-members-section {
     padding: 80px 32px;
     background: #000;
@@ -3758,7 +3743,6 @@ body {
     text-decoration: underline;
 }
 
-/* Team Page Styles */
 .team-members-section {
     padding: 80px 32px;
 }

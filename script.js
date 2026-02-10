@@ -1,10 +1,8 @@
-// Mobile Menu Toggle
 document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.querySelector('.header__menu-toggle');
     const nav = document.querySelector('.header__nav');
     const navItems = document.querySelectorAll('.header__nav-item.has-children');
 
-    // Toggle mobile menu
     if (menuToggle) {
         menuToggle.addEventListener('click', function() {
             const isExpanded = this.getAttribute('aria-expanded') === 'true';
@@ -13,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle mobile dropdown toggles
     if (window.innerWidth <= 768) {
         navItems.forEach(item => {
             const link = item.querySelector('.header__nav-link');
@@ -24,19 +21,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     e.preventDefault();
                     const isVisible = dropdown.style.display === 'flex';
 
-                    // Close all other dropdowns
                     document.querySelectorAll('.header__nav-list--second-level').forEach(d => {
                         d.style.display = 'none';
                     });
 
-                    // Toggle current dropdown
                     dropdown.style.display = isVisible ? 'none' : 'flex';
                 });
             }
         });
     }
 
-    // Close mobile menu when clicking outside
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.header__container')) {
             if (menuToggle && nav.classList.contains('active')) {
@@ -46,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Handle window resize
     let resizeTimer;
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
@@ -56,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (menuToggle) {
                     menuToggle.setAttribute('aria-expanded', 'false');
                 }
-                // Reset all dropdowns
                 document.querySelectorAll('.header__nav-list--second-level').forEach(d => {
                     d.style.display = '';
                 });
@@ -64,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 250);
     });
 
-    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -77,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         block: 'start'
                     });
 
-                    // Close mobile menu after clicking a link
                     if (window.innerWidth <= 768 && nav.classList.contains('active')) {
                         menuToggle.setAttribute('aria-expanded', 'false');
                         nav.classList.remove('active');
@@ -87,17 +77,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Search button functionality (placeholder)
     const searchButtons = document.querySelectorAll('.header__search-toggle');
     searchButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // Add your search functionality here
-            // You can implement a search modal or redirect to a search page
         });
     });
 });
 
-// Show notification banner
 function showNotification() {
     const notification = document.getElementById('notification');
     if (notification) {
@@ -108,7 +94,6 @@ function showNotification() {
     }
 }
 
-// Rotating Taglines for Index Page (Hero)
 const indexTaglines = [
     "Keeping everyone safe.",
     "Changing how safety stands.",
@@ -122,7 +107,6 @@ const indexTaglines = [
     "Here for the long haul."
 ];
 
-// Rotating Taglines for About Page
 const aboutTaglines = [
     "Building a Safer Community",
     "Working with Law Enforcement",
@@ -136,7 +120,6 @@ const aboutTaglines = [
     "Standing Against Threats"
 ];
 
-// Rotating Taglines for Donate Page
 const donateTaglines = [
     "Support RoSecure",
     "Help Us Protect Others",
@@ -150,7 +133,6 @@ const donateTaglines = [
     "Help Us Help Others"
 ];
 
-// Rotating Taglines for Team Page
 const teamTaglines = [
     "Our Team",
     "Our Heroes",
@@ -237,7 +219,6 @@ function initTeamRotatingTagline() {
     }, 4000);
 }
 
-// Initialize rotating taglines when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
     initIndexRotatingTagline();
     initRotatingTagline();
@@ -245,7 +226,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initTeamRotatingTagline();
 });
 
-// FAQ Toggle Function
 function toggleFaq(button) {
     const faqItem = button.parentElement;
     const isActive = faqItem.classList.contains('active');
