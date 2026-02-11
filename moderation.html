@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn how RoSecure moderates and protects communities using our 12-factor detection system.">
+    <meta name="description" content="Learn how RoSecure moderates and protects communities using our 15-factor detection system.">
     <meta name="theme-color" content="#1f4dff">
     <title>RoSecure - How We Moderate</title>
     <link rel="icon" type="image/png" href="rosecurelogo.png">
@@ -27,16 +27,21 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
+            max-width: 90%;
+            width: auto;
         }
         .header {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 32px;
             padding: 12px 24px;
             background: rgba(10, 10, 15, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50px;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            white-space: nowrap;
         }
         .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
         .logo-img { width: 28px; height: 28px; border-radius: 6px; }
@@ -135,11 +140,36 @@
             pointer-events: none;
         }
         .hero-content { position: relative; z-index: 1; }
-        .hero-title {
-            font-size: 44px;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(31, 77, 255, 0.1);
+            border: 1px solid rgba(31, 77, 255, 0.2);
+            border-radius: 50px;
+            font-size: 13px;
             font-weight: 600;
-            line-height: 1.2;
-            letter-spacing: -1px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: #1f4dff;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
             margin-bottom: 24px;
             max-width: 700px;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.5) 100%);
@@ -153,6 +183,26 @@
             color: rgba(255, 255, 255, 0.5);
             max-width: 600px;
             margin: 0 auto;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 48px;
+            justify-content: center;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .hero-stat-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 4px;
         }
 
         /* Content Sections */
@@ -213,17 +263,28 @@
             transform: translateY(-4px);
         }
         .factor-icon {
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             margin: 0 auto 16px;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: rgba(31, 77, 255, 0.1);
+            border-radius: 14px;
+            border: 1px solid rgba(31, 77, 255, 0.15);
         }
         .factor-icon svg {
-            width: 32px;
-            height: 32px;
-            color: #fff;
+            width: 26px;
+            height: 26px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .factor-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(31, 77, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
         }
         .factor-title {
             font-size: 15px;
@@ -462,6 +523,7 @@
             padding: 0;
             color: rgba(255, 255, 255, 0.7);
             transition: all 0.2s;
+            flex-shrink: 0;
         }
         .mobile-menu-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
         .mobile-menu-btn svg { width: 18px; height: 18px; }
@@ -477,6 +539,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 16px;
             z-index: 999;
             flex-direction: column;
@@ -501,8 +564,8 @@
             .footer-main { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
-            .header-wrapper { width: 95%; }
-            .header { gap: 16px; padding: 10px 16px; }
+            .header-wrapper { width: 92%; max-width: 92%; top: 12px; }
+            .header { gap: 12px; padding: 10px 16px; justify-content: space-between; }
             .nav { display: none; }
             .mobile-menu-btn { display: flex; }
             .hero { padding: 140px 20px 80px; }
@@ -518,6 +581,45 @@
             .footer-main { grid-template-columns: 1fr; gap: 32px; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
             .animate-from-left, .animate-from-right { transform: translateY(40px); }
+            .hero-stats { gap: 32px; margin-top: 36px; }
+            .hero-stat-number { font-size: 24px; }
+            .hero-title { font-size: 32px; }
+        }
+        @media (max-width: 480px) {
+            .hero { padding: 120px 16px 60px; }
+            .hero-title { font-size: 28px; letter-spacing: -1px; }
+            .hero-description { font-size: 15px; }
+            .hero-stats { gap: 24px; margin-top: 28px; }
+            .hero-stat-number { font-size: 22px; }
+            .hero-stat-label { font-size: 12px; }
+            .content-section { padding: 60px 16px; }
+            .section-title { font-size: 24px; }
+            .section-subtitle { font-size: 14px; }
+            .factor-card { padding: 22px 18px; }
+            .learn-box { padding: 22px 18px; }
+            .learn-title { font-size: 22px; }
+            .cta-section { padding: 60px 16px; }
+            .cta-title { font-size: 24px; }
+            .footer { padding: 48px 16px 24px; }
+            .class-card { padding: 24px 20px; }
+            .class-title { font-size: 16px; }
+            .class-desc { font-size: 13px; }
+        }
+        @media (max-width: 360px) {
+            .hero-title { font-size: 24px; }
+            .hero-stats { flex-direction: column; gap: 16px; }
+            .hero-badge { font-size: 12px; padding: 6px 12px; }
+            .factor-card { padding: 18px 14px; border-radius: 16px; }
+            .factor-title { font-size: 14px; }
+            .factor-desc { font-size: 12px; }
+        }
+        @media (orientation: landscape) and (max-height: 500px) {
+            .hero { min-height: auto; padding: 100px 32px 40px; }
+            .hero-stats { margin-top: 24px; }
+        }
+        @media (min-width: 1025px) and (max-width: 1366px) {
+            .factors-grid { grid-template-columns: repeat(3, 1fr); max-width: 960px; }
+            .content-section { padding: 80px 32px; }
         }
 
         /* Construction Modal */
@@ -597,10 +699,28 @@
 
     <section class="hero">
         <div class="hero-content">
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                Multi-Layered Protection
+            </div>
             <h1 class="hero-title">How We Moderate</h1>
             <p class="hero-description">
                 Our systems run on 15 factors to detect sexually explicit material and other harmful content. Learn how we identify, classify, and respond to threats.
             </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-number">15</div>
+                    <div class="hero-stat-label">Detection Factors</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">3</div>
+                    <div class="hero-stat-label">Classification Levels</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">24/7</div>
+                    <div class="hero-stat-label">Active Monitoring</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -611,6 +731,7 @@
         </div>
         <div class="factors-grid">
             <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-number">Factor 01</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" /></svg>
                 </div>
@@ -618,6 +739,7 @@
                 <p class="factor-desc">Pattern matching against known harmful terms and phrases</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-number">Factor 02</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
                 </div>
@@ -625,6 +747,7 @@
                 <p class="factor-desc">AI-powered visual content analysis for explicit material</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-number">Factor 03</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
                 </div>
@@ -632,6 +755,7 @@
                 <p class="factor-desc">Past behavior patterns and previous violations</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-number">Factor 04</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
                 </div>
@@ -639,6 +763,7 @@
                 <p class="factor-desc">URL analysis for phishing and malicious sites</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-number">Factor 05</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" /></svg>
                 </div>
@@ -646,6 +771,7 @@
                 <p class="factor-desc">Understanding message context and intent</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-number">Factor 06</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
@@ -653,6 +779,7 @@
                 <p class="factor-desc">New account detection and verification</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-number">Factor 07</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
                 </div>
@@ -660,6 +787,7 @@
                 <p class="factor-desc">Unusual activity and spam detection</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-number">Factor 08</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" /></svg>
                 </div>
@@ -667,6 +795,7 @@
                 <p class="factor-desc">Cross-reference with known offender databases</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-number">Factor 09</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
                 </div>
@@ -674,6 +803,7 @@
                 <p class="factor-desc">Known CSAM and harmful content hash detection</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-number">Factor 10</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
                 </div>
@@ -681,6 +811,7 @@
                 <p class="factor-desc">User-submitted reports and verification</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-number">Factor 11</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>
                 </div>
@@ -688,6 +819,7 @@
                 <p class="factor-desc">Shared intelligence from partner networks</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-number">Factor 12</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" /></svg>
                 </div>
@@ -695,6 +827,7 @@
                 <p class="factor-desc">Manual verification by trained moderators</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-number">Factor 13</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
                 </div>
@@ -702,6 +835,7 @@
                 <p class="factor-desc">Analyzing group memberships for harmful associations</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-number">Factor 14</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
                 </div>
@@ -709,6 +843,7 @@
                 <p class="factor-desc">Identifying connections to known bad actors</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-number">Factor 15</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>
                 </div>
