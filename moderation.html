@@ -140,11 +140,36 @@
             pointer-events: none;
         }
         .hero-content { position: relative; z-index: 1; }
-        .hero-title {
-            font-size: 44px;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(31, 77, 255, 0.1);
+            border: 1px solid rgba(31, 77, 255, 0.2);
+            border-radius: 50px;
+            font-size: 13px;
             font-weight: 600;
-            line-height: 1.2;
-            letter-spacing: -1px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: #1f4dff;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
             margin-bottom: 24px;
             max-width: 700px;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.5) 100%);
@@ -158,6 +183,26 @@
             color: rgba(255, 255, 255, 0.5);
             max-width: 600px;
             margin: 0 auto;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 48px;
+            justify-content: center;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .hero-stat-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 4px;
         }
 
         /* Content Sections */
