@@ -1,0 +1,28 @@
+# Git internals - NEVER expose publicly
+.git/
+
+# Wrangler build artifacts
+.wrangler/
+
+# Worker source (served by Worker, not as static asset)
+main.js
+
+# Config files
+wrangler.json
+.assetsignore
+.gitignore
+.dev.vars
+
+# Claude Code
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
