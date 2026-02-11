@@ -1120,17 +1120,26 @@
     </div>
 
     <div class="modal-overlay" id="stagingWarning" style="display: none;">
-        <div class="modal">
-            <div class="modal-icon">🔧</div>
-            <h2 class="modal-title">Staging Environment</h2>
-            <p class="modal-text">
-                You're viewing the staging environment. Features here are under development and may not reflect the final product.
+        <div class="modal" style="max-width: 480px;">
+            <div class="modal-icon" style="font-size: 56px;">⚠️</div>
+            <h2 class="modal-title" style="font-size: 22px; margin-bottom: 4px;">Restricted Access</h2>
+            <div style="display: inline-block; padding: 4px 14px; margin: 8px 0 16px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 50px; font-size: 11px; font-weight: 700; color: #ef4444; text-transform: uppercase; letter-spacing: 1px;">Authorized Personnel Only</div>
+            <p class="modal-text" style="font-size: 13px; line-height: 1.8; margin-bottom: 16px;">
+                This is a <strong style="color: rgba(255,255,255,0.8);">private staging environment</strong> intended solely for authorized developers, testers, and personnel of RoSecure Technologies. All access is monitored, logged, and subject to audit.
             </p>
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                <input type="checkbox" id="dontShowAgain" style="width: 16px; height: 16px; cursor: pointer;">
-                <label for="dontShowAgain" style="font-size: 13px; color: rgba(255, 255, 255, 0.6); cursor: pointer; user-select: none;">Don't show this again</label>
+            <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.15); border-radius: 12px; padding: 16px; margin-bottom: 20px; text-align: left;">
+                <p style="font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.7; margin: 0;">
+                    <strong style="color: rgba(239, 68, 68, 0.9);">LEGAL NOTICE:</strong> Unauthorized access to this system is prohibited and constitutes a criminal offense under the <strong style="color: rgba(255,255,255,0.7);">Computer Fraud and Abuse Act (18 U.S.C. § 1030)</strong>, the <strong style="color: rgba(255,255,255,0.7);">Computer Misuse Act 1990</strong>, and all applicable federal, state, and international computer crime statutes. Violators will be prosecuted to the fullest extent of the law and may be subject to civil liability, criminal penalties, and substantial monetary damages.
+                </p>
             </div>
-            <button class="modal-close" onclick="closeStagingWarning()">Got it</button>
+            <p style="font-size: 11px; color: rgba(255,255,255,0.3); margin-bottom: 20px; line-height: 1.6;">
+                By proceeding, you acknowledge that you are an authorized individual and consent to monitoring and recording of all activity on this system.
+            </p>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px; padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
+                <input type="checkbox" id="dontShowAgain" style="width: 16px; height: 16px; cursor: pointer; accent-color: #1f4dff;">
+                <label for="dontShowAgain" style="font-size: 12px; color: rgba(255, 255, 255, 0.5); cursor: pointer; user-select: none;">Don't show this warning again</label>
+            </div>
+            <button class="modal-close" onclick="closeStagingWarning()" style="background: rgba(255,255,255,0.1); padding: 12px 28px;">I Am Authorized — Continue</button>
         </div>
     </div>
 

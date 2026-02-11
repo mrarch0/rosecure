@@ -31,15 +31,21 @@ function getSecurityHeaders(isLockdown) {
     'X-Frame-Options': 'DENY',
     'X-XSS-Protection': '1; mode=block',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
-    'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
-    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://embed.tawk.to https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://embed.tawk.to wss://*.tawk.to; frame-src https://embed.tawk.to; object-src 'none'; base-uri 'self'; form-action 'self';",
-    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload'
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()',
+    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://embed.tawk.to https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://embed.tawk.to wss://*.tawk.to; frame-src https://embed.tawk.to; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;",
+    'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+    'Cross-Origin-Opener-Policy': 'same-origin',
+    'Cross-Origin-Embedder-Policy': 'credentialless',
+    'Cross-Origin-Resource-Policy': 'same-origin',
+    'X-DNS-Prefetch-Control': 'off',
+    'X-Download-Options': 'noopen',
+    'X-Permitted-Cross-Domain-Policies': 'none'
   };
 
   if (isLockdown) {
     headers['Cache-Control'] = 'no-store, no-cache, must-revalidate';
     headers['X-Robots-Tag'] = 'noindex, nofollow';
-    headers['Content-Security-Policy'] = "default-src 'self'; script-src 'none'; style-src 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src https://staging.rosecure.org; connect-src 'none'; object-src 'none'; base-uri 'self';";
+    headers['Content-Security-Policy'] = "default-src 'self'; script-src 'none'; style-src 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src https://staging.rosecure.org; connect-src 'none'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests;";
   }
 
   return headers;
