@@ -28,16 +28,21 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
+            max-width: 90%;
+            width: auto;
         }
         .header {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 32px;
             padding: 12px 24px;
             background: rgba(10, 10, 15, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50px;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            white-space: nowrap;
         }
         .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
         .logo-img { width: 28px; height: 28px; border-radius: 6px; }
@@ -173,6 +178,7 @@
             padding: 0;
             color: rgba(255, 255, 255, 0.7);
             transition: all 0.2s;
+            flex-shrink: 0;
         }
         .mobile-menu-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
         .mobile-menu-btn svg { width: 18px; height: 18px; }
@@ -188,6 +194,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 16px;
             z-index: 999;
             flex-direction: column;
@@ -207,7 +214,8 @@
 
         @media (max-width: 1024px) { .footer-main { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) {
-            .header { padding: 10px 16px; gap: 16px; }
+            .header-wrapper { width: 92%; max-width: 92%; top: 12px; }
+            .header { gap: 12px; padding: 10px 16px; justify-content: space-between; }
             .nav { display: none; }
             .mobile-menu-btn { display: flex; }
             .main { padding: 120px 20px 60px; }

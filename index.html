@@ -28,16 +28,21 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
+            max-width: 90%;
+            width: auto;
         }
         .header {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 32px;
             padding: 12px 24px;
             background: rgba(10, 10, 15, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50px;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            white-space: nowrap;
         }
         .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
         .logo-img { width: 28px; height: 28px; border-radius: 6px; }
@@ -381,9 +386,7 @@
         .footer-tagline { font-size: 13px; color: rgba(255, 255, 255, 0.4); }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .footer-main { grid-template-columns: repeat(2, 1fr); }
-        }
+
         /* Mobile Menu Toggle */
         .mobile-menu-btn {
             display: none;
@@ -397,6 +400,7 @@
             padding: 0;
             color: rgba(255, 255, 255, 0.7);
             transition: all 0.2s;
+            flex-shrink: 0;
         }
         .mobile-menu-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
         .mobile-menu-btn svg { width: 18px; height: 18px; }
@@ -409,10 +413,11 @@
             transform: translateX(-50%);
             width: 90%;
             max-width: 400px;
-            background: rgba(10, 10, 15, 0.95);
+            background: rgba(10, 10, 15, 0.97);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 16px;
             z-index: 999;
             flex-direction: column;
@@ -430,28 +435,402 @@
         }
         .mobile-nav a:hover, .mobile-nav a.active { color: #fff; background: rgba(255, 255, 255, 0.08); }
 
+        /* =============================================
+           TABLET / iPad (768px - 1024px)
+           ============================================= */
+        @media (max-width: 1024px) {
+            .header-wrapper {
+                max-width: 95%;
+            }
+            .header {
+                gap: 20px;
+                padding: 12px 20px;
+            }
+            .nav-link {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            .hero {
+                padding: 140px 32px 80px;
+                min-height: auto;
+            }
+            .hero-title {
+                font-size: 38px;
+            }
+            .feature-section {
+                padding: 80px 32px;
+            }
+            .feature-container {
+                max-width: 100%;
+            }
+            .feature-title {
+                font-size: 28px;
+            }
+            .stats-section {
+                padding: 100px 32px;
+            }
+            .stats-number {
+                font-size: 88px;
+            }
+            .cta-section {
+                padding: 120px 32px;
+            }
+            .cta-title {
+                font-size: 40px;
+            }
+            .footer-main {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 36px;
+            }
+        }
+
+        /* =============================================
+           iPAD MINI / SMALL TABLETS (600px - 768px)
+           ============================================= */
         @media (max-width: 768px) {
-            .header-wrapper { width: 95%; }
-            .header { gap: 16px; padding: 10px 16px; }
+            /* Header - centered pill */
+            .header-wrapper {
+                width: 92%;
+                max-width: 92%;
+                top: 12px;
+            }
+            .header {
+                gap: 12px;
+                padding: 10px 16px;
+                justify-content: space-between;
+            }
             .nav { display: none; }
             .mobile-menu-btn { display: flex; }
-            .hero { padding: 120px 20px 60px; }
-            .hero-title { font-size: 36px; }
-            .hero-buttons { flex-direction: column; width: 100%; }
-            .btn-primary, .btn-secondary { width: 100%; text-align: center; }
-            .feature-section { padding: 80px 20px; }
-            .feature-box { padding: 32px 24px; }
-            .feature-title { font-size: 28px; }
-            .stats-section { padding: 100px 20px; }
-            .stats-number { font-size: 72px; }
-            .stats-label { font-size: 16px; }
-            .cta-section { padding: 100px 20px; }
-            .cta-title { font-size: 36px; }
-            .cta-buttons { flex-direction: column; }
-            .footer { padding: 60px 20px 30px; }
-            .footer-main { grid-template-columns: 1fr; gap: 32px; }
-            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+
+            /* Mobile nav positioning */
+            .mobile-nav {
+                top: 72px;
+                width: 92%;
+            }
+
+            /* Hero */
+            .hero {
+                padding: 110px 20px 60px;
+                min-height: auto;
+            }
+            .hero-title {
+                font-size: 32px;
+                letter-spacing: -0.5px;
+            }
+            .hero-description {
+                font-size: 15px;
+                margin: 0 auto 32px;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 320px;
+                margin: 0 auto;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                text-align: center;
+                padding: 14px 24px;
+            }
+
+            /* Feature sections */
+            .feature-section {
+                padding: 60px 20px;
+            }
+            .feature-box {
+                padding: 28px 22px;
+                border-radius: 20px;
+            }
+            .feature-title {
+                font-size: 24px;
+                margin-bottom: 12px;
+            }
+            .feature-description {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            .feature-list li {
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+
+            /* 3D animations - reduce for mobile performance */
+            .animate-tilt-left {
+                transform: perspective(1000px) rotateY(8deg) translateX(-20px) scale(0.97);
+            }
+            .animate-tilt-right {
+                transform: perspective(1000px) rotateY(-8deg) translateX(20px) scale(0.97);
+            }
+            .animate-tilt-up {
+                transform: perspective(1000px) rotateX(6deg) translateY(30px) scale(0.97);
+            }
+
+            /* Stats */
+            .stats-section {
+                padding: 80px 20px;
+            }
+            .stats-number {
+                font-size: 64px;
+                letter-spacing: -2px;
+            }
+            .stats-label {
+                font-size: 16px;
+            }
+            .stats-description {
+                font-size: 15px;
+            }
+
+            /* CTA */
+            .cta-section {
+                padding: 80px 20px;
+            }
+            .cta-title {
+                font-size: 32px;
+                letter-spacing: -0.5px;
+            }
+            .cta-subtitle {
+                font-size: 16px;
+                margin-bottom: 32px;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 320px;
+                margin: 0 auto;
+            }
+            .cta-buttons .btn-primary,
+            .cta-buttons .btn-secondary {
+                width: 100%;
+            }
+
+            /* Footer */
+            .footer {
+                padding: 48px 20px 28px;
+            }
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+            .footer-brand {
+                margin-bottom: 8px;
+            }
+            .footer-brand img {
+                width: 40px;
+                height: 40px;
+            }
+            .footer-brand-text {
+                font-size: 18px;
+            }
+            .footer-column h4 {
+                margin-bottom: 14px;
+            }
+            .footer-column li {
+                margin-bottom: 10px;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+            .footer-copyright {
+                font-size: 12px;
+            }
+
+            /* Modal */
+            .modal {
+                width: 92%;
+                padding: 36px 28px;
+            }
+
             .animate-from-left, .animate-from-right { transform: translateY(40px); }
+        }
+
+        /* =============================================
+           SMALL PHONES (480px and below)
+           ============================================= */
+        @media (max-width: 480px) {
+            .header-wrapper {
+                width: 96%;
+                max-width: 96%;
+                top: 8px;
+            }
+            .header {
+                padding: 8px 12px;
+                gap: 8px;
+            }
+            .logo-text {
+                font-size: 14px;
+            }
+            .logo-img {
+                width: 24px;
+                height: 24px;
+            }
+            .discord-btn, .github-btn {
+                width: 32px;
+                height: 32px;
+            }
+            .discord-btn svg, .github-btn svg {
+                width: 16px;
+                height: 16px;
+            }
+            .mobile-menu-btn {
+                width: 32px;
+                height: 32px;
+            }
+            .mobile-menu-btn svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .mobile-nav {
+                top: 60px;
+                width: 96%;
+            }
+
+            .hero {
+                padding: 100px 16px 48px;
+            }
+            .hero-title {
+                font-size: 26px;
+                letter-spacing: -0.5px;
+            }
+            .hero-description {
+                font-size: 14px;
+                line-height: 1.7;
+            }
+            .hero-buttons {
+                max-width: 100%;
+            }
+            .btn-primary, .btn-secondary {
+                padding: 12px 20px;
+                font-size: 13px;
+            }
+
+            .feature-section {
+                padding: 48px 16px;
+            }
+            .feature-box {
+                padding: 24px 18px;
+                border-radius: 16px;
+            }
+            .feature-title {
+                font-size: 22px;
+            }
+            .feature-description {
+                font-size: 13px;
+            }
+            .feature-list li {
+                font-size: 13px;
+                gap: 8px;
+            }
+
+            .stats-section {
+                padding: 64px 16px;
+            }
+            .stats-number {
+                font-size: 52px;
+                letter-spacing: -1px;
+            }
+            .stats-description {
+                font-size: 14px;
+            }
+
+            .cta-section {
+                padding: 64px 16px;
+            }
+            .cta-title {
+                font-size: 26px;
+            }
+            .cta-subtitle {
+                font-size: 14px;
+            }
+
+            .footer {
+                padding: 40px 16px 24px;
+            }
+            .footer-main {
+                gap: 24px;
+            }
+            .footer-brand img {
+                width: 36px;
+                height: 36px;
+            }
+            .footer-brand-text {
+                font-size: 16px;
+            }
+
+            /* Reduce 3D effects for performance */
+            .animate-tilt-left,
+            .animate-tilt-right {
+                transform: translateY(30px) scale(0.98);
+            }
+            .animate-tilt-up {
+                transform: translateY(30px) scale(0.98);
+            }
+        }
+
+        /* =============================================
+           VERY SMALL PHONES (360px and below)
+           ============================================= */
+        @media (max-width: 360px) {
+            .header {
+                padding: 8px 10px;
+                gap: 6px;
+            }
+            .logo-text {
+                font-size: 13px;
+            }
+            .hero-title {
+                font-size: 22px;
+            }
+            .hero-description {
+                font-size: 13px;
+            }
+            .feature-title {
+                font-size: 20px;
+            }
+            .stats-number {
+                font-size: 44px;
+            }
+            .cta-title {
+                font-size: 22px;
+            }
+        }
+
+        /* =============================================
+           LANDSCAPE PHONES
+           ============================================= */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero {
+                min-height: auto;
+                padding: 90px 20px 40px;
+            }
+            .stats-section {
+                padding: 60px 20px;
+            }
+            .cta-section {
+                padding: 60px 20px;
+            }
+        }
+
+        /* =============================================
+           iPAD PRO and larger tablets (1024px - 1366px)
+           ============================================= */
+        @media (min-width: 1025px) and (max-width: 1366px) {
+            .header {
+                gap: 24px;
+                padding: 12px 24px;
+            }
+            .nav-link {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            .hero-title {
+                font-size: 42px;
+            }
+            .feature-section {
+                padding: 100px 40px;
+            }
         }
 
         /* Construction Modal */
@@ -741,17 +1120,26 @@
     </div>
 
     <div class="modal-overlay" id="stagingWarning" style="display: none;">
-        <div class="modal">
-            <div class="modal-icon">🔧</div>
-            <h2 class="modal-title">Staging Environment</h2>
-            <p class="modal-text">
-                You're viewing the staging environment. Features here are under development and may not reflect the final product.
+        <div class="modal" style="max-width: 480px;">
+            <div class="modal-icon" style="font-size: 56px;">⚠️</div>
+            <h2 class="modal-title" style="font-size: 22px; margin-bottom: 4px;">Restricted Access</h2>
+            <div style="display: inline-block; padding: 4px 14px; margin: 8px 0 16px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 50px; font-size: 11px; font-weight: 700; color: #ef4444; text-transform: uppercase; letter-spacing: 1px;">Authorized Personnel Only</div>
+            <p class="modal-text" style="font-size: 13px; line-height: 1.8; margin-bottom: 16px;">
+                This is a <strong style="color: rgba(255,255,255,0.8);">private staging environment</strong> intended solely for authorized developers, testers, and personnel of RoSecure Technologies. All access is monitored, logged, and subject to audit.
             </p>
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                <input type="checkbox" id="dontShowAgain" style="width: 16px; height: 16px; cursor: pointer;">
-                <label for="dontShowAgain" style="font-size: 13px; color: rgba(255, 255, 255, 0.6); cursor: pointer; user-select: none;">Don't show this again</label>
+            <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.15); border-radius: 12px; padding: 16px; margin-bottom: 20px; text-align: left;">
+                <p style="font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.7; margin: 0;">
+                    <strong style="color: rgba(239, 68, 68, 0.9);">LEGAL NOTICE:</strong> Unauthorized access to this system is prohibited and constitutes a criminal offense under the <strong style="color: rgba(255,255,255,0.7);">Computer Fraud and Abuse Act (18 U.S.C. § 1030)</strong>, the <strong style="color: rgba(255,255,255,0.7);">Computer Misuse Act 1990</strong>, and all applicable federal, state, and international computer crime statutes. Violators will be prosecuted to the fullest extent of the law and may be subject to civil liability, criminal penalties, and substantial monetary damages.
+                </p>
             </div>
-            <button class="modal-close" onclick="closeStagingWarning()">Got it</button>
+            <p style="font-size: 11px; color: rgba(255,255,255,0.3); margin-bottom: 20px; line-height: 1.6;">
+                By proceeding, you acknowledge that you are an authorized individual and consent to monitoring and recording of all activity on this system.
+            </p>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px; padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
+                <input type="checkbox" id="dontShowAgain" style="width: 16px; height: 16px; cursor: pointer; accent-color: #1f4dff;">
+                <label for="dontShowAgain" style="font-size: 12px; color: rgba(255, 255, 255, 0.5); cursor: pointer; user-select: none;">Don't show this warning again</label>
+            </div>
+            <button class="modal-close" onclick="closeStagingWarning()" style="background: rgba(255,255,255,0.1); padding: 12px 28px;">I Am Authorized — Continue</button>
         </div>
     </div>
 
@@ -782,6 +1170,23 @@
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);
     })();
+    </script>
+    <div class="modal-overlay" id="maintenanceMode" style="display: none; background: rgba(0, 0, 0, 0.95);">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-icon">🚧</div>
+            <h2 class="modal-title">Site Under Development</h2>
+            <p class="modal-text">
+                This site is currently under development and not available to the public. Only authorized developers and testers have access.
+            </p>
+            <button class="modal-close" onclick="window.location.href='https://staging.rosecure.org'" style="width: 100%; margin-bottom: 12px;">I am a Developer or Tester</button>
+            <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4); text-align: center;">Check back soon for our official launch</p>
+        </div>
+    </div>
+    <script>
+        if (window.location.hostname === 'rosecure.org' || window.location.hostname === 'www.rosecure.org' || (!window.location.hostname.includes('staging') && !window.location.hostname.includes('localhost'))) {
+            document.getElementById('maintenanceMode').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
     </script>
 </body>
 </html>
