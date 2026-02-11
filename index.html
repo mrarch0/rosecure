@@ -755,18 +755,6 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="maintenanceMode" style="display: none; background: rgba(0, 0, 0, 0.95);">
-        <div class="modal" style="max-width: 500px;">
-            <div class="modal-icon">🚧</div>
-            <h2 class="modal-title">Site Under Development</h2>
-            <p class="modal-text">
-                This site is currently under development and not available to the public. Only authorized developers and testers have access.
-            </p>
-            <button class="modal-close" onclick="window.location.href='https://staging.rosecure.org'" style="width: 100%; margin-bottom: 12px;">I am a Developer or Tester</button>
-            <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4); text-align: center;">Check back soon for our official launch</p>
-        </div>
-    </div>
-
     <script>
         function closeStagingWarning() {
             const checkbox = document.getElementById('dontShowAgain');
@@ -781,9 +769,6 @@
             if (!hideWarning) {
                 document.getElementById('stagingWarning').style.display = 'flex';
             }
-        } else if (window.location.hostname === 'rosecure.org' || window.location.hostname === 'www.rosecure.org' || (!window.location.hostname.includes('staging') && !window.location.hostname.includes('localhost'))) {
-            document.getElementById('maintenanceMode').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
         }
     </script>
 
