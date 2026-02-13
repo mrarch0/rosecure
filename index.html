@@ -489,9 +489,72 @@
             border-radius: 50px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
         .modal-close:hover { background: rgba(255,255,255,0.15); }
+
+        .marquee-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #1f4dff 0%, #0039e6 100%);
+            z-index: 2000;
+            overflow: hidden;
+            height: 36px;
+            display: none;
+        }
+        .marquee-banner.active {
+            display: flex;
+            align-items: center;
+        }
+        .marquee-track {
+            display: flex;
+            animation: marqueeScroll 20s linear infinite;
+            white-space: nowrap;
+        }
+        .marquee-content {
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            padding: 0 24px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .marquee-content span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-banner.active ~ .header-wrapper {
+            top: 56px;
+        }
+        .marquee-banner.active ~ .hero {
+            padding-top: 176px;
+        }
     </style>
 </head>
 <body>
+    <!-- Marquee Alert Banner - set class="marquee-banner active" to enable -->
+    <div class="marquee-banner" id="marqueeAlert">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span>&#9888; Important Security Alert: Stay vigilant against new phishing scams targeting Roblox players.</span>
+                <span>&#9888; Important Security Alert: Stay vigilant against new phishing scams targeting Roblox players.</span>
+                <span>&#9888; Important Security Alert: Stay vigilant against new phishing scams targeting Roblox players.</span>
+                <span>&#9888; Important Security Alert: Stay vigilant against new phishing scams targeting Roblox players.</span>
+            </div>
+            <div class="marquee-content">
+                <span>&#9888; Important Security Alert: Stay vigilant against new phishing scams targeting Roblox players.</span>
+                <span>&#9888; Important Security Alert: Stay vigilant against new phishing scams targeting Roblox players.</span>
+                <span>&#9888; Important Security Alert: Stay vigilant against new phishing scams targeting Roblox players.</span>
+                <span>&#9888; Important Security Alert: Stay vigilant against new phishing scams targeting Roblox players.</span>
+            </div>
+        </div>
+    </div>
     <div class="header-wrapper">
         <header class="header">
             <a href="index.html" class="logo">
