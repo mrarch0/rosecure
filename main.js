@@ -3,18 +3,15 @@ export default {
     const url = new URL(request.url);
     const hostname = url.hostname;
 
-    // Production lockdown - return lockdown page for main domain
     if (hostname === 'rosecure.org' || hostname === 'www.rosecure.org') {
       return new Response(getLockdownHTML(), {
         headers: getSecurityHeaders(true)
       });
     }
 
-    // Serve normal assets for staging and other environments
     const response = await env.ASSETS.fetch(request);
     const newResponse = new Response(response.body, response);
 
-    // Add security headers to all responses
     const securityHeaders = getSecurityHeaders(false);
     Object.entries(securityHeaders).forEach(([key, value]) => {
       newResponse.headers.set(key, value);

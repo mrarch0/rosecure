@@ -230,12 +230,10 @@ function toggleFaq(button) {
     const faqItem = button.parentElement;
     const isActive = faqItem.classList.contains('active');
 
-    // Close all FAQ items
     document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
     });
 
-    // Toggle current item
     if (!isActive) {
         faqItem.classList.add('active');
     }
