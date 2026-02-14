@@ -28,16 +28,21 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
+            max-width: 90%;
+            width: auto;
         }
         .header {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 32px;
             padding: 12px 24px;
             background: rgba(10, 10, 15, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50px;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            white-space: nowrap;
         }
         .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
         .logo-img { width: 28px; height: 28px; border-radius: 6px; }
@@ -166,6 +171,7 @@
             padding: 0;
             color: rgba(255, 255, 255, 0.7);
             transition: all 0.2s;
+            flex-shrink: 0;
         }
         .mobile-menu-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
         .mobile-menu-btn svg { width: 18px; height: 18px; }
@@ -181,6 +187,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 16px;
             z-index: 999;
             flex-direction: column;
@@ -199,7 +206,8 @@
         .mobile-nav a:hover, .mobile-nav a.active { background: rgba(255, 255, 255, 0.08); color: #fff; }
 
         @media (max-width: 768px) {
-            .header { padding: 10px 16px; gap: 16px; }
+            .header-wrapper { width: 92%; max-width: 92%; top: 12px; }
+            .header { gap: 12px; padding: 10px 16px; justify-content: space-between; }
             .nav { display: none; }
             .mobile-menu-btn { display: flex; }
             .main { padding: 120px 20px 60px; }
@@ -371,31 +379,10 @@
             <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4); text-align: center;">Check back soon for our official launch</p>
         </div>
     </div>
-    <div class="modal-overlay" id="stagingModal" style="display: none; background: rgba(0, 0, 0, 0.95);">
-        <div class="modal" style="max-width: 520px;">
-            <div class="modal-icon">&#9888;&#65039;</div>
-            <h2 class="modal-title">Restricted Access</h2>
-            <p style="font-size: 11px; font-weight: 600; color: rgba(255, 180, 0, 0.9); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Authorized Personnel Only</p>
-            <p class="modal-text" style="font-size: 13px; text-align: left;">
-                This is a private staging environment intended solely for authorized developers, testers, and personnel of RoSecure Technologies. All access is monitored, logged, and subject to audit.
-            </p>
-            <p class="modal-text" style="font-size: 12px; text-align: left; color: rgba(255, 255, 255, 0.35);">
-                <strong style="color: rgba(255, 255, 255, 0.5);">LEGAL NOTICE:</strong> Unauthorized access to this system is prohibited and constitutes a criminal offense under the Computer Fraud and Abuse Act (18 U.S.C. &sect; 1030), the Computer Misuse Act 1990, and all applicable federal, state, and international computer crime statutes. Violators will be prosecuted to the fullest extent of the law and may be subject to civil liability, criminal penalties, and substantial monetary damages.
-            </p>
-            <p class="modal-text" style="font-size: 12px; text-align: left; color: rgba(255, 255, 255, 0.35);">
-                By proceeding, you acknowledge that you are an authorized individual and consent to monitoring and recording of all activity on this system.
-            </p>
-            <button class="modal-close" onclick="document.getElementById('stagingModal').style.display='none';document.body.style.overflow='auto'" style="width: 100%; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12); padding: 12px 24px;">I Am Authorized &mdash; Continue</button>
-        </div>
-    </div>
     <script>
         if (window.location.protocol !== 'file:') {
             if (window.location.hostname === 'rosecure.org' || window.location.hostname === 'www.rosecure.org' || (!window.location.hostname.includes('staging') && !window.location.hostname.includes('localhost'))) {
                 document.getElementById('maintenanceMode').style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-            if (window.location.hostname.includes('staging') || window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1') {
-                document.getElementById('stagingModal').style.display = 'flex';
                 document.body.style.overflow = 'hidden';
             }
         }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn how RoSecure moderates and protects communities using our 12-factor detection system.">
+    <meta name="description" content="Learn how RoSecure moderates and protects communities using our 15-factor detection system.">
     <meta name="theme-color" content="#1f4dff">
     <title>RoSecure - How We Moderate</title>
     <link rel="icon" type="image/png" href="rosecurelogo.png">
@@ -20,22 +20,28 @@
             overflow-x: hidden;
         }
 
+        /* Floating Dynamic Island Header */
         .header-wrapper {
             position: fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
+            max-width: 90%;
+            width: auto;
         }
         .header {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 32px;
             padding: 12px 24px;
             background: rgba(10, 10, 15, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50px;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            white-space: nowrap;
         }
         .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
         .logo-img { width: 28px; height: 28px; border-radius: 6px; }
@@ -72,6 +78,7 @@
         }
         .github-btn:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
 
+        /* 3D Tilt Animation Classes */
         .animate-on-scroll {
             opacity: 0;
             transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
@@ -102,6 +109,7 @@
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
 
+        /* Hero Section */
         .hero {
             min-height: 60vh;
             display: flex;
@@ -132,11 +140,36 @@
             pointer-events: none;
         }
         .hero-content { position: relative; z-index: 1; }
-        .hero-title {
-            font-size: 44px;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(31, 77, 255, 0.1);
+            border: 1px solid rgba(31, 77, 255, 0.2);
+            border-radius: 50px;
+            font-size: 13px;
             font-weight: 600;
-            line-height: 1.2;
-            letter-spacing: -1px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: #1f4dff;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
             margin-bottom: 24px;
             max-width: 700px;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.5) 100%);
@@ -151,7 +184,28 @@
             max-width: 600px;
             margin: 0 auto;
         }
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 48px;
+            justify-content: center;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .hero-stat-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 4px;
+        }
 
+        /* Content Sections */
         .content-section {
             padding: 100px 48px;
             position: relative;
@@ -168,6 +222,7 @@
             margin: 0 auto;
         }
 
+        /* Section Headers */
         .section-header {
             text-align: center;
             margin-bottom: 60px;
@@ -186,6 +241,7 @@
             margin: 0 auto;
         }
 
+        /* 12 Factors Grid */
         .factors-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -207,15 +263,28 @@
             transform: translateY(-4px);
         }
         .factor-icon {
+            width: 52px;
+            height: 52px;
             margin: 0 auto 16px;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: rgba(31, 77, 255, 0.1);
+            border-radius: 14px;
+            border: 1px solid rgba(31, 77, 255, 0.15);
         }
         .factor-icon svg {
-            width: 28px;
-            height: 28px;
-            color: rgba(255, 255, 255, 0.7);
+            width: 26px;
+            height: 26px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .factor-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(31, 77, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
         }
         .factor-title {
             font-size: 15px;
@@ -229,6 +298,7 @@
             line-height: 1.6;
         }
 
+        /* Classification Section */
         .classification-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -268,12 +338,12 @@
             justify-content: center;
         }
         .class-indicator svg {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
         }
-        .class-card.green .class-indicator svg { color: #22c55e; }
-        .class-card.yellow .class-indicator svg { color: #eab308; }
-        .class-card.red .class-indicator svg { color: #ef4444; }
+        .class-card.green .class-indicator svg { color: #22c55e; filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.4)); }
+        .class-card.yellow .class-indicator svg { color: #eab308; filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.4)); }
+        .class-card.red .class-indicator svg { color: #ef4444; filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.4)); }
         .class-title {
             font-size: 18px;
             font-weight: 600;
@@ -286,6 +356,7 @@
             line-height: 1.7;
         }
 
+        /* How We Learn Section */
         .learn-box {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -337,6 +408,7 @@
             line-height: 1.6;
         }
 
+        /* CTA Section */
         .cta-section {
             padding: 120px 48px;
             text-align: center;
@@ -390,6 +462,7 @@
         }
         .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.5); }
 
+        /* Footer */
         .footer {
             padding: 80px 48px 40px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -436,6 +509,7 @@
         }
         .footer-tagline { font-size: 13px; color: rgba(255, 255, 255, 0.4); }
 
+        /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
             width: 36px;
@@ -449,6 +523,7 @@
             padding: 0;
             color: rgba(255, 255, 255, 0.7);
             transition: all 0.2s;
+            flex-shrink: 0;
         }
         .mobile-menu-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
         .mobile-menu-btn svg { width: 18px; height: 18px; }
@@ -464,6 +539,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 16px;
             z-index: 999;
             flex-direction: column;
@@ -481,14 +557,15 @@
         }
         .mobile-nav a:hover, .mobile-nav a.active { background: rgba(255, 255, 255, 0.08); color: #fff; }
 
+        /* Responsive */
         @media (max-width: 1024px) {
             .factors-grid { grid-template-columns: repeat(2, 1fr); }
             .classification-grid { grid-template-columns: 1fr; }
             .footer-main { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
-            .header-wrapper { width: 95%; }
-            .header { gap: 16px; padding: 10px 16px; }
+            .header-wrapper { width: 92%; max-width: 92%; top: 12px; }
+            .header { gap: 12px; padding: 10px 16px; justify-content: space-between; }
             .nav { display: none; }
             .mobile-menu-btn { display: flex; }
             .hero { padding: 140px 20px 80px; }
@@ -504,8 +581,48 @@
             .footer-main { grid-template-columns: 1fr; gap: 32px; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
             .animate-from-left, .animate-from-right { transform: translateY(40px); }
+            .hero-stats { gap: 32px; margin-top: 36px; }
+            .hero-stat-number { font-size: 24px; }
+            .hero-title { font-size: 32px; }
+        }
+        @media (max-width: 480px) {
+            .hero { padding: 120px 16px 60px; }
+            .hero-title { font-size: 28px; letter-spacing: -1px; }
+            .hero-description { font-size: 15px; }
+            .hero-stats { gap: 24px; margin-top: 28px; }
+            .hero-stat-number { font-size: 22px; }
+            .hero-stat-label { font-size: 12px; }
+            .content-section { padding: 60px 16px; }
+            .section-title { font-size: 24px; }
+            .section-subtitle { font-size: 14px; }
+            .factor-card { padding: 22px 18px; }
+            .learn-box { padding: 22px 18px; }
+            .learn-title { font-size: 22px; }
+            .cta-section { padding: 60px 16px; }
+            .cta-title { font-size: 24px; }
+            .footer { padding: 48px 16px 24px; }
+            .class-card { padding: 24px 20px; }
+            .class-title { font-size: 16px; }
+            .class-desc { font-size: 13px; }
+        }
+        @media (max-width: 360px) {
+            .hero-title { font-size: 24px; }
+            .hero-stats { flex-direction: column; gap: 16px; }
+            .hero-badge { font-size: 12px; padding: 6px 12px; }
+            .factor-card { padding: 18px 14px; border-radius: 16px; }
+            .factor-title { font-size: 14px; }
+            .factor-desc { font-size: 12px; }
+        }
+        @media (orientation: landscape) and (max-height: 500px) {
+            .hero { min-height: auto; padding: 100px 32px 40px; }
+            .hero-stats { margin-top: 24px; }
+        }
+        @media (min-width: 1025px) and (max-width: 1366px) {
+            .factors-grid { grid-template-columns: repeat(3, 1fr); max-width: 960px; }
+            .content-section { padding: 80px 32px; }
         }
 
+        /* Construction Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -559,10 +676,10 @@
                 <a href="#" class="nav-link" onclick="event.preventDefault();document.getElementById('constructionModal').classList.add('open')">Dashboard</a>
             </nav>
             <div class="header-right">
-                <a href="https://discord.gg/mbXQCEJS58" target="_blank" rel="noopener noreferrer" class="discord-btn">
+                <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="discord-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.947 2.418-2.157 2.418z"/></svg>
                 </a>
-                <a href="https://github.com/mrarch0" target="_blank" rel="noopener noreferrer" class="github-btn" aria-label="GitHub">
+                <a href="https://github.com/mrarch0" target="_blank" class="github-btn" aria-label="GitHub">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                 </a>
                 <button class="mobile-menu-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">
@@ -576,26 +693,45 @@
         <a href="volunteer.html">Volunteer</a>
         <a href="donate.html">Donate</a>
         <a href="#" onclick="event.preventDefault();document.getElementById('constructionModal').classList.add('open')">Dashboard</a>
-        <a href="https://discord.gg/mbXQCEJS58" target="_blank" rel="noopener noreferrer">Discord</a>
-        <a href="https://github.com/mrarch0" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord</a>
+        <a href="https://github.com/mrarch0" target="_blank">GitHub</a>
     </nav>
 
     <section class="hero">
         <div class="hero-content">
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                Multi-Layered Protection
+            </div>
             <h1 class="hero-title">How We Moderate</h1>
             <p class="hero-description">
                 Our systems run on 15 factors to detect sexually explicit material and other harmful content. Learn how we identify, classify, and respond to threats.
             </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-number">15</div>
+                    <div class="hero-stat-label">Detection Factors</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">3</div>
+                    <div class="hero-stat-label">Classification Levels</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">24/7</div>
+                    <div class="hero-stat-label">Active Monitoring</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <section class="content-section">
         <div class="section-header animate-on-scroll animate-from-bottom">
             <h2 class="section-title">15 Detection Factors</h2>
-            <p class="section-subtitle">We analyze content across these key factors to ensure accurate detection.</p>
+            <p class="section-subtitle">Our multi-layered approach analyzes content across these key factors to ensure accurate detection.</p>
         </div>
         <div class="factors-grid">
             <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-number">Factor 01</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" /></svg>
                 </div>
@@ -603,6 +739,7 @@
                 <p class="factor-desc">Pattern matching against known harmful terms and phrases</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-number">Factor 02</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
                 </div>
@@ -610,6 +747,7 @@
                 <p class="factor-desc">AI-powered visual content analysis for explicit material</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-number">Factor 03</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
                 </div>
@@ -617,6 +755,7 @@
                 <p class="factor-desc">Past behavior patterns and previous violations</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-number">Factor 04</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
                 </div>
@@ -624,6 +763,7 @@
                 <p class="factor-desc">URL analysis for phishing and malicious sites</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-number">Factor 05</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" /></svg>
                 </div>
@@ -631,6 +771,7 @@
                 <p class="factor-desc">Understanding message context and intent</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-number">Factor 06</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
@@ -638,6 +779,7 @@
                 <p class="factor-desc">New account detection and verification</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-number">Factor 07</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
                 </div>
@@ -645,6 +787,7 @@
                 <p class="factor-desc">Unusual activity and spam detection</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-number">Factor 08</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" /></svg>
                 </div>
@@ -652,6 +795,7 @@
                 <p class="factor-desc">Cross-reference with known offender databases</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-number">Factor 09</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
                 </div>
@@ -659,6 +803,7 @@
                 <p class="factor-desc">Known CSAM and harmful content hash detection</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-number">Factor 10</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
                 </div>
@@ -666,6 +811,7 @@
                 <p class="factor-desc">User-submitted reports and verification</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-number">Factor 11</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>
                 </div>
@@ -673,6 +819,7 @@
                 <p class="factor-desc">Shared intelligence from partner networks</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-number">Factor 12</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" /></svg>
                 </div>
@@ -680,6 +827,7 @@
                 <p class="factor-desc">Manual verification by trained moderators</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="factor-number">Factor 13</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>
                 </div>
@@ -687,6 +835,7 @@
                 <p class="factor-desc">Analyzing group memberships for harmful associations</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="factor-number">Factor 14</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
                 </div>
@@ -694,6 +843,7 @@
                 <p class="factor-desc">Identifying connections to known bad actors</p>
             </div>
             <div class="factor-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="factor-number">Factor 15</div>
                 <div class="factor-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>
                 </div>
@@ -787,7 +937,7 @@
             <h2 class="cta-title">Questions about our moderation?</h2>
             <p class="cta-text">Reach out to our team, submit an appeal, or visit our FAQ for more information.</p>
             <div class="cta-buttons">
-                <a href="https://discord.gg/mbXQCEJS58" target="_blank" rel="noopener noreferrer" class="btn-primary">Join Discord</a>
+                <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="btn-primary">Join Discord</a>
                 <a href="faq.html" class="btn-secondary">Read FAQ</a>
             </div>
         </div>
@@ -819,8 +969,8 @@
                 <div class="footer-column">
                     <h4>Community</h4>
                     <ul>
-                        <li><a href="https://discord.gg/mbXQCEJS58" target="_blank" rel="noopener noreferrer">Discord Server</a></li>
-                        <li><a href="https://rosecurestatus.betteruptime.com/" target="_blank" rel="noopener noreferrer">System Status</a></li>
+                        <li><a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord Server</a></li>
+                        <li><a href="https://rosecurestatus.betteruptime.com/" target="_blank">System Status</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -842,6 +992,7 @@
     </footer>
 
     <script>
+        // Scroll animation observer
         const observerOptions = {
             root: null,
             rootMargin: '0px',
@@ -892,31 +1043,10 @@
             <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4); text-align: center;">Check back soon for our official launch</p>
         </div>
     </div>
-    <div class="modal-overlay" id="stagingModal" style="display: none; background: rgba(0, 0, 0, 0.95);">
-        <div class="modal" style="max-width: 520px;">
-            <div class="modal-icon">&#9888;&#65039;</div>
-            <h2 class="modal-title">Restricted Access</h2>
-            <p style="font-size: 11px; font-weight: 600; color: rgba(255, 180, 0, 0.9); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Authorized Personnel Only</p>
-            <p class="modal-text" style="font-size: 13px; text-align: left;">
-                This is a private staging environment intended solely for authorized developers, testers, and personnel of RoSecure Technologies. All access is monitored, logged, and subject to audit.
-            </p>
-            <p class="modal-text" style="font-size: 12px; text-align: left; color: rgba(255, 255, 255, 0.35);">
-                <strong style="color: rgba(255, 255, 255, 0.5);">LEGAL NOTICE:</strong> Unauthorized access to this system is prohibited and constitutes a criminal offense under the Computer Fraud and Abuse Act (18 U.S.C. &sect; 1030), the Computer Misuse Act 1990, and all applicable federal, state, and international computer crime statutes. Violators will be prosecuted to the fullest extent of the law and may be subject to civil liability, criminal penalties, and substantial monetary damages.
-            </p>
-            <p class="modal-text" style="font-size: 12px; text-align: left; color: rgba(255, 255, 255, 0.35);">
-                By proceeding, you acknowledge that you are an authorized individual and consent to monitoring and recording of all activity on this system.
-            </p>
-            <button class="modal-close" onclick="document.getElementById('stagingModal').style.display='none';document.body.style.overflow='auto'" style="width: 100%; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12); padding: 12px 24px;">I Am Authorized &mdash; Continue</button>
-        </div>
-    </div>
     <script>
         if (window.location.protocol !== 'file:') {
             if (window.location.hostname === 'rosecure.org' || window.location.hostname === 'www.rosecure.org' || (!window.location.hostname.includes('staging') && !window.location.hostname.includes('localhost'))) {
                 document.getElementById('maintenanceMode').style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-            if (window.location.hostname.includes('staging') || window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1') {
-                document.getElementById('stagingModal').style.display = 'flex';
                 document.body.style.overflow = 'hidden';
             }
         }
