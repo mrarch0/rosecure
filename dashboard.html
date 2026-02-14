@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #0d0d12;
@@ -30,73 +29,41 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
-        .loading-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
+        .loading-overlay.hidden { opacity: 0; visibility: hidden; }
+        .spinner {
+            width: 40px; height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.08);
+            border-top-color: #1f4dff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
-        .loading-spinner {
-            width: 80px;
-            height: 80px;
-            position: relative;
-        }
-        .loading-spinner svg {
-            width: 80px;
-            height: 80px;
-            transform: rotate(-90deg);
-        }
-        .loading-spinner .track {
-            fill: none;
-            stroke: rgba(255, 255, 255, 0.08);
-            stroke-width: 4;
-        }
-        .loading-spinner .progress {
-            fill: none;
-            stroke: #1f4dff;
-            stroke-width: 4;
-            stroke-linecap: round;
-            stroke-dasharray: 226;
-            stroke-dashoffset: 226;
-            transition: stroke-dashoffset 0.3s ease;
-        }
-        .loading-percent {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 18px;
-            font-weight: 600;
-            color: #fff;
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .loading-text {
-            margin-top: 20px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
         }
 
-        .dashboard-layout {
-            display: flex;
-            min-height: 100vh;
-        }
+        .dashboard-layout { display: flex; min-height: 100vh; }
 
         .sidebar {
             width: 260px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             border-right: 1px solid rgba(255, 255, 255, 0.06);
             display: flex;
             flex-direction: column;
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             height: 100vh;
             z-index: 100;
-            transition: width 0.2s ease;
             overflow-y: auto;
             overflow-x: hidden;
         }
-        .sidebar.collapsed {
-            width: 64px;
-        }
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
 
         .sidebar-header {
             display: flex;
@@ -105,69 +72,17 @@
             padding: 20px 16px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
-        .sidebar-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            flex-shrink: 0;
-        }
-        .sidebar-title {
-            font-size: 16px;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            transition: opacity 0.2s;
-        }
-        .sidebar.collapsed .sidebar-title {
-            opacity: 0;
-            width: 0;
-        }
+        .sidebar-logo { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; }
+        .sidebar-title { font-size: 16px; font-weight: 700; }
 
-        .sidebar-collapse-btn {
-            position: absolute;
-            top: 24px;
-            right: -14px;
-            width: 28px;
-            height: 28px;
-            background: #1a1a2e;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: rgba(255, 255, 255, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.2s;
-            z-index: 10;
-        }
-        .sidebar-collapse-btn:hover {
-            background: #1f4dff;
-            color: #fff;
-            border-color: #1f4dff;
-        }
-
-        .sidebar-menu {
-            flex: 1;
-            padding: 12px 8px;
-        }
+        .sidebar-menu { flex: 1; padding: 12px 8px; }
         .menu-label {
-            font-size: 11px;
-            font-weight: 600;
+            font-size: 11px; font-weight: 600;
             color: rgba(255, 255, 255, 0.3);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             padding: 16px 12px 8px;
-            white-space: nowrap;
-            overflow: hidden;
         }
-        .sidebar.collapsed .menu-label {
-            opacity: 0;
-            height: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
         .menu-item {
             display: flex;
             align-items: center;
@@ -180,467 +95,362 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.15s;
-            white-space: nowrap;
-            position: relative;
             user-select: none;
         }
-        .menu-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.9);
-        }
-        .menu-item.active {
-            background: rgba(31, 77, 255, 0.12);
-            color: #5b8aff;
-        }
-        .menu-item-icon {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .menu-item-icon svg {
-            width: 18px;
-            height: 18px;
-        }
-        .menu-item-text {
-            flex: 1;
-            overflow: hidden;
-        }
-        .sidebar.collapsed .menu-item-text {
-            opacity: 0;
-            width: 0;
-        }
-        .menu-item-arrow {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.2s;
-            flex-shrink: 0;
-        }
-        .menu-item-arrow svg {
-            width: 16px;
-            height: 16px;
-        }
-        .menu-item.expanded .menu-item-arrow {
-            transform: rotate(90deg);
-        }
-        .sidebar.collapsed .menu-item-arrow {
-            opacity: 0;
-            width: 0;
-        }
+        .menu-item:hover { background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.9); }
+        .menu-item.active { background: rgba(31, 77, 255, 0.12); color: #5b8aff; }
+        .menu-item-icon { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .menu-item-icon svg { width: 18px; height: 18px; }
+        .menu-item-text { flex: 1; }
+        .menu-item-arrow { width: 16px; height: 16px; transition: transform 0.2s; flex-shrink: 0; }
+        .menu-item-arrow svg { width: 16px; height: 16px; }
+        .menu-item.expanded .menu-item-arrow { transform: rotate(90deg); }
 
-        .submenu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.25s ease;
-        }
-        .submenu.open {
-            max-height: 300px;
-        }
-        .submenu .menu-item {
-            padding-left: 42px;
-            font-size: 13px;
-        }
-        .submenu .submenu .menu-item {
-            padding-left: 62px;
-        }
+        .submenu { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
+        .submenu.open { max-height: 400px; }
+        .submenu .menu-item { padding-left: 42px; font-size: 13px; }
 
         .sidebar-footer {
-            padding: 16px;
+            padding: 12px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
         .sidebar-profile {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px;
+            padding: 10px;
             border-radius: 8px;
             cursor: pointer;
             transition: background 0.15s;
         }
-        .sidebar-profile:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
+        .sidebar-profile:hover { background: rgba(255, 255, 255, 0.05); }
         .avatar {
-            width: 36px;
-            height: 36px;
+            width: 36px; height: 36px;
             border-radius: 50%;
             background: rgba(31, 77, 255, 0.15);
             border: 2px solid rgba(31, 77, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
         }
-        .avatar svg {
-            width: 18px;
-            height: 18px;
-            color: #5b8aff;
-        }
-        .avatar-info {
-            overflow: hidden;
-        }
-        .avatar-name {
-            font-size: 13px;
-            font-weight: 600;
-            color: #fff;
-            white-space: nowrap;
-        }
-        .avatar-role {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.4);
-            white-space: nowrap;
-        }
-        .sidebar.collapsed .avatar-info {
-            opacity: 0;
-            width: 0;
-        }
+        .avatar svg { width: 18px; height: 18px; color: #5b8aff; }
+        .avatar-name { font-size: 13px; font-weight: 600; color: #fff; }
+        .avatar-role { font-size: 11px; color: rgba(255, 255, 255, 0.4); }
 
         .main-content {
             flex: 1;
             margin-left: 260px;
             padding: 32px;
-            transition: margin-left 0.2s ease;
             min-height: 100vh;
         }
-        .sidebar.collapsed ~ .main-content {
-            margin-left: 64px;
-        }
 
-        .page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 32px;
-        }
-        .page-title {
-            font-size: 24px;
-            font-weight: 700;
-        }
-        .page-subtitle {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 4px;
-        }
+        .page { display: none; }
+        .page.active { display: block; }
 
-        .alert {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            font-size: 14px;
-            border: 1px solid;
-            position: relative;
-        }
-        .alert-icon {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-        .alert-icon svg {
-            width: 20px;
-            height: 20px;
-        }
-        .alert-content {
-            flex: 1;
-        }
-        .alert-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        .alert-message {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.5;
-        }
-        .alert-close {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.4);
-            cursor: pointer;
-            font-size: 16px;
-            padding: 2px;
-            line-height: 1;
-            transition: color 0.2s;
-        }
-        .alert-close:hover {
-            color: rgba(255, 255, 255, 0.8);
-        }
-        .alert.hidden {
-            display: none;
-        }
-
-        .alert-success {
-            background: rgba(82, 196, 26, 0.08);
-            border-color: rgba(82, 196, 26, 0.2);
-        }
-        .alert-success .alert-icon { color: #52c41a; }
-        .alert-success .alert-title { color: #73d13d; }
-
-        .alert-info {
-            background: rgba(31, 77, 255, 0.08);
-            border-color: rgba(31, 77, 255, 0.2);
-        }
-        .alert-info .alert-icon { color: #1f4dff; }
-        .alert-info .alert-title { color: #5b8aff; }
-
-        .alert-warning {
-            background: rgba(250, 173, 20, 0.08);
-            border-color: rgba(250, 173, 20, 0.2);
-        }
-        .alert-warning .alert-icon { color: #faad14; }
-        .alert-warning .alert-title { color: #ffc53d; }
-
-        .alert-error {
-            background: rgba(255, 77, 79, 0.08);
-            border-color: rgba(255, 77, 79, 0.2);
-        }
-        .alert-error .alert-icon { color: #ff4d4f; }
-        .alert-error .alert-title { color: #ff7875; }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-        .stat-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
-            padding: 24px;
-            transition: border-color 0.2s;
-        }
-        .stat-card:hover {
-            border-color: rgba(255, 255, 255, 0.12);
-        }
-        .stat-title {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.45);
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-        .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            display: flex;
-            align-items: baseline;
-            gap: 4px;
-        }
-        .stat-value.positive { color: #5b8aff; }
-        .stat-value.negative { color: #ff4d4f; }
-        .stat-value.neutral { color: #fff; }
-        .stat-suffix {
-            font-size: 16px;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.45);
-        }
-        .stat-footer {
-            margin-top: 12px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.35);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .stat-trend-up { color: #52c41a; }
-        .stat-trend-down { color: #ff4d4f; }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 32px;
-        }
+        .page-header { margin-bottom: 32px; }
+        .page-title { font-size: 24px; font-weight: 700; }
+        .page-subtitle { font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-top: 4px; }
 
         .card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 12px;
-            overflow: hidden;
+            margin-bottom: 20px;
         }
         .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: flex; align-items: center; justify-content: space-between;
             padding: 20px 24px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
-        .card-title {
-            font-size: 16px;
-            font-weight: 600;
-        }
-        .card-body {
-            padding: 24px;
-        }
+        .card-title { font-size: 16px; font-weight: 600; }
+        .card-body { padding: 24px; }
 
-        .switch-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 0;
+        .policy-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
-        .switch-row:last-child {
-            border-bottom: none;
-        }
-        .switch-label {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        .switch-description {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.35);
-            margin-top: 2px;
-        }
+        .policy-item:last-child { border-bottom: none; }
+        .policy-info { flex: 1; }
+        .policy-name { font-size: 14px; font-weight: 500; color: rgba(255, 255, 255, 0.85); }
+        .policy-desc { font-size: 12px; color: rgba(255, 255, 255, 0.35); margin-top: 2px; line-height: 1.4; }
 
         .switch {
-            width: 40px;
-            height: 22px;
+            width: 40px; height: 22px;
             background: rgba(255, 255, 255, 0.15);
             border-radius: 11px;
             position: relative;
             cursor: pointer;
             transition: background 0.2s;
             flex-shrink: 0;
-            border: none;
-            padding: 0;
+            border: none; padding: 0;
         }
         .switch::after {
             content: '';
             position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 16px;
-            height: 16px;
+            top: 3px; left: 3px;
+            width: 16px; height: 16px;
             background: #fff;
             border-radius: 50%;
             transition: transform 0.2s;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
-        .switch.active {
-            background: #1f4dff;
-        }
-        .switch.active::after {
-            transform: translateX(18px);
-        }
+        .switch.active { background: #1f4dff; }
+        .switch.active::after { transform: translateX(18px); }
 
-        .input-number-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        .list-manager { margin-top: 16px; }
+        .list-tabs {
+            display: flex; gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
         }
-        .input-number-row:last-child {
-            border-bottom: none;
-        }
-        .input-number {
-            display: flex;
-            align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 6px;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.03);
-            transition: border-color 0.2s;
-        }
-        .input-number:focus-within {
-            border-color: #1f4dff;
-        }
-        .input-number.status-error {
-            border-color: #ff4d4f;
-        }
-        .input-number.status-warning {
-            border-color: #faad14;
-        }
-        .input-number input {
-            width: 70px;
-            padding: 6px 10px;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 14px;
-            font-family: inherit;
-            text-align: center;
-            outline: none;
-            -moz-appearance: textfield;
-        }
-        .input-number input::-webkit-outer-spin-button,
-        .input-number input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-        }
-        .input-number-controls {
-            display: flex;
-            flex-direction: column;
-            border-left: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .input-number-btn {
-            width: 24px;
-            height: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.4);
+        .list-tab {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.6);
             transition: all 0.15s;
         }
-        .input-number-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-        }
-        .input-number-btn:first-child {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
+        .list-tab:hover { border-color: rgba(255, 255, 255, 0.15); color: #fff; }
+        .list-tab.active { background: rgba(31, 77, 255, 0.12); border-color: rgba(31, 77, 255, 0.3); color: #5b8aff; }
 
-        .recent-activity {
-            list-style: none;
+        .list-content {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 16px;
+            min-height: 120px;
         }
-        .activity-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .activity-item:last-child {
-            border-bottom: none;
-        }
-        .activity-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-        .activity-dot.green { background: #52c41a; }
-        .activity-dot.blue { background: #1f4dff; }
-        .activity-dot.yellow { background: #faad14; }
-        .activity-dot.red { background: #ff4d4f; }
-        .activity-text {
-            flex: 1;
+        .list-entry {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            margin-bottom: 8px;
             font-size: 13px;
             color: rgba(255, 255, 255, 0.7);
         }
-        .activity-time {
-            font-size: 12px;
+        .list-entry:last-child { margin-bottom: 0; }
+        .list-entry-remove {
+            background: none; border: none;
             color: rgba(255, 255, 255, 0.3);
-            white-space: nowrap;
+            cursor: pointer; font-size: 16px;
+            padding: 0 4px;
+            transition: color 0.15s;
         }
+        .list-entry-remove:hover { color: #ff4d4f; }
+
+        .list-add-row {
+            display: flex; gap: 8px;
+            margin-top: 12px;
+        }
+        .list-input {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .list-input:focus { border-color: #1f4dff; }
+        .list-input::placeholder { color: rgba(255, 255, 255, 0.25); }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+        .btn-primary-sm { background: #1f4dff; color: #fff; }
+        .btn-primary-sm:hover { background: #1a44e0; }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .btn-outline:hover { border-color: rgba(255, 255, 255, 0.25); color: #fff; }
+        .btn-danger { background: rgba(255, 77, 79, 0.12); border: 1px solid rgba(255, 77, 79, 0.2); color: #ff7875; }
+        .btn-danger:hover { background: rgba(255, 77, 79, 0.2); }
+
+        .list-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .list-count { font-size: 12px; color: rgba(255, 255, 255, 0.3); }
+
+        .standing-card {
+            background: rgba(82, 196, 26, 0.06);
+            border: 1px solid rgba(82, 196, 26, 0.15);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .standing-card.warning {
+            background: rgba(250, 173, 20, 0.06);
+            border-color: rgba(250, 173, 20, 0.15);
+        }
+        .standing-card.bad {
+            background: rgba(255, 77, 79, 0.06);
+            border-color: rgba(255, 77, 79, 0.15);
+        }
+        .standing-icon {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .standing-icon.good { background: rgba(82, 196, 26, 0.15); color: #52c41a; }
+        .standing-icon.warning { background: rgba(250, 173, 20, 0.15); color: #faad14; }
+        .standing-icon.bad { background: rgba(255, 77, 79, 0.15); color: #ff4d4f; }
+        .standing-icon svg { width: 24px; height: 24px; }
+        .standing-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .standing-text { font-size: 13px; color: rgba(255, 255, 255, 0.5); line-height: 1.5; }
+
+        .connected-account {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .connected-account:last-child { margin-bottom: 0; }
+        .account-info { display: flex; align-items: center; gap: 12px; }
+        .account-icon {
+            width: 40px; height: 40px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .account-icon.discord { background: rgba(88, 101, 242, 0.15); color: #5865F2; }
+        .account-icon.roblox { background: rgba(255, 255, 255, 0.08); color: #fff; }
+        .account-icon svg { width: 20px; height: 20px; }
+        .account-name { font-size: 14px; font-weight: 500; }
+        .account-status { font-size: 12px; color: rgba(255, 255, 255, 0.35); margin-top: 2px; }
+        .account-status.connected { color: #52c41a; }
+
+        .violation-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .violation-table th {
+            text-align: left;
+            padding: 10px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .violation-table td {
+            padding: 12px 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .violation-table tr:last-child td { border-bottom: none; }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-green { background: rgba(82, 196, 26, 0.12); color: #52c41a; }
+        .badge-red { background: rgba(255, 77, 79, 0.12); color: #ff4d4f; }
+        .badge-yellow { background: rgba(250, 173, 20, 0.12); color: #faad14; }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .empty-state-icon { font-size: 32px; margin-bottom: 12px; opacity: 0.5; }
+        .empty-state-icon svg { width: 48px; height: 48px; }
+        .empty-state-text { font-size: 14px; }
+
+        .account-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+        }
+        .account-modal-overlay.open { display: flex; }
+        .account-modal {
+            width: 90%;
+            max-width: 420px;
+            background: rgba(18, 18, 24, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            animation: modalIn 0.25s ease;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95) translateY(8px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .account-modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .account-modal-title { font-size: 18px; font-weight: 700; }
+        .account-modal-close {
+            background: none; border: none;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer; font-size: 20px;
+            padding: 4px;
+        }
+        .account-modal-close:hover { color: #fff; }
+        .account-modal-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            transition: color 0.15s;
+        }
+        .account-modal-item:last-child { border-bottom: none; }
+        .account-modal-item:hover { color: #fff; }
+        .account-modal-item svg { width: 18px; height: 18px; flex-shrink: 0; color: rgba(255,255,255,0.4); }
+        .account-modal-item.danger { color: #ff7875; }
+        .account-modal-item.danger svg { color: #ff7875; }
+
+        .setting-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .setting-row:last-child { border-bottom: none; }
+        .setting-label { font-size: 14px; color: rgba(255, 255, 255, 0.8); }
+        .setting-desc { font-size: 12px; color: rgba(255, 255, 255, 0.35); margin-top: 2px; }
 
         .mobile-menu-btn {
             display: none;
             position: fixed;
-            top: 16px;
-            left: 16px;
+            top: 16px; left: 16px;
             z-index: 200;
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -649,11 +459,7 @@
             align-items: center;
             justify-content: center;
         }
-        .mobile-menu-btn svg {
-            width: 20px;
-            height: 20px;
-        }
-
+        .mobile-menu-btn svg { width: 20px; height: 20px; }
         .sidebar-overlay {
             display: none;
             position: fixed;
@@ -663,60 +469,18 @@
             z-index: 90;
         }
 
-        @media (max-width: 1024px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: flex;
-            }
-            .sidebar {
-                transform: translateX(-100%);
-                z-index: 150;
-            }
-            .sidebar.mobile-open {
-                transform: translateX(0);
-            }
-            .sidebar-overlay.active {
-                display: block;
-            }
-            .main-content {
-                margin-left: 0;
-                padding: 24px 16px;
-                padding-top: 72px;
-            }
-            .sidebar.collapsed ~ .main-content {
-                margin-left: 0;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+            .mobile-menu-btn { display: flex; }
+            .sidebar { transform: translateX(-100%); z-index: 150; }
+            .sidebar.mobile-open { transform: translateX(0); }
+            .sidebar-overlay.active { display: block; }
+            .main-content { margin-left: 0; padding: 24px 16px; padding-top: 72px; }
         }
     </style>
 </head>
 <body>
     <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner">
-            <svg viewBox="0 0 80 80">
-                <circle class="track" cx="40" cy="40" r="36"/>
-                <circle class="progress" id="loadingProgress" cx="40" cy="40" r="36"/>
-            </svg>
-            <span class="loading-percent" id="loadingPercent">0%</span>
-        </div>
+        <div class="spinner"></div>
         <div class="loading-text">Loading Dashboard...</div>
     </div>
 
@@ -731,78 +495,75 @@
                 <img src="rosecurelogo.png" alt="RoSecure" class="sidebar-logo">
                 <span class="sidebar-title">RoSecure</span>
             </div>
-            <button class="sidebar-collapse-btn" id="collapseBtn" aria-label="Toggle sidebar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
 
             <nav class="sidebar-menu">
                 <div class="menu-label">Overview</div>
-                <a class="menu-item active" href="#">
-                    <span class="menu-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
-                    <span class="menu-item-text">Dashboard</span>
-                </a>
-                <a class="menu-item" href="#">
-                    <span class="menu-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
-                    <span class="menu-item-text">Analytics</span>
-                </a>
-
-                <div class="menu-label">Systems</div>
-                <div class="menu-item" onclick="toggleSubmenu(this)">
+                <div class="menu-item active" data-page="account-standing">
                     <span class="menu-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-                    <span class="menu-item-text">Protection</span>
-                    <span class="menu-item-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></span>
-                </div>
-                <div class="submenu">
-                    <a class="menu-item" href="#">
-                        <span class="menu-item-text">Anti-Scam</span>
-                    </a>
-                    <a class="menu-item" href="#">
-                        <span class="menu-item-text">Threat Detection</span>
-                    </a>
-                    <a class="menu-item" href="#">
-                        <span class="menu-item-text">User Reports</span>
-                    </a>
+                    <span class="menu-item-text">Account Standing</span>
                 </div>
 
-                <div class="menu-item" onclick="toggleSubmenu(this)">
-                    <span class="menu-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-                    <span class="menu-item-text">Moderation</span>
+                <div class="menu-label">Policies</div>
+                <div class="menu-item has-submenu" data-toggle="filtering-menu">
+                    <span class="menu-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></span>
+                    <span class="menu-item-text">Filtering Policies</span>
                     <span class="menu-item-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></span>
                 </div>
-                <div class="submenu">
-                    <a class="menu-item" href="#">
-                        <span class="menu-item-text">Auto-Mod</span>
-                    </a>
-                    <a class="menu-item" href="#">
-                        <span class="menu-item-text">Ban Appeals</span>
-                    </a>
-                    <a class="menu-item" href="#">
-                        <span class="menu-item-text">Watchlist</span>
-                    </a>
+                <div class="submenu" id="filtering-menu">
+                    <div class="menu-item" data-page="filtering-general">
+                        <span class="menu-item-text">General Filtering</span>
+                    </div>
+                    <div class="menu-item" data-page="filtering-spam">
+                        <span class="menu-item-text">Spam &amp; Misleading Content</span>
+                    </div>
+                    <div class="menu-item" data-page="filtering-profanity">
+                        <span class="menu-item-text">Profanity &amp; Slurs</span>
+                    </div>
+                    <div class="menu-item" data-page="filtering-links">
+                        <span class="menu-item-text">Links &amp; URLs</span>
+                    </div>
+                    <div class="menu-item" data-page="filtering-phishing">
+                        <span class="menu-item-text">Phishing &amp; Scam Detection</span>
+                    </div>
                 </div>
 
-                <div class="menu-item" onclick="toggleSubmenu(this)">
+                <div class="menu-item has-submenu" data-toggle="safety-menu">
+                    <span class="menu-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+                    <span class="menu-item-text">Safety Policies</span>
+                    <span class="menu-item-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                </div>
+                <div class="submenu" id="safety-menu">
+                    <div class="menu-item" data-page="safety-general">
+                        <span class="menu-item-text">General Safety</span>
+                    </div>
+                    <div class="menu-item" data-page="safety-beacon">
+                        <span class="menu-item-text">Beacon (Crisis Prevention)</span>
+                    </div>
+                    <div class="menu-item" data-page="safety-predator">
+                        <span class="menu-item-text">Predator Detection</span>
+                    </div>
+                    <div class="menu-item" data-page="safety-harassment">
+                        <span class="menu-item-text">Harassment &amp; Bullying</span>
+                    </div>
+                </div>
+
+                <div class="menu-label">Lists</div>
+                <div class="menu-item" data-page="lists-manage">
+                    <span class="menu-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span>
+                    <span class="menu-item-text">Manage Lists</span>
+                </div>
+
+                <div class="menu-label">Account</div>
+                <div class="menu-item" data-page="account-settings">
                     <span class="menu-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
-                    <span class="menu-item-text">Configuration</span>
-                    <span class="menu-item-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                    <span class="menu-item-text">Account Settings</span>
                 </div>
-                <div class="submenu">
-                    <a class="menu-item" href="#">
-                        <span class="menu-item-text">General</span>
-                    </a>
-                    <a class="menu-item" href="#">
-                        <span class="menu-item-text">Notifications</span>
-                    </a>
-                    <a class="menu-item" href="#">
-                        <span class="menu-item-text">API Keys</span>
-                    </a>
+                <div class="menu-item" data-page="connected-accounts">
+                    <span class="menu-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+                    <span class="menu-item-text">Connected Accounts</span>
                 </div>
 
-                <div class="menu-label">Tools</div>
-                <a class="menu-item" href="#">
-                    <span class="menu-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
-                    <span class="menu-item-text">Audit Logs</span>
-                </a>
+                <div class="menu-label">Navigation</div>
                 <a class="menu-item" href="index.html">
                     <span class="menu-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
                     <span class="menu-item-text">Back to Site</span>
@@ -810,177 +571,589 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="sidebar-profile">
+                <div class="sidebar-profile" id="profileBtn">
                     <div class="avatar">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                     </div>
-                    <div class="avatar-info">
-                        <div class="avatar-name">Admin</div>
-                        <div class="avatar-role">Administrator</div>
+                    <div>
+                        <div class="avatar-name">User</div>
+                        <div class="avatar-role">Not signed in</div>
                     </div>
                 </div>
             </div>
         </aside>
 
         <main class="main-content">
-            <div class="page-header">
-                <div>
-                    <h1 class="page-title">Dashboard</h1>
-                    <p class="page-subtitle">Overview of RoSecure systems and metrics</p>
-                </div>
-            </div>
 
-            <div class="alert alert-info">
-                <span class="alert-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></span>
-                <div class="alert-content">
-                    <div class="alert-title">System Notice</div>
-                    <div class="alert-message">Dashboard is in preview mode. Some features may be limited.</div>
+            <!-- Account Standing Page -->
+            <div class="page active" id="page-account-standing">
+                <div class="page-header">
+                    <h1 class="page-title">Account Standing</h1>
+                    <p class="page-subtitle">View your standing across RoSecure, Roblox, and Discord platforms</p>
                 </div>
-                <button class="alert-close" onclick="this.closest('.alert').classList.add('hidden')">&times;</button>
-            </div>
 
-            <div class="alert alert-success">
-                <span class="alert-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span>
-                <div class="alert-content">
-                    <div class="alert-title">All Systems Operational</div>
-                    <div class="alert-message">All protection systems are running normally.</div>
+                <div class="standing-card">
+                    <div class="standing-icon good">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <div>
+                        <div class="standing-title">RoSecure Standing: Good</div>
+                        <div class="standing-text">Your account is in good standing with RoSecure. No active violations or restrictions.</div>
+                    </div>
                 </div>
-                <button class="alert-close" onclick="this.closest('.alert').classList.add('hidden')">&times;</button>
-            </div>
 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-title">Threats Blocked</div>
-                    <div class="stat-value positive">
-                        1,284
-                        <span class="stat-suffix">/ day</span>
-                    </div>
-                    <div class="stat-footer">
-                        <span class="stat-trend-up">&#9650; 12.5%</span> from last week
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">Active Users</div>
-                    <div class="stat-value neutral">
-                        8,462
-                    </div>
-                    <div class="stat-footer">
-                        <span class="stat-trend-up">&#9650; 4.2%</span> from last month
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">Scam Reports</div>
-                    <div class="stat-value negative">
-                        347
-                        <span class="stat-suffix">pending</span>
-                    </div>
-                    <div class="stat-footer">
-                        <span class="stat-trend-down">&#9660; 8.1%</span> from last week
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">Uptime</div>
-                    <div class="stat-value positive">
-                        99.9
-                        <span class="stat-suffix">%</span>
-                    </div>
-                    <div class="stat-footer">
-                        Last 30 days
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">System Controls</h3>
+                        <h3 class="card-title">Roblox Community Guidelines</h3>
                     </div>
                     <div class="card-body">
-                        <div class="switch-row">
-                            <div>
-                                <div class="switch-label">Anti-Scam Protection</div>
-                                <div class="switch-description">Automatically detect and block known scams</div>
-                            </div>
-                            <button class="switch active" onclick="this.classList.toggle('active')" aria-label="Toggle anti-scam protection"></button>
-                        </div>
-                        <div class="switch-row">
-                            <div>
-                                <div class="switch-label">Real-Time Monitoring</div>
-                                <div class="switch-description">Monitor community activity in real time</div>
-                            </div>
-                            <button class="switch active" onclick="this.classList.toggle('active')" aria-label="Toggle real-time monitoring"></button>
-                        </div>
-                        <div class="switch-row">
-                            <div>
-                                <div class="switch-label">Auto-Ban Repeat Offenders</div>
-                                <div class="switch-description">Automatically ban users with 3+ violations</div>
-                            </div>
-                            <button class="switch" onclick="this.classList.toggle('active')" aria-label="Toggle auto-ban"></button>
-                        </div>
-                        <div class="switch-row">
-                            <div>
-                                <div class="switch-label">Maintenance Mode</div>
-                                <div class="switch-description">Temporarily disable public access</div>
-                            </div>
-                            <button class="switch" onclick="this.classList.toggle('active')" aria-label="Toggle maintenance mode"></button>
+                        <div class="empty-state">
+                            <div class="empty-state-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                            <div class="empty-state-text">No violations of Roblox's Terms of Service or Community Guidelines on record.</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Status Configuration</h3>
+                        <h3 class="card-title">Discord Terms of Service</h3>
                     </div>
                     <div class="card-body">
-                        <div class="input-number-row">
-                            <div>
-                                <div class="switch-label">Max Warning Level</div>
-                                <div class="switch-description">Warnings before auto-action</div>
+                        <div class="empty-state">
+                            <div class="empty-state-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                            <div class="empty-state-text">No violations of Discord's Terms of Service or Community Guidelines on record.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Server Bans</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="empty-state">
+                            <div class="empty-state-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                            <div class="empty-state-text">You are not banned from any servers monitored by RoSecure.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Violation History</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="violation-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Platform</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: rgba(255,255,255,0.3); padding: 32px;">No violations on record.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtering: General -->
+            <div class="page" id="page-filtering-general">
+                <div class="page-header">
+                    <h1 class="page-title">General Filtering</h1>
+                    <p class="page-subtitle">Configure broad content filtering settings for your server</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Content Filter Settings</h3></div>
+                    <div class="card-body">
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Enable Content Filtering</div>
+                                <div class="policy-desc">Globally enable or disable all content filtering features</div>
                             </div>
-                            <div class="input-number">
-                                <input type="number" value="3" min="1" max="10">
-                                <div class="input-number-controls">
-                                    <button class="input-number-btn" onclick="stepInput(this, 1)">&#9650;</button>
-                                    <button class="input-number-btn" onclick="stepInput(this, -1)">&#9660;</button>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Filter Sensitivity Level</div>
+                                <div class="policy-desc">Higher sensitivity catches more content but may produce more false positives</div>
+                            </div>
+                            <select style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 6px 12px; color: #fff; font-size: 13px; font-family: inherit; outline: none; cursor: pointer;">
+                                <option value="low" style="background: #1a1a2e;">Low</option>
+                                <option value="medium" selected style="background: #1a1a2e;">Medium</option>
+                                <option value="high" style="background: #1a1a2e;">High</option>
+                                <option value="strict" style="background: #1a1a2e;">Strict</option>
+                            </select>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Log Filtered Content</div>
+                                <div class="policy-desc">Keep a record of all filtered messages in your audit log</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Notify Users on Filter</div>
+                                <div class="policy-desc">Send a DM to users when their message is filtered</div>
+                            </div>
+                            <button class="switch" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Exempt Server Moderators</div>
+                                <div class="policy-desc">Bypass filters for users with moderator roles</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtering: Spam -->
+            <div class="page" id="page-filtering-spam">
+                <div class="page-header">
+                    <h1 class="page-title">Spam &amp; Misleading Content</h1>
+                    <p class="page-subtitle">Control spam detection and misleading content prevention</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Spam Detection</h3></div>
+                    <div class="card-body">
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Anti-Spam Protection</div>
+                                <div class="policy-desc">Detect and remove spam messages, repeated content, and mass mentions</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Duplicate Message Detection</div>
+                                <div class="policy-desc">Flag or remove messages that are repeated multiple times in quick succession</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Mass Mention Prevention</div>
+                                <div class="policy-desc">Prevent users from mentioning large numbers of users or roles at once</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Misleading Content Detection</div>
+                                <div class="policy-desc">Identify content designed to mislead users, including fake giveaways and impersonation</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Invite Link Spam</div>
+                                <div class="policy-desc">Block unsolicited server invite links</div>
+                            </div>
+                            <button class="switch" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtering: Profanity -->
+            <div class="page" id="page-filtering-profanity">
+                <div class="page-header">
+                    <h1 class="page-title">Profanity &amp; Slurs</h1>
+                    <p class="page-subtitle">Manage language filtering and word-level controls</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Language Filter</h3></div>
+                    <div class="card-body">
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Profanity Filter</div>
+                                <div class="policy-desc">Automatically filter profane language from messages</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Slur Detection</div>
+                                <div class="policy-desc">Detect and remove racial, ethnic, and other discriminatory slurs</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Leet Speak Detection</div>
+                                <div class="policy-desc">Catch attempts to bypass filters using character substitutions (e.g., @ for a)</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Zero-Width Character Detection</div>
+                                <div class="policy-desc">Detect hidden characters used to bypass word filters</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtering: Links -->
+            <div class="page" id="page-filtering-links">
+                <div class="page-header">
+                    <h1 class="page-title">Links &amp; URLs</h1>
+                    <p class="page-subtitle">Control how links and URLs are handled in your server</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Link Controls</h3></div>
+                    <div class="card-body">
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Link Filtering</div>
+                                <div class="policy-desc">Enable filtering for links and URLs posted in messages</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Block Unknown Domains</div>
+                                <div class="policy-desc">Block links from domains not on your allowed list</div>
+                            </div>
+                            <button class="switch" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">URL Redirect Detection</div>
+                                <div class="policy-desc">Detect links that use redirects to hide their true destination</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">IP Logger Detection</div>
+                                <div class="policy-desc">Block known IP grabber and logger links</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtering: Phishing -->
+            <div class="page" id="page-filtering-phishing">
+                <div class="page-header">
+                    <h1 class="page-title">Phishing &amp; Scam Detection</h1>
+                    <p class="page-subtitle">Protect your community from phishing attempts and scams</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Phishing Protection</h3></div>
+                    <div class="card-body">
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Phishing Link Detection</div>
+                                <div class="policy-desc">Automatically detect and block known phishing URLs targeting Roblox and Discord users</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Fake Nitro Detection</div>
+                                <div class="policy-desc">Block fake Discord Nitro gift links and scam messages</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Robux Scam Detection</div>
+                                <div class="policy-desc">Detect and remove messages promoting fake free Robux generators or trades</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">QR Code Scam Warning</div>
+                                <div class="policy-desc">Warn users about QR codes that may be used for account theft</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Steam/Trade Scam Detection</div>
+                                <div class="policy-desc">Detect common trading and marketplace scam patterns</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safety: General -->
+            <div class="page" id="page-safety-general">
+                <div class="page-header">
+                    <h1 class="page-title">General Safety</h1>
+                    <p class="page-subtitle">Core safety features to protect your community members</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Safety Settings</h3></div>
+                    <div class="card-body">
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">User Verification</div>
+                                <div class="policy-desc">Require new members to verify their identity before accessing the server</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">New Account Detection</div>
+                                <div class="policy-desc">Flag accounts created within the last 7 days as potentially suspicious</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Alt Account Detection</div>
+                                <div class="policy-desc">Detect and flag suspected alt accounts entering your server</div>
+                            </div>
+                            <button class="switch" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Raid Protection</div>
+                                <div class="policy-desc">Automatically detect and respond to server raid attempts</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">NSFW Content Detection</div>
+                                <div class="policy-desc">Scan and block NSFW images and content in non-NSFW channels</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safety: Beacon -->
+            <div class="page" id="page-safety-beacon">
+                <div class="page-header">
+                    <h1 class="page-title">Beacon - Crisis Prevention</h1>
+                    <p class="page-subtitle">Suicide and self-harm prevention tools to protect vulnerable community members</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Beacon System</h3></div>
+                    <div class="card-body">
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Enable Beacon</div>
+                                <div class="policy-desc">Activate the Beacon crisis detection system to identify messages indicating self-harm or suicidal ideation</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Crisis Resource Response</div>
+                                <div class="policy-desc">Automatically provide crisis hotline numbers and resources (988 Lifeline, Crisis Text Line) when concerning messages are detected</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Staff Notification</div>
+                                <div class="policy-desc">Alert designated staff members when Beacon is triggered so they can follow up with the user</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Private Outreach</div>
+                                <div class="policy-desc">Send a private, supportive message to the user with resources rather than publicly flagging them</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safety: Predator -->
+            <div class="page" id="page-safety-predator">
+                <div class="page-header">
+                    <h1 class="page-title">Predator Detection</h1>
+                    <p class="page-subtitle">Identify and stop predatory behavior targeting minors</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Predator Detection Settings</h3></div>
+                    <div class="card-body">
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Grooming Pattern Detection</div>
+                                <div class="policy-desc">Monitor for language patterns commonly associated with grooming behavior</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Cross-Server Database Check</div>
+                                <div class="policy-desc">Check new members against the RoSecure known predator database</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Age-Inappropriate DM Detection</div>
+                                <div class="policy-desc">Detect attempts to solicit personal information or inappropriate content from minors</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Auto-Ban Known Predators</div>
+                                <div class="policy-desc">Automatically ban users found in the RoSecure predator database</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safety: Harassment -->
+            <div class="page" id="page-safety-harassment">
+                <div class="page-header">
+                    <h1 class="page-title">Harassment &amp; Bullying</h1>
+                    <p class="page-subtitle">Prevent targeted harassment and bullying within your community</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Harassment Prevention</h3></div>
+                    <div class="card-body">
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Harassment Detection</div>
+                                <div class="policy-desc">Detect patterns of targeted harassment against specific users</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Repeated Targeting Prevention</div>
+                                <div class="policy-desc">Flag when a user is repeatedly mentioned or targeted negatively</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Doxxing Prevention</div>
+                                <div class="policy-desc">Detect and remove messages containing personal information shared without consent</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="policy-item">
+                            <div class="policy-info">
+                                <div class="policy-name">Hate Speech Detection</div>
+                                <div class="policy-desc">Identify and remove messages promoting hatred against protected groups</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manage Lists -->
+            <div class="page" id="page-lists-manage">
+                <div class="page-header">
+                    <h1 class="page-title">Manage Lists</h1>
+                    <p class="page-subtitle">Create and manage allowed and blocked lists. You can create up to 20 custom lists or use RoSecure's pre-configured lists.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Your Lists</h3>
+                        <button class="btn btn-primary-sm" onclick="createNewList()">Create New List</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-tabs" id="listTabs">
+                            <div class="list-tab active" data-list="allowed">Allowed Domains</div>
+                            <div class="list-tab" data-list="blocked">Blocked Words</div>
+                            <div class="list-tab" data-list="rosecure-phishing">RoSecure: Phishing</div>
+                            <div class="list-tab" data-list="rosecure-scam">RoSecure: Scam Domains</div>
+                            <div class="list-tab" data-list="rosecure-slurs">RoSecure: Slurs</div>
+                        </div>
+
+                        <div id="list-allowed" class="list-panel">
+                            <div class="list-header">
+                                <span style="font-size: 13px; color: rgba(255,255,255,0.5);">Domains on this list will bypass link filtering</span>
+                                <span class="list-count">2 entries</span>
+                            </div>
+                            <div class="list-content">
+                                <div class="list-entry">
+                                    <span>discord.com</span>
+                                    <button class="list-entry-remove" onclick="this.closest('.list-entry').remove()">&times;</button>
+                                </div>
+                                <div class="list-entry">
+                                    <span>roblox.com</span>
+                                    <button class="list-entry-remove" onclick="this.closest('.list-entry').remove()">&times;</button>
+                                </div>
+                            </div>
+                            <div class="list-add-row">
+                                <input type="text" class="list-input" placeholder="Add a domain (e.g., example.com)">
+                                <button class="btn btn-primary-sm" onclick="addListEntry(this)">Add</button>
+                            </div>
+                        </div>
+
+                        <div id="list-blocked" class="list-panel" style="display:none;">
+                            <div class="list-header">
+                                <span style="font-size: 13px; color: rgba(255,255,255,0.5);">Words on this list will be filtered from messages</span>
+                                <span class="list-count">0 entries</span>
+                            </div>
+                            <div class="list-content">
+                                <div class="empty-state" style="padding: 24px;">
+                                    <div class="empty-state-text">No entries yet. Add words or phrases to filter.</div>
+                                </div>
+                            </div>
+                            <div class="list-add-row">
+                                <input type="text" class="list-input" placeholder="Add a word or phrase to block">
+                                <button class="btn btn-primary-sm" onclick="addListEntry(this)">Add</button>
+                            </div>
+                        </div>
+
+                        <div id="list-rosecure-phishing" class="list-panel" style="display:none;">
+                            <div class="list-header">
+                                <span style="font-size: 13px; color: rgba(255,255,255,0.5);">Maintained by RoSecure. Updated automatically.</span>
+                                <span class="badge badge-green">Active</span>
+                            </div>
+                            <div class="list-content">
+                                <div style="padding: 16px; text-align: center; color: rgba(255,255,255,0.4); font-size: 13px;">
+                                    This list is managed by RoSecure and contains known phishing domains. It is updated automatically and cannot be edited directly.
                                 </div>
                             </div>
                         </div>
-                        <div class="input-number-row">
-                            <div>
-                                <div class="switch-label">Scan Interval</div>
-                                <div class="switch-description">Minutes between scans</div>
+
+                        <div id="list-rosecure-scam" class="list-panel" style="display:none;">
+                            <div class="list-header">
+                                <span style="font-size: 13px; color: rgba(255,255,255,0.5);">Maintained by RoSecure. Updated automatically.</span>
+                                <span class="badge badge-green">Active</span>
                             </div>
-                            <div class="input-number">
-                                <input type="number" value="5" min="1" max="60">
-                                <div class="input-number-controls">
-                                    <button class="input-number-btn" onclick="stepInput(this, 1)">&#9650;</button>
-                                    <button class="input-number-btn" onclick="stepInput(this, -1)">&#9660;</button>
+                            <div class="list-content">
+                                <div style="padding: 16px; text-align: center; color: rgba(255,255,255,0.4); font-size: 13px;">
+                                    This list is managed by RoSecure and contains known scam domains. It is updated automatically and cannot be edited directly.
                                 </div>
                             </div>
                         </div>
-                        <div class="input-number-row">
-                            <div>
-                                <div class="switch-label">Alert Threshold</div>
-                                <div class="switch-description">Risk score to trigger alert</div>
+
+                        <div id="list-rosecure-slurs" class="list-panel" style="display:none;">
+                            <div class="list-header">
+                                <span style="font-size: 13px; color: rgba(255,255,255,0.5);">Maintained by RoSecure. Updated automatically.</span>
+                                <span class="badge badge-green">Active</span>
                             </div>
-                            <div class="input-number status-warning">
-                                <input type="number" value="75" min="0" max="100">
-                                <div class="input-number-controls">
-                                    <button class="input-number-btn" onclick="stepInput(this, 1)">&#9650;</button>
-                                    <button class="input-number-btn" onclick="stepInput(this, -1)">&#9660;</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-number-row">
-                            <div>
-                                <div class="switch-label">Ban Duration</div>
-                                <div class="switch-description">Days (0 = permanent)</div>
-                            </div>
-                            <div class="input-number status-error">
-                                <input type="number" value="0" min="0" max="365">
-                                <div class="input-number-controls">
-                                    <button class="input-number-btn" onclick="stepInput(this, 1)">&#9650;</button>
-                                    <button class="input-number-btn" onclick="stepInput(this, -1)">&#9660;</button>
+                            <div class="list-content">
+                                <div style="padding: 16px; text-align: center; color: rgba(255,255,255,0.4); font-size: 13px;">
+                                    This list is managed by RoSecure and contains known slurs and hate speech terms. It is updated automatically and cannot be edited directly.
                                 </div>
                             </div>
                         </div>
@@ -988,134 +1161,259 @@
                 </div>
             </div>
 
-            <div class="card" style="margin-bottom: 32px;">
-                <div class="card-header">
-                    <h3 class="card-title">Recent Activity</h3>
+            <!-- Account Settings -->
+            <div class="page" id="page-account-settings">
+                <div class="page-header">
+                    <h1 class="page-title">Account Settings</h1>
+                    <p class="page-subtitle">Manage your RoSecure account preferences</p>
                 </div>
-                <div class="card-body">
-                    <ul class="recent-activity">
-                        <li class="activity-item">
-                            <span class="activity-dot red"></span>
-                            <span class="activity-text">Scam link detected and blocked in Server #4821</span>
-                            <span class="activity-time">2 min ago</span>
-                        </li>
-                        <li class="activity-item">
-                            <span class="activity-dot green"></span>
-                            <span class="activity-text">User verification completed for @player_247</span>
-                            <span class="activity-time">8 min ago</span>
-                        </li>
-                        <li class="activity-item">
-                            <span class="activity-dot yellow"></span>
-                            <span class="activity-text">Suspicious activity flagged in Community Hub</span>
-                            <span class="activity-time">15 min ago</span>
-                        </li>
-                        <li class="activity-item">
-                            <span class="activity-dot blue"></span>
-                            <span class="activity-text">System scan completed - 0 threats found</span>
-                            <span class="activity-time">32 min ago</span>
-                        </li>
-                        <li class="activity-item">
-                            <span class="activity-dot green"></span>
-                            <span class="activity-text">Protection rules updated successfully</span>
-                            <span class="activity-time">1 hr ago</span>
-                        </li>
-                        <li class="activity-item">
-                            <span class="activity-dot red"></span>
-                            <span class="activity-text">Repeat offender auto-banned: user_9182</span>
-                            <span class="activity-time">2 hr ago</span>
-                        </li>
-                    </ul>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Preferences</h3></div>
+                    <div class="card-body">
+                        <div class="setting-row">
+                            <div>
+                                <div class="setting-label">Email Notifications</div>
+                                <div class="setting-desc">Receive email alerts for important account activity</div>
+                            </div>
+                            <button class="switch" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <div class="setting-label">Two-Factor Authentication</div>
+                                <div class="setting-desc">Add an extra layer of security to your account</div>
+                            </div>
+                            <button class="switch" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <div class="setting-label">Data Sharing</div>
+                                <div class="setting-desc">Allow RoSecure to share anonymized data to improve protection across servers</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <div class="setting-label">Activity Status</div>
+                                <div class="setting-desc">Show your online status to other users in your servers</div>
+                            </div>
+                            <button class="switch active" onclick="this.classList.toggle('active')"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Danger Zone</h3></div>
+                    <div class="card-body">
+                        <div class="setting-row">
+                            <div>
+                                <div class="setting-label" style="color: #ff7875;">Delete Account</div>
+                                <div class="setting-desc">Permanently delete your RoSecure account and all associated data</div>
+                            </div>
+                            <button class="btn btn-danger">Delete Account</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="alert alert-warning" style="margin-bottom: 16px;">
-                <span class="alert-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg></span>
-                <div class="alert-content">
-                    <div class="alert-title">Elevated Threat Level</div>
-                    <div class="alert-message">Increased scam activity detected across monitored servers. Additional monitoring is active.</div>
+            <!-- Connected Accounts -->
+            <div class="page" id="page-connected-accounts">
+                <div class="page-header">
+                    <h1 class="page-title">Connected Accounts</h1>
+                    <p class="page-subtitle">Manage your linked Discord and Roblox accounts</p>
                 </div>
-                <button class="alert-close" onclick="this.closest('.alert').classList.add('hidden')">&times;</button>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Linked Accounts</h3></div>
+                    <div class="card-body">
+                        <div class="connected-account">
+                            <div class="account-info">
+                                <div class="account-icon discord">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+                                </div>
+                                <div>
+                                    <div class="account-name">Discord</div>
+                                    <div class="account-status">Not connected</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary-sm">Connect</button>
+                        </div>
+                        <div class="connected-account">
+                            <div class="account-info">
+                                <div class="account-icon roblox">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.164 0L0 18.627 18.836 24 24 5.373z M14.806 15.834l-6.632-1.752 1.752-6.632 6.632 1.752z"/></svg>
+                                </div>
+                                <div>
+                                    <div class="account-name">Roblox</div>
+                                    <div class="account-status">Not connected</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary-sm">Connect</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="alert alert-error">
-                <span class="alert-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></span>
-                <div class="alert-content">
-                    <div class="alert-title">Action Required</div>
-                    <div class="alert-message">3 reports require manual review. Please check the moderation queue.</div>
-                </div>
-                <button class="alert-close" onclick="this.closest('.alert').classList.add('hidden')">&times;</button>
-            </div>
         </main>
     </div>
 
+    <!-- Account Quick Menu Modal -->
+    <div class="account-modal-overlay" id="accountModal" onclick="if(event.target===this)this.classList.remove('open')">
+        <div class="account-modal">
+            <div class="account-modal-header">
+                <h3 class="account-modal-title">Account</h3>
+                <button class="account-modal-close" onclick="document.getElementById('accountModal').classList.remove('open')">&times;</button>
+            </div>
+            <div class="account-modal-item" onclick="navigateTo('account-standing');document.getElementById('accountModal').classList.remove('open')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Account Standing
+            </div>
+            <div class="account-modal-item" onclick="navigateTo('account-settings');document.getElementById('accountModal').classList.remove('open')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Account Settings
+            </div>
+            <div class="account-modal-item" onclick="navigateTo('connected-accounts');document.getElementById('accountModal').classList.remove('open')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                Connected Accounts
+            </div>
+            <div class="account-modal-item danger" onclick="document.getElementById('accountModal').classList.remove('open')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Sign Out
+            </div>
+        </div>
+    </div>
+
     <script>
-        (function() {
-            const overlay = document.getElementById('loadingOverlay');
-            const progressCircle = document.getElementById('loadingProgress');
-            const percentText = document.getElementById('loadingPercent');
-            const circumference = 2 * Math.PI * 36;
-            let progress = 0;
+        // Loading screen
+        setTimeout(function() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }, 800);
 
-            function updateProgress() {
-                progress += Math.random() * 15 + 5;
-                if (progress > 100) progress = 100;
+        // Page navigation
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+            var target = document.getElementById('page-' + pageId);
+            if (target) target.classList.add('active');
 
-                const offset = circumference - (progress / 100) * circumference;
-                progressCircle.style.strokeDashoffset = offset;
-                percentText.textContent = Math.round(progress) + '%';
-
-                if (progress < 100) {
-                    setTimeout(updateProgress, 200 + Math.random() * 300);
-                } else {
-                    setTimeout(function() {
-                        overlay.classList.add('hidden');
-                    }, 400);
-                }
-            }
-
-            updateProgress();
-        })();
-
-        function toggleSubmenu(menuItem) {
-            const submenu = menuItem.nextElementSibling;
-            const isExpanded = menuItem.classList.contains('expanded');
-
-            document.querySelectorAll('.sidebar-menu .menu-item.expanded').forEach(function(item) {
-                item.classList.remove('expanded');
-                if (item.nextElementSibling && item.nextElementSibling.classList.contains('submenu')) {
-                    item.nextElementSibling.classList.remove('open');
+            document.querySelectorAll('.sidebar-menu .menu-item').forEach(function(item) {
+                item.classList.remove('active');
+                if (item.getAttribute('data-page') === pageId) {
+                    item.classList.add('active');
                 }
             });
 
-            if (!isExpanded) {
-                menuItem.classList.add('expanded');
-                submenu.classList.add('open');
-            }
+            // Close mobile menu
+            document.getElementById('sidebar').classList.remove('mobile-open');
+            document.getElementById('sidebarOverlay').classList.remove('active');
         }
 
-        document.getElementById('collapseBtn').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
+        // Menu click handlers
+        document.querySelectorAll('.menu-item[data-page]').forEach(function(item) {
+            item.addEventListener('click', function() {
+                navigateTo(this.getAttribute('data-page'));
+            });
         });
 
+        // Submenu toggles (accordion)
+        document.querySelectorAll('.menu-item[data-toggle]').forEach(function(item) {
+            item.addEventListener('click', function() {
+                var targetId = this.getAttribute('data-toggle');
+                var submenu = document.getElementById(targetId);
+                var isExpanded = this.classList.contains('expanded');
+
+                // Close all
+                document.querySelectorAll('.menu-item[data-toggle]').forEach(function(i) {
+                    i.classList.remove('expanded');
+                });
+                document.querySelectorAll('.submenu').forEach(function(s) {
+                    s.classList.remove('open');
+                });
+
+                if (!isExpanded) {
+                    this.classList.add('expanded');
+                    submenu.classList.add('open');
+                }
+            });
+        });
+
+        // Account modal
+        document.getElementById('profileBtn').addEventListener('click', function() {
+            document.getElementById('accountModal').classList.add('open');
+        });
+
+        // Mobile menu
         document.getElementById('mobileMenuBtn').addEventListener('click', function() {
             document.getElementById('sidebar').classList.add('mobile-open');
             document.getElementById('sidebarOverlay').classList.add('active');
         });
-
         document.getElementById('sidebarOverlay').addEventListener('click', function() {
             document.getElementById('sidebar').classList.remove('mobile-open');
             this.classList.remove('active');
         });
 
-        function stepInput(btn, direction) {
-            var input = btn.closest('.input-number').querySelector('input');
-            var val = parseInt(input.value) || 0;
-            var min = parseInt(input.min);
-            var max = parseInt(input.max);
-            val += direction;
-            if (!isNaN(min) && val < min) val = min;
-            if (!isNaN(max) && val > max) val = max;
-            input.value = val;
+        // List tab switching
+        document.querySelectorAll('.list-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.list-tab').forEach(function(t) { t.classList.remove('active'); });
+                this.classList.add('active');
+                document.querySelectorAll('.list-panel').forEach(function(p) { p.style.display = 'none'; });
+                var panel = document.getElementById('list-' + this.getAttribute('data-list'));
+                if (panel) panel.style.display = 'block';
+            });
+        });
+
+        // Add list entry
+        function addListEntry(btn) {
+            var row = btn.closest('.list-add-row');
+            var input = row.querySelector('.list-input');
+            var value = input.value.trim();
+            if (!value) return;
+
+            var listContent = row.previousElementSibling;
+            var empty = listContent.querySelector('.empty-state');
+            if (empty) empty.remove();
+
+            var entry = document.createElement('div');
+            entry.className = 'list-entry';
+            entry.innerHTML = '<span>' + value.replace(/</g, '&lt;') + '</span><button class="list-entry-remove" onclick="this.closest(\'.list-entry\').remove()">&times;</button>';
+            listContent.appendChild(entry);
+            input.value = '';
+        }
+
+        // Create new list
+        function createNewList() {
+            var tabs = document.querySelectorAll('.list-tab');
+            var customCount = 0;
+            tabs.forEach(function(t) {
+                if (!t.getAttribute('data-list').startsWith('rosecure-') && t.getAttribute('data-list') !== 'allowed' && t.getAttribute('data-list') !== 'blocked') {
+                    customCount++;
+                }
+            });
+            if (tabs.length >= 20) {
+                alert('You can create up to 20 lists maximum.');
+                return;
+            }
+            var name = prompt('Enter a name for your new list:');
+            if (!name) return;
+
+            var slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            var tabContainer = document.getElementById('listTabs');
+            var tab = document.createElement('div');
+            tab.className = 'list-tab';
+            tab.setAttribute('data-list', slug);
+            tab.textContent = name;
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.list-tab').forEach(function(t) { t.classList.remove('active'); });
+                this.classList.add('active');
+                document.querySelectorAll('.list-panel').forEach(function(p) { p.style.display = 'none'; });
+                var panel = document.getElementById('list-' + this.getAttribute('data-list'));
+                if (panel) panel.style.display = 'block';
+            });
+            tabContainer.appendChild(tab);
+
+            var panel = document.createElement('div');
+            panel.id = 'list-' + slug;
+            panel.className = 'list-panel';
+            panel.style.display = 'none';
+            panel.innerHTML = '<div class="list-header"><span style="font-size:13px;color:rgba(255,255,255,0.5);">Custom list: ' + name.replace(/</g, '&lt;') + '</span><span class="list-count">0 entries</span></div><div class="list-content"><div class="empty-state" style="padding:24px;"><div class="empty-state-text">No entries yet.</div></div></div><div class="list-add-row"><input type="text" class="list-input" placeholder="Add an entry"><button class="btn btn-primary-sm" onclick="addListEntry(this)">Add</button></div>';
+            tabContainer.parentNode.appendChild(panel);
         }
     </script>
 </body>

@@ -892,10 +892,17 @@
             <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4); text-align: center;">Check back soon for our official launch</p>
         </div>
     </div>
+    <div id="stagingBanner" style="display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: rgba(255, 180, 0, 0.95); color: #000; text-align: center; padding: 10px 20px; font-size: 13px; font-weight: 600; letter-spacing: 0.3px;">
+        &#9888;&#65039; This is a staging environment. This application is for authorized individuals only. Unauthorized access in violation of the Computer Fraud and Abuse Act may result in legal prosecution.
+    </div>
     <script>
         if (window.location.hostname === 'rosecure.org' || window.location.hostname === 'www.rosecure.org' || (!window.location.hostname.includes('staging') && !window.location.hostname.includes('localhost'))) {
             document.getElementById('maintenanceMode').style.display = 'flex';
             document.body.style.overflow = 'hidden';
+        }
+        if (window.location.hostname.includes('staging') || window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1') {
+            document.getElementById('stagingBanner').style.display = 'block';
+            document.body.style.paddingTop = '40px';
         }
     </script>
 </body>

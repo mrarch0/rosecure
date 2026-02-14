@@ -794,25 +794,13 @@
         </div>
     </div>
 
-    <div id="stagingWarning" style="display: none; position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 1001; background: rgba(255, 180, 0, 0.12); border: 1px solid rgba(255, 180, 0, 0.25); border-radius: 50px; padding: 8px 20px; backdrop-filter: blur(10px); font-size: 13px; color: rgba(255, 180, 0, 0.9); display: flex; align-items: center; gap: 12px;">
-        <span>Staging Environment</span>
-        <button onclick="closeStagingWarning()" style="background: none; border: none; color: rgba(255, 255, 255, 0.5); cursor: pointer; font-size: 16px; padding: 0; line-height: 1;">&times;</button>
+    <div id="stagingBanner" style="display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: rgba(255, 180, 0, 0.95); color: #000; text-align: center; padding: 10px 20px; font-size: 13px; font-weight: 600; letter-spacing: 0.3px;">
+        &#9888;&#65039; This is a staging environment. This application is for authorized individuals only. Unauthorized access in violation of the Computer Fraud and Abuse Act may result in legal prosecution.
     </div>
-
     <script>
-        function closeStagingWarning() {
-            const checkbox = document.getElementById('dontShowAgain');
-            if (checkbox && checkbox.checked) {
-                localStorage.setItem('hideStagingWarning', 'true');
-            }
-            document.getElementById('stagingWarning').style.display = 'none';
-        }
-
-        if (window.location.hostname === 'staging.rosecure.org' || window.location.hostname.includes('staging')) {
-            const hideWarning = localStorage.getItem('hideStagingWarning');
-            if (!hideWarning) {
-                document.getElementById('stagingWarning').style.display = 'flex';
-            }
+        if (window.location.hostname.includes('staging') || window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1') {
+            document.getElementById('stagingBanner').style.display = 'block';
+            document.body.style.paddingTop = '40px';
         }
     </script>
 
