@@ -910,13 +910,15 @@
         </div>
     </div>
     <script>
-        if (window.location.hostname === 'rosecure.org' || window.location.hostname === 'www.rosecure.org' || (!window.location.hostname.includes('staging') && !window.location.hostname.includes('localhost'))) {
-            document.getElementById('maintenanceMode').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        if (window.location.hostname.includes('staging') || window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1') {
-            document.getElementById('stagingModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+        if (window.location.protocol !== 'file:') {
+            if (window.location.hostname === 'rosecure.org' || window.location.hostname === 'www.rosecure.org' || (!window.location.hostname.includes('staging') && !window.location.hostname.includes('localhost'))) {
+                document.getElementById('maintenanceMode').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+            if (window.location.hostname.includes('staging') || window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1') {
+                document.getElementById('stagingModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
         }
     </script>
 </body>
