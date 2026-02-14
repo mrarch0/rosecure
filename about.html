@@ -201,6 +201,23 @@
             margin-bottom: 16px;
         }
         .content-text:last-child { margin-bottom: 0; }
+        .feature-list { list-style: none; }
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .feature-list li:last-child { margin-bottom: 0; }
+        .feature-list li svg {
+            width: 20px;
+            height: 20px;
+            color: rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
 
         /* Values Grid */
         .values-section {
@@ -689,24 +706,38 @@
     <section class="content-section">
         <div class="content-container animate-on-scroll animate-tilt-right">
             <div class="content-box">
-                <h2 class="content-title">Need help? <span class="muted">We're here.</span></h2>
+                <h2 class="content-title">Need support? <span class="muted">We've got you.</span></h2>
                 <p class="content-text">
-                    Whether you need to appeal a flag, report a threat, or just have a question, there are a few ways to reach us:
+                    Whether you have questions, need help with the bot, or want to report a threat, we're available through multiple channels.
                 </p>
-                <ul style="list-style: none; margin-top: 12px;">
-                    <li style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; font-size: 15px; color: rgba(255, 255, 255, 0.7);">
-                        <svg style="width: 20px; height: 20px; color: rgba(255, 255, 255, 0.4); flex-shrink: 0; margin-top: 2px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                        <span><strong style="color: #fff;">Live website chat</strong> — Click the chat widget in the bottom right corner of any page</span>
+                <ul class="feature-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Live chat right here on the website
                     </li>
-                    <li style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; font-size: 15px; color: rgba(255, 255, 255, 0.7);">
-                        <svg style="width: 20px; height: 20px; color: rgba(255, 255, 255, 0.4); flex-shrink: 0; margin-top: 2px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                        <span><strong style="color: #fff;">Email support</strong> — Reach us at <a href="mailto:hello@rosecure.org" style="color: #3b82f6; text-decoration: none;">hello@rosecure.org</a></span>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Email us at hello@rosecure.org
                     </li>
-                    <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255, 255, 255, 0.7);">
-                        <svg style="width: 20px; height: 20px; color: rgba(255, 255, 255, 0.4); flex-shrink: 0; margin-top: 2px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                        <span><strong style="color: #fff;">Discord tickets</strong> — Open a support ticket in our <a href="https://discord.gg/mbXQCEJS58" target="_blank" style="color: #3b82f6; text-decoration: none;">Discord server</a></span>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Discord ticketing support system
                     </li>
                 </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="content-container animate-on-scroll animate-tilt-left">
+            <div class="content-box">
+                <h2 class="content-title">Built for the long <span class="muted">run.</span></h2>
+                <p class="content-text">
+                    This isn't a side project we'll abandon in six months. We're committed to keeping RoSecure running, updated, and free for as long as communities need it. Every update, every new detection method, every improvement is driven by one thing: keeping people safe.
+                </p>
+                <p class="content-text">
+                    We publish annual transparency reports, hold ourselves accountable, and always put the community first. If we ever make a mistake, you'll hear about it from us before anyone else.
+                </p>
             </div>
         </div>
     </section>
