@@ -270,8 +270,8 @@
         .footer-container { max-width: 1200px; margin: 0 auto; }
         .footer-main {
             display: grid;
-            grid-template-columns: 280px repeat(4, 1fr);
-            gap: 48px;
+            grid-template-columns: 280px repeat(5, 1fr);
+            gap: 32px;
             margin-bottom: 48px;
         }
         .footer-brand { display: flex; align-items: center; gap: 12px; }
@@ -309,7 +309,7 @@
         .footer-tagline { font-size: 12px; color: rgba(255, 255, 255, 0.4); }
 
         @media (max-width: 1024px) {
-            .footer-main { grid-template-columns: repeat(2, 1fr); }
+            .footer-main { grid-template-columns: repeat(3, 1fr); }
         }
         /* Mobile Menu Toggle */
         .mobile-menu-btn {
@@ -640,7 +640,163 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
                 <div class="faq-answer">
-                    <p>DM us on Discord or shoot an email to hello@rosecure.org. We're always down to work with other groups that care about safety.</p>
+                    <p>DM us on Discord or shoot an email to <a href="mailto:hello@rosecure.org">hello@rosecure.org</a>. We're always down to work with other groups that care about safety.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Are there other safety servers you recommend?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Yeah! Even though we're not partnered with them, we think <a href="https://discord.gg/e2jtwmFAzX" target="_blank">Rotector</a> and <a href="https://discord.gg/rD4mP39GpX" target="_blank">AEPE</a> are doing solid work in the safety space. Worth checking out if you care about online safety.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-group animate-on-scroll animate-tilt-right delay-4">
+            <h3 class="faq-group-title">Data & Privacy</h3>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>What data does RoSecure collect?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Only what we need to keep people safe. That includes public user IDs, server IDs, and any reports or evidence submitted. We don't collect passwords, DMs, or anything private. Check our <a href="privacy.html">Privacy Policy</a> for the full breakdown.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can I request my data be deleted?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. Email us at <a href="mailto:hello@rosecure.org">hello@rosecure.org</a> with your request. Note that if you have an active flag for serious offenses, we may need to retain certain records for safety purposes.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Does RoSecure sell user data?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Absolutely not. We don't sell, trade, or share your data with anyone for commercial purposes. The only data sharing we do is threat intelligence with our safety partners, and that's strictly to protect people.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Do I need to be 13+ to use RoSecure?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. In line with Discord's Terms of Service and COPPA regulations, you must be at least 13 years old to use RoSecure's services directly. Server owners using our bot are responsible for ensuring their community complies with age requirements.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-group animate-on-scroll animate-tilt-left delay-4">
+            <h3 class="faq-group-title">Safety Tips</h3>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>How can I protect myself from scammers on Roblox?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Never share your password or login info. Don't click random links people send you. If something sounds too good to be true (free Robux, rare items), it's a scam. And make sure your account has 2-step verification enabled.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>What should I do if someone is being inappropriate?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Block them immediately. Take screenshots of the conversation. Report them to the platform (Discord or Roblox) and submit a report to us through our Discord server. If it involves a minor and feels dangerous, tell a trusted adult and consider reporting to NCMEC at CyberTipline.org.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>How do I report someone to RoSecure?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Join our <a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord server</a> and open a support ticket. Provide the user's ID, what they did, and any evidence you have (screenshots, links, etc). Our moderation team will review it.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-group animate-on-scroll animate-tilt-right delay-4">
+            <h3 class="faq-group-title">Technical</h3>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>What permissions does the bot need?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>The bot needs basic permissions like reading messages, sending messages, and managing roles. We don't ask for admin because we don't need it. Only the permissions required for safety features.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Is RoSecure open source?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Parts of our code are available on <a href="https://github.com/mrarch0" target="_blank">GitHub</a>. Our core detection systems aren't open source though, because bad actors could use that info to bypass our checks.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Is there an API I can use?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>We're working on a public API for developers who want to integrate RoSecure checks into their own tools. Check our <a href="docs.html">Documentation</a> page for updates on that.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-group animate-on-scroll animate-tilt-left delay-4">
+            <h3 class="faq-group-title">Getting Support</h3>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>What's the best way to contact support?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>You've got three options: use the <strong>live chat widget</strong> on the bottom right of any page for quick help, email us at <a href="mailto:hello@rosecure.org">hello@rosecure.org</a> for detailed inquiries, or open a <strong>support ticket</strong> in our <a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord server</a> for the fastest response.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>How fast do you respond to support requests?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Discord tickets usually get a response within a few hours. Email might take up to 48 hours depending on volume. For urgent safety concerns, Discord is always the fastest way to reach us.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can I suggest features or improvements?</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Definitely! We love hearing from the community. Drop your ideas in our Discord server or email them to us. Some of our best features came from user suggestions.</p>
                 </div>
             </div>
         </div>
@@ -648,14 +804,14 @@
 
     <section class="cta-section animate-on-scroll animate-tilt-up delay-4">
         <h2 class="cta-title">Still have questions?</h2>
-        <p class="cta-text">Drop by our Discord and we'll help you out.</p>
+        <p class="cta-text">Use the live chat widget, email us at hello@rosecure.org, or open a ticket on Discord.</p>
         <div class="cta-buttons">
-            <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="btn-primary">Join Discord</a>
-            <a href="mailto:hello@rosecure.org" class="btn-secondary">Email Support</a>
+            <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="btn-primary">Discord Support</a>
+            <a href="mailto:hello@rosecure.org" class="btn-secondary">Email Us</a>
         </div>
     </section>
 
-    <footer class="footer">
+        <footer class="footer">
         <div class="footer-container">
             <div class="footer-main">
                 <div class="footer-brand">
@@ -667,6 +823,7 @@
                     <ul>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="volunteer.html">Volunteer</a></li>
+                        <li><a href="donate.html">Donate</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -675,22 +832,29 @@
                         <li><a href="faq.html">FAQ</a></li>
                         <li><a href="moderation.html">Moderation</a></li>
                         <li><a href="transparency.html">Transparency</a></li>
-                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="docs.html">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord Tickets</a></li>
+                        <li><a href="mailto:hello@rosecure.org">Email Support</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h4>Community</h4>
                     <ul>
                         <li><a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord Server</a></li>
+                        <li><a href="https://rosecurestatus.betteruptime.com/" target="_blank">System Status</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h4>Legal & Status</h4>
+                    <h4>Legal</h4>
                     <ul>
                         <li><a href="privacy.html">Privacy Policy</a></li>
                         <li><a href="terms.html">Terms of Service</a></li>
                         <li><a href="eula.html">EULA</a></li>
-                        <li><a href="https://rosecurestatus.betteruptime.com/" target="_blank">System Status</a></li>
                     </ul>
                 </div>
             </div>
