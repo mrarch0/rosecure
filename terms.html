@@ -517,8 +517,22 @@
             <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4); text-align: center;">Check back soon for our official launch</p>
         </div>
     </div>
-    <div id="stagingBanner" style="display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: rgba(255, 180, 0, 0.95); color: #000; text-align: center; padding: 10px 20px; font-size: 13px; font-weight: 600; letter-spacing: 0.3px;">
-        &#9888;&#65039; This is a staging environment. This application is for authorized individuals only. Unauthorized access in violation of the Computer Fraud and Abuse Act may result in legal prosecution.
+    <div class="modal-overlay" id="stagingModal" style="display: none; background: rgba(0, 0, 0, 0.95);">
+        <div class="modal" style="max-width: 520px;">
+            <div class="modal-icon">&#9888;&#65039;</div>
+            <h2 class="modal-title">Restricted Access</h2>
+            <p style="font-size: 11px; font-weight: 600; color: rgba(255, 180, 0, 0.9); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Authorized Personnel Only</p>
+            <p class="modal-text" style="font-size: 13px; text-align: left;">
+                This is a private staging environment intended solely for authorized developers, testers, and personnel of RoSecure Technologies. All access is monitored, logged, and subject to audit.
+            </p>
+            <p class="modal-text" style="font-size: 12px; text-align: left; color: rgba(255, 255, 255, 0.35);">
+                <strong style="color: rgba(255, 255, 255, 0.5);">LEGAL NOTICE:</strong> Unauthorized access to this system is prohibited and constitutes a criminal offense under the Computer Fraud and Abuse Act (18 U.S.C. &sect; 1030), the Computer Misuse Act 1990, and all applicable federal, state, and international computer crime statutes. Violators will be prosecuted to the fullest extent of the law and may be subject to civil liability, criminal penalties, and substantial monetary damages.
+            </p>
+            <p class="modal-text" style="font-size: 12px; text-align: left; color: rgba(255, 255, 255, 0.35);">
+                By proceeding, you acknowledge that you are an authorized individual and consent to monitoring and recording of all activity on this system.
+            </p>
+            <button class="modal-close" onclick="document.getElementById('stagingModal').style.display='none';document.body.style.overflow='auto'" style="width: 100%; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12); padding: 12px 24px;">I Am Authorized &mdash; Continue</button>
+        </div>
     </div>
     <script>
         if (window.location.hostname === 'rosecure.org' || window.location.hostname === 'www.rosecure.org' || (!window.location.hostname.includes('staging') && !window.location.hostname.includes('localhost'))) {
@@ -526,8 +540,8 @@
             document.body.style.overflow = 'hidden';
         }
         if (window.location.hostname.includes('staging') || window.location.hostname.includes('localhost') || window.location.hostname === '127.0.0.1') {
-            document.getElementById('stagingBanner').style.display = 'block';
-            document.body.style.paddingTop = '40px';
+            document.getElementById('stagingModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
     </script>
 </body>
