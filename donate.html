@@ -119,6 +119,73 @@
         }
         .donate-btn:hover { background: rgba(255, 255, 255, 0.85); }
 
+        .donate-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            text-align: left;
+        }
+        .donate-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 28px 24px;
+            transition: all 0.3s;
+        }
+        .donate-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        .donate-card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 22px;
+        }
+        .donate-card-icon.discord { background: rgba(88, 101, 242, 0.15); color: #5865F2; }
+        .donate-card-icon.robux { background: rgba(0, 180, 80, 0.15); color: #00b450; }
+        .donate-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .donate-card p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+        .donate-card-btn {
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .donate-card-btn.discord {
+            background: rgba(88, 101, 242, 0.15);
+            color: #7289da;
+            border: 1px solid rgba(88, 101, 242, 0.25);
+        }
+        .donate-card-btn.discord:hover { background: rgba(88, 101, 242, 0.25); }
+        .donate-card-btn.robux {
+            background: rgba(0, 180, 80, 0.15);
+            color: #00d45a;
+            border: 1px solid rgba(0, 180, 80, 0.25);
+        }
+        .donate-card-btn.robux:hover { background: rgba(0, 180, 80, 0.25); }
+
         .footer {
             padding: 80px 48px 40px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -263,16 +330,33 @@
         <a href="https://github.com/mrarch0" target="_blank" rel="noopener noreferrer">GitHub</a>
     </nav>
 
-    <main class="main">
+    <main class="main" style="max-width: 900px;">
         <h1 class="title">Support RoSecure</h1>
         <p class="message">
             RoSecure is completely free and always will be for the community. We don't charge for anything, and that's not going to change.
             <br><br>
             That said, running everything does cost money. If you want to help out, donations go straight toward hosting, development, and keeping the lights on. You won't get any special perks or benefits for donating, your money just helps us keep doing what we do.
             <br><br>
-            You can make a one-time donation through our Discord store. Even a small amount goes a long way, we really do appreciate it.
+            Even a small amount goes a long way, we really do appreciate it. Choose a method below to donate.
         </p>
-        <a href="https://discord.com/application-directory/1457385555103977502/store" target="_blank" rel="noopener noreferrer" class="donate-btn">Donate Now</a>
+        <div class="donate-methods">
+            <div class="donate-card">
+                <div class="donate-card-icon discord">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.947 2.418-2.157 2.418z"/></svg>
+                </div>
+                <h3>Discord Donations</h3>
+                <p>Donate through our Discord bot store. Quick and easy, directly supports our servers and development.</p>
+                <a href="https://discord.com/application-directory/1457385555103977502/store" target="_blank" rel="noopener noreferrer" class="donate-card-btn discord">Donate via Discord</a>
+            </div>
+            <div class="donate-card">
+                <div class="donate-card-icon robux">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M5.5 2h13l3.5 3.5v13L18.5 22h-13L2 18.5v-13L5.5 2zm1.06 2L4 6.56v10.88L6.56 20h10.88L20 17.44V6.56L17.44 4H6.56zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>
+                </div>
+                <h3>Robux Donations</h3>
+                <p>Support us through Roblox! Purchase our gamepasses or donate Robux directly to help fund our mission.</p>
+                <a href="https://www.roblox.com/games/134863935772498/RoSecure-Donations" target="_blank" rel="noopener noreferrer" class="donate-card-btn robux">Donate via Robux</a>
+            </div>
+        </div>
     </main>
 
     <div class="modal-overlay" id="constructionModal" onclick="if(event.target===this)this.classList.remove('open')">
