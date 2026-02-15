@@ -81,13 +81,13 @@
 
         /* Hero */
         .hero {
-            min-height: 50vh;
+            min-height: 70vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 160px 32px 80px;
+            padding: 160px 32px 100px;
             position: relative;
             overflow: hidden;
         }
@@ -100,21 +100,30 @@
             filter: blur(80px);
             pointer-events: none;
         }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -100px; right: -200px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(60, 120, 180, 0.15) 0%, transparent 60%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
         .hero-content { position: relative; z-index: 1; }
         .hero-title {
-            font-size: 42px;
-            font-weight: 700;
-            line-height: 1.15;
-            letter-spacing: -1.5px;
-            margin-bottom: 20px;
-            max-width: 600px;
+            font-size: 44px;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+            max-width: 700px;
             color: #fff;
         }
         .hero-description {
-            font-size: 17px;
+            font-size: 16px;
             line-height: 1.8;
             color: #fff;
-            max-width: 520px;
+            max-width: 550px;
             margin: 0 auto;
         }
 
@@ -204,34 +213,23 @@
             line-height: 1.6;
         }
 
-        /* Roles Grid */
-        .roles-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+        /* Impact Banner */
+        .impact-banner {
+            text-align: center;
+            padding: 80px 48px;
         }
-        .role-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            padding: 32px 28px;
-            transition: all 0.3s ease;
-        }
-        .role-card:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-4px);
-        }
-        .role-card h3 {
-            font-size: 16px;
+        .impact-text {
+            font-size: 28px;
             font-weight: 600;
             color: #fff;
-            margin-bottom: 8px;
+            max-width: 600px;
+            margin: 0 auto 12px;
+            line-height: 1.4;
+            letter-spacing: -0.5px;
         }
-        .role-card p {
-            font-size: 14px;
+        .impact-sub {
+            font-size: 16px;
             color: #fff;
-            line-height: 1.7;
         }
 
         /* CTA Section */
@@ -302,13 +300,29 @@
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
+
+        /* Enhanced animations */
+        @keyframes subtleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(100, 60, 180, 0); }
+            50% { box-shadow: 0 0 40px rgba(100, 60, 180, 0.15); }
+        }
+        .learn-box:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        .hero-content { animation: subtleFloat 6s ease-in-out infinite; }
         @media (max-width: 768px) {
-            .hero { padding: 120px 20px 60px; }
-            .hero-title { font-size: 30px; }
+            .hero { padding: 140px 20px 80px; }
+            .hero-title { font-size: 36px; }
             .content-section { padding: 60px 20px; }
             .cta-section { padding: 80px 20px; }
-            .roles-grid { grid-template-columns: 1fr; }
             .learn-box { padding: 28px 24px; }
+            .impact-banner { padding: 48px 20px; }
+            .impact-text { font-size: 22px; }
         }
 
         .footer {
@@ -548,29 +562,9 @@
     </section>
 
     <section class="content-section">
-        <div class="content-container">
-            <div class="section-header animate-on-scroll animate-from-bottom">
-                <h2 class="section-title">Open Roles</h2>
-                <p class="section-subtitle">Pick what fits your skills. We need help across the board.</p>
-            </div>
-            <div class="roles-grid">
-                <div class="role-card animate-on-scroll animate-tilt-left delay-1">
-                    <h3>Community Moderator</h3>
-                    <p>Moderate our Discord server, respond to reports, and keep the community safe and welcoming.</p>
-                </div>
-                <div class="role-card animate-on-scroll animate-tilt-right delay-2">
-                    <h3>Report Reviewer</h3>
-                    <p>Review incoming scam and threat reports, verify evidence, and update our safety databases.</p>
-                </div>
-                <div class="role-card animate-on-scroll animate-tilt-left delay-3">
-                    <h3>Developer</h3>
-                    <p>Contribute to our tools, bots, website, or API. We work with JavaScript, Python, and Discord/Roblox APIs.</p>
-                </div>
-                <div class="role-card animate-on-scroll animate-tilt-right delay-4">
-                    <h3>Content & Outreach</h3>
-                    <p>Write safety guides, create educational content, and spread awareness about online threats.</p>
-                </div>
-            </div>
+        <div class="impact-banner animate-on-scroll animate-from-bottom">
+            <h2 class="impact-text">When you work here, you make a difference in every way possible.</h2>
+            <p class="impact-sub">Join us.</p>
         </div>
     </section>
 

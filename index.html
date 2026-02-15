@@ -179,6 +179,20 @@
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
 
+        /* Enhanced animations */
+        @keyframes subtleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(100, 60, 180, 0); }
+            50% { box-shadow: 0 0 40px rgba(100, 60, 180, 0.15); }
+        }
+        .feature-box:hover {
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        .hero-content { animation: subtleFloat 6s ease-in-out infinite; }
+
         /* Feature box enhanced 3D hover */
         .feature-box {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
@@ -1073,6 +1087,41 @@
             <a href="https://discord.com/oauth2/authorize?client_id=1457385555103977502" target="_blank" class="btn-secondary">
                 Get Started
             </a>
+        </div>
+    </section>
+
+    <section class="feature-section">
+        <div class="feature-container">
+            <div style="text-align: center; margin-bottom: 60px;" class="animate-on-scroll animate-from-bottom">
+                <h2 class="feature-title" style="font-size: 36px; text-align: center; max-width: 600px; margin: 0 auto 16px;">Powered by 15 detection factors.</h2>
+                <p style="font-size: 16px; color: #fff; max-width: 550px; margin: 0 auto;">Our moderation system analyzes every user across 15 different factors to catch threats before they cause harm.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 900px; margin: 0 auto;">
+                <div style="background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 28px 24px; text-align: center; transition: all 0.3s ease;" class="animate-on-scroll animate-from-bottom delay-1">
+                    <div style="width: 52px; height: 52px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); border-radius: 14px; border: 1px solid rgba(255,255,255,0.1);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.85)" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" /></svg>
+                    </div>
+                    <h3 style="font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 8px;">Keyword Analysis</h3>
+                    <p style="font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6;">Pattern matching against known harmful terms</p>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 28px 24px; text-align: center; transition: all 0.3s ease;" class="animate-on-scroll animate-from-bottom delay-2">
+                    <div style="width: 52px; height: 52px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); border-radius: 14px; border: 1px solid rgba(255,255,255,0.1);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.85)" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                    </div>
+                    <h3 style="font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 8px;">User History</h3>
+                    <p style="font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6;">Past behavior patterns and violations</p>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 28px 24px; text-align: center; transition: all 0.3s ease;" class="animate-on-scroll animate-from-bottom delay-3">
+                    <div style="width: 52px; height: 52px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); border-radius: 14px; border: 1px solid rgba(255,255,255,0.1);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.85)" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
+                    </div>
+                    <h3 style="font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 8px;">Hash Matching</h3>
+                    <p style="font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6;">Known harmful content hash detection</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;" class="animate-on-scroll animate-from-bottom">
+                <a href="moderation.html" class="btn-secondary" style="font-size: 13px; padding: 12px 24px;">See All 15 Factors</a>
+            </div>
         </div>
     </section>
 

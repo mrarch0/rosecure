@@ -109,9 +109,27 @@
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
 
+        /* Enhanced animations */
+        @keyframes subtleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(100, 60, 180, 0); }
+            50% { box-shadow: 0 0 40px rgba(100, 60, 180, 0.15); }
+        }
+        .learn-box:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        .factor-card:hover {
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        .hero-content { animation: subtleFloat 6s ease-in-out infinite; }
+
         /* Hero Section */
         .hero {
-            min-height: 60vh;
+            min-height: 70vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -166,10 +184,10 @@
             50% { opacity: 0.4; }
         }
         .hero-title {
-            font-size: 48px;
-            font-weight: 700;
-            line-height: 1.15;
-            letter-spacing: -1.5px;
+            font-size: 44px;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -1px;
             margin-bottom: 24px;
             max-width: 700px;
             color: #fff;
@@ -827,7 +845,7 @@
     <section class="content-section">
         <div class="section-header animate-on-scroll animate-from-bottom">
             <h2 class="section-title">Content Classification</h2>
-            <p class="section-subtitle">Our systems categorize content into three levels based on violation severity and evidence clarity.</p>
+            <p class="section-subtitle">Our systems categorize content into four levels based on violation severity and evidence clarity.</p>
         </div>
         <div class="classification-grid">
             <div class="class-card green animate-on-scroll animate-tilt-left delay-1">
