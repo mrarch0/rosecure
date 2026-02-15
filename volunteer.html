@@ -195,10 +195,20 @@
         }
         .learn-list li:last-child { border-bottom: none; }
         .learn-list-icon {
-            width: 24px;
-            height: 24px;
+            width: 52px;
+            height: 52px;
             flex-shrink: 0;
-            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .learn-list-icon svg {
+            width: 26px;
+            height: 26px;
+            color: rgba(255, 255, 255, 0.85);
         }
         .learn-list-content { flex: 1; }
         .learn-list-title {
@@ -321,6 +331,8 @@
             .content-section { padding: 60px 20px; }
             .cta-section { padding: 80px 20px; }
             .learn-box { padding: 28px 24px; }
+            .learn-list-icon { width: 44px; height: 44px; border-radius: 12px; }
+            .learn-list-icon svg { width: 22px; height: 22px; }
             .impact-banner { padding: 48px 20px; }
             .impact-text { font-size: 22px; }
         }
@@ -422,8 +434,6 @@
             .header { gap: 12px; padding: 10px 16px; justify-content: space-between; }
             .nav { display: none; }
             .mobile-menu-btn { display: flex; }
-            .main { padding: 120px 20px 60px; }
-            .title { font-size: 26px; }
             .footer { padding: 60px 20px 30px; }
             .footer-main { grid-template-columns: 1fr; gap: 32px; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
