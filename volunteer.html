@@ -79,42 +79,196 @@
         }
         .github-btn:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
 
-        .main {
-            flex: 1;
+        /* Hero */
+        .hero {
+            min-height: 50vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 140px 32px 80px;
+            padding: 160px 32px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px; left: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(100, 60, 180, 0.2) 0%, transparent 60%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-title {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+            max-width: 600px;
+            color: #fff;
+        }
+        .hero-description {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #fff;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 100px 48px;
+            position: relative;
+        }
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        }
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        .section-subtitle {
+            font-size: 16px;
+            color: #fff;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        .title {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: #fff;
-        }
-
-        .message {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.8;
+        /* Learn Box (card style from moderation) */
+        .learn-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px 44px;
             margin-bottom: 32px;
         }
-
-        .link {
-            color: #6366f1;
-            text-decoration: none;
+        .learn-box:last-child { margin-bottom: 0; }
+        .learn-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 20px;
         }
-        .link:hover { text-decoration: underline; }
+        .learn-text {
+            font-size: 15px;
+            color: #fff;
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+        .learn-list {
+            list-style: none;
+            margin-top: 24px;
+        }
+        .learn-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .learn-list li:last-child { border-bottom: none; }
+        .learn-list-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            color: #fff;
+        }
+        .learn-list-content { flex: 1; }
+        .learn-list-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .learn-list-desc {
+            font-size: 14px;
+            color: #fff;
+            line-height: 1.6;
+        }
 
+        /* Roles Grid */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .role-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: all 0.3s ease;
+        }
+        .role-card:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+        }
+        .role-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .role-card p {
+            font-size: 14px;
+            color: #fff;
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        }
+        .cta-content { position: relative; z-index: 1; }
+        .cta-title {
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        .cta-text {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 32px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
         .apply-btn {
             display: inline-block;
-            padding: 12px 28px;
+            padding: 14px 28px;
             background: #fff;
+            border: 1px solid #fff;
             border-radius: 50px;
             color: #0d0d12;
             font-size: 14px;
@@ -124,110 +278,37 @@
         }
         .apply-btn:hover { background: rgba(255, 255, 255, 0.85); }
 
-        .content-section {
-            padding: 80px 48px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .content-box {
-            max-width: 720px;
-            margin: 0 auto;
-        }
-        .content-box h2 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .content-box h2 .muted {
-            color: rgba(255, 255, 255, 0.4);
-        }
-        .content-box .section-desc {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.5);
-            line-height: 1.8;
-            margin-bottom: 32px;
-        }
-        .feature-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .feature-list-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-        }
-        .feature-list-item .check-icon {
-            width: 22px;
-            height: 22px;
-            flex-shrink: 0;
-            margin-top: 2px;
-            color: #6366f1;
-        }
-        .feature-list-item span {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-        }
-        .roles-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        .role-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 28px;
-        }
-        .role-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .role-card p {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
-            line-height: 1.7;
-        }
-        .cta-section {
-            padding: 80px 48px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            text-align: center;
-        }
-        .cta-box {
-            max-width: 560px;
-            margin: 0 auto;
-        }
-        .cta-box h2 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-        .cta-box p {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.5);
-            line-height: 1.8;
-            margin-bottom: 28px;
-        }
+        /* Animations */
         .animate-on-scroll {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
+        .animate-tilt-left {
+            transform: perspective(1000px) rotateY(15deg) rotateX(5deg) translateX(-40px) scale(0.95);
+            transform-origin: right center;
+        }
+        .animate-tilt-right {
+            transform: perspective(1000px) rotateY(-15deg) rotateX(5deg) translateX(40px) scale(0.95);
+            transform-origin: left center;
+        }
+        .animate-from-bottom { transform: translateY(40px); }
         .animate-on-scroll.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateX(0) translateY(0) scale(1);
         }
-        .animate-from-bottom { transform: translateY(30px); }
-        .animate-from-bottom.visible { transform: translateY(0); }
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
         @media (max-width: 768px) {
+            .hero { padding: 120px 20px 60px; }
+            .hero-title { font-size: 30px; }
             .content-section { padding: 60px 20px; }
-            .cta-section { padding: 60px 20px; }
+            .cta-section { padding: 80px 20px; }
             .roles-grid { grid-template-columns: 1fr; }
+            .learn-box { padding: 28px 24px; }
         }
 
         .footer {
@@ -408,101 +489,145 @@
         <a href="https://github.com/mrarch0" target="_blank">GitHub</a>
     </nav>
 
-    <main class="main">
-        <h1 class="title">Volunteer With Us</h1>
-        <p class="message">
-            We're always looking for more people who actually care about this stuff. If you know your way around moderation, development, or you just wanna help out somehow, we'd love to have you.
-            <br><br>
-            There's no crazy time commitment or anything like that. You help when you can. We use Google Forms for applications because it keeps things simple.
-            <br><br>
-            Sound like your thing? Fill out the form below and we'll get back to you.
-        </p>
-        <a href="https://forms.gle/KkNd7VhZrpvhVJzN7" target="_blank" class="apply-btn">Apply Now</a>
-    </main>
+    <section class="hero">
+        <div class="hero-content animate-on-scroll animate-from-bottom">
+            <h1 class="hero-title">Join the team that keeps communities safe.</h1>
+            <p class="hero-description">No crazy time commitment. You help when you can. If you care about keeping people safe online, we want you here.</p>
+        </div>
+    </section>
 
     <section class="content-section">
-        <div class="content-box animate-on-scroll animate-from-bottom">
-            <h2>What volunteers do <span class="muted">around here.</span></h2>
-            <p class="section-desc">Our volunteers are the backbone of RoSecure. Every report reviewed, every scam caught, and every community helped is because someone chose to give their time.</p>
-            <div class="feature-list">
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Review and verify scam reports submitted by community members</span>
-                </div>
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Monitor Discord servers and Roblox communities for emerging threats</span>
-                </div>
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Help maintain and improve our safety databases and documentation</span>
-                </div>
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Assist community members with questions and support tickets</span>
-                </div>
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Contribute to development, design, or content creation</span>
-                </div>
+        <div class="content-container">
+            <div class="section-header animate-on-scroll animate-from-bottom">
+                <h2 class="section-title">What Volunteers Do</h2>
+                <p class="section-subtitle">Every report reviewed and every scam caught is because someone chose to give their time.</p>
+            </div>
+            <div class="learn-box animate-on-scroll animate-tilt-left">
+                <h3 class="learn-title">Day-to-Day Responsibilities</h3>
+                <p class="learn-text">Volunteers are the backbone of RoSecure. Here's what you'd actually be doing.</p>
+                <ul class="learn-list">
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Review Scam Reports</h4>
+                            <p class="learn-list-desc">Verify reports submitted by the community, check evidence, and flag confirmed threats in our database.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Monitor for Threats</h4>
+                            <p class="learn-list-desc">Keep an eye on Discord servers and Roblox communities for emerging scams, raids, and malicious actors.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Help Community Members</h4>
+                            <p class="learn-list-desc">Answer questions, respond to support tickets, and guide people through reporting threats.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Contribute to Tools</h4>
+                            <p class="learn-list-desc">Help build and improve our bots, website, safety databases, and documentation.</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
 
     <section class="content-section">
-        <div class="content-box animate-on-scroll animate-from-bottom">
-            <h2>Current roles <span class="muted">we're looking for.</span></h2>
-            <p class="section-desc">We have a few different areas where help is needed most. Pick what fits your skills.</p>
+        <div class="content-container">
+            <div class="section-header animate-on-scroll animate-from-bottom">
+                <h2 class="section-title">Open Roles</h2>
+                <p class="section-subtitle">Pick what fits your skills. We need help across the board.</p>
+            </div>
             <div class="roles-grid">
-                <div class="role-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="role-card animate-on-scroll animate-tilt-left delay-1">
                     <h3>Community Moderator</h3>
-                    <p>Help moderate our Discord server, respond to reports, and keep the community safe and welcoming for everyone.</p>
+                    <p>Moderate our Discord server, respond to reports, and keep the community safe and welcoming.</p>
                 </div>
-                <div class="role-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="role-card animate-on-scroll animate-tilt-right delay-2">
                     <h3>Report Reviewer</h3>
-                    <p>Review incoming scam and threat reports, verify evidence, and help update our safety databases with accurate information.</p>
+                    <p>Review incoming scam and threat reports, verify evidence, and update our safety databases.</p>
                 </div>
-                <div class="role-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="role-card animate-on-scroll animate-tilt-left delay-3">
                     <h3>Developer</h3>
-                    <p>Contribute to our tools, bots, website, or API. We work with JavaScript, Python, and various Discord/Roblox APIs.</p>
+                    <p>Contribute to our tools, bots, website, or API. We work with JavaScript, Python, and Discord/Roblox APIs.</p>
                 </div>
-                <div class="role-card animate-on-scroll animate-from-bottom delay-4">
+                <div class="role-card animate-on-scroll animate-tilt-right delay-4">
                     <h3>Content & Outreach</h3>
-                    <p>Help write safety guides, create educational content, and spread awareness about online threats in gaming communities.</p>
+                    <p>Write safety guides, create educational content, and spread awareness about online threats.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="content-section">
-        <div class="content-box animate-on-scroll animate-from-bottom">
-            <h2>What to expect <span class="muted">as a volunteer.</span></h2>
-            <p class="section-desc">We want to be upfront about what volunteering here looks like so there are no surprises.</p>
-            <div class="feature-list">
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span><strong>Flexible hours</strong> &mdash; There's no minimum time commitment. Help when you can, step back when you need to.</span>
-                </div>
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span><strong>Training provided</strong> &mdash; We'll walk you through everything you need to know. No prior experience required.</span>
-                </div>
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span><strong>Real impact</strong> &mdash; Your work directly helps protect real people from scams and malicious actors.</span>
-                </div>
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span><strong>Great community</strong> &mdash; You'll be working alongside people who genuinely care about keeping others safe.</span>
-                </div>
+        <div class="content-container">
+            <div class="section-header animate-on-scroll animate-from-bottom">
+                <h2 class="section-title">What to Expect</h2>
+                <p class="section-subtitle">No surprises. Here's exactly what volunteering with us looks like.</p>
+            </div>
+            <div class="learn-box animate-on-scroll animate-tilt-right">
+                <h3 class="learn-title">Before You Apply</h3>
+                <ul class="learn-list">
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Flexible Hours</h4>
+                            <p class="learn-list-desc">No minimum time commitment. Help when you can, step back when you need to. It's that simple.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Training Provided</h4>
+                            <p class="learn-list-desc">We walk you through everything. No prior moderation or development experience required.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Real Impact</h4>
+                            <p class="learn-list-desc">Your work directly protects real people from scams and malicious actors. This isn't busywork.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Great Community</h4>
+                            <p class="learn-list-desc">You'll work alongside people who genuinely care about keeping others safe online.</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
 
     <section class="cta-section">
-        <div class="cta-box animate-on-scroll animate-from-bottom">
-            <h2>Ready to make a difference?</h2>
-            <p>Fill out a quick application and we'll review it within a few days. If you're a good fit, we'll reach out on Discord to get you started.</p>
+        <div class="cta-content animate-on-scroll animate-from-bottom">
+            <h2 class="cta-title">Ready to make a difference?</h2>
+            <p class="cta-text">Fill out a quick application and we'll get back to you within a few days.</p>
             <a href="https://forms.gle/KkNd7VhZrpvhVJzN7" target="_blank" class="apply-btn">Apply Now</a>
         </div>
     </section>

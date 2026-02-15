@@ -79,75 +79,97 @@
         }
         .github-btn:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
 
-        .main {
-            flex: 1;
+        /* Hero */
+        .hero {
+            min-height: 50vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 140px 32px 60px;
-            max-width: 700px;
-            margin: 0 auto;
+            padding: 160px 32px 80px;
+            position: relative;
+            overflow: hidden;
         }
-
-        .title {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 12px;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px; left: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(100, 60, 180, 0.2) 0%, transparent 60%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-title {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+            max-width: 600px;
             color: #fff;
         }
-
-        .subtitle {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.5);
+        .hero-description {
+            font-size: 17px;
             line-height: 1.8;
-            max-width: 500px;
-        }
-
-        .link {
-            color: #6366f1;
-            text-decoration: none;
-        }
-        .link:hover { text-decoration: underline; }
-
-        .content-section {
-            padding: 80px 48px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .content-box {
-            max-width: 720px;
+            color: #fff;
+            max-width: 520px;
             margin: 0 auto;
         }
-        .content-box h2 {
-            font-size: 24px;
+
+        /* Content Sections */
+        .content-section {
+            padding: 100px 48px;
+            position: relative;
+        }
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        }
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title {
+            font-size: 32px;
             font-weight: 600;
-            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            color: #fff;
         }
-        .content-box h2 .muted {
-            color: rgba(255, 255, 255, 0.4);
+        .section-subtitle {
+            font-size: 16px;
+            color: #fff;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .content-box .section-desc {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.5);
-            line-height: 1.8;
-            margin-bottom: 32px;
-        }
+
+        /* Doc Cards Grid */
         .docs-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
         .doc-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 28px;
+            border-radius: 20px;
+            padding: 32px 28px;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
         }
         .doc-card:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
             border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
         }
         .doc-card .doc-icon {
             font-size: 24px;
@@ -162,55 +184,95 @@
         }
         .doc-card p {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
+            color: #fff;
             line-height: 1.7;
         }
-        .feature-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+
+        /* Learn Box */
+        .learn-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px 44px;
         }
-        .feature-list-item {
+        .learn-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .learn-text {
+            font-size: 15px;
+            color: #fff;
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+        .learn-list {
+            list-style: none;
+            margin-top: 24px;
+        }
+        .learn-list li {
             display: flex;
             align-items: flex-start;
-            gap: 14px;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
-        .feature-list-item .check-icon {
-            width: 22px;
-            height: 22px;
+        .learn-list li:last-child { border-bottom: none; }
+        .learn-list-icon {
+            width: 24px;
+            height: 24px;
             flex-shrink: 0;
-            margin-top: 2px;
-            color: #6366f1;
+            color: #fff;
         }
-        .feature-list-item span {
+        .learn-list-content { flex: 1; }
+        .learn-list-title {
             font-size: 15px;
-            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .learn-list-desc {
+            font-size: 14px;
+            color: #fff;
             line-height: 1.6;
         }
+
+        /* CTA Section */
         .cta-section {
-            padding: 80px 48px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 120px 48px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        .cta-box {
-            max-width: 560px;
-            margin: 0 auto;
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
         }
-        .cta-box h2 {
-            font-size: 24px;
+        .cta-content { position: relative; z-index: 1; }
+        .cta-title {
+            font-size: 36px;
             font-weight: 600;
-            margin-bottom: 12px;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            color: #fff;
         }
-        .cta-box p {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.5);
-            line-height: 1.8;
-            margin-bottom: 28px;
+        .cta-text {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 32px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .cta-btn {
             display: inline-block;
-            padding: 12px 28px;
+            padding: 14px 28px;
             background: #fff;
+            border: 1px solid #fff;
             border-radius: 50px;
             color: #0d0d12;
             font-size: 14px;
@@ -219,25 +281,38 @@
             transition: all 0.3s;
         }
         .cta-btn:hover { background: rgba(255, 255, 255, 0.85); }
+
+        /* Animations */
         .animate-on-scroll {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
+        .animate-tilt-left {
+            transform: perspective(1000px) rotateY(15deg) rotateX(5deg) translateX(-40px) scale(0.95);
+            transform-origin: right center;
+        }
+        .animate-tilt-right {
+            transform: perspective(1000px) rotateY(-15deg) rotateX(5deg) translateX(40px) scale(0.95);
+            transform-origin: left center;
+        }
+        .animate-from-bottom { transform: translateY(40px); }
         .animate-on-scroll.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateX(0) translateY(0) scale(1);
         }
-        .animate-from-bottom { transform: translateY(30px); }
-        .animate-from-bottom.visible { transform: translateY(0); }
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
         @media (max-width: 768px) {
+            .hero { padding: 120px 20px 60px; }
+            .hero-title { font-size: 30px; }
             .content-section { padding: 60px 20px; }
-            .cta-section { padding: 60px 20px; }
+            .cta-section { padding: 80px 20px; }
             .docs-grid { grid-template-columns: 1fr; }
+            .learn-box { padding: 28px 24px; }
         }
 
         .footer {
@@ -342,8 +417,8 @@
             .header { gap: 12px; padding: 10px 16px; justify-content: space-between; }
             .nav { display: none; }
             .mobile-menu-btn { display: flex; }
-            .main { padding: 120px 20px 60px; }
-            .title { font-size: 26px; }
+            .hero { padding: 120px 20px 60px; }
+            .hero-title { font-size: 30px; }
             .footer { padding: 60px 20px 30px; }
             .footer-main { grid-template-columns: 1fr; gap: 32px; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
@@ -423,100 +498,130 @@
         <a href="https://github.com/mrarch0" target="_blank">GitHub</a>
     </nav>
 
-    <main class="main">
-        <h1 class="title">Documentation</h1>
-        <p class="subtitle">
-            Everything you need to know about how RoSecure works, how to integrate with us, and how to use our tools.
-        </p>
-    </main>
+    <section class="hero">
+        <div class="hero-content animate-on-scroll animate-from-bottom">
+            <h1 class="hero-title">Everything you need to know about RoSecure.</h1>
+            <p class="hero-description">Guides, API references, and best practices for keeping your community safe.</p>
+        </div>
+    </section>
 
     <section class="content-section">
-        <div class="content-box animate-on-scroll animate-from-bottom">
-            <h2>Quick start <span class="muted">guides.</span></h2>
-            <p class="section-desc">New to RoSecure? Start here. These guides cover the basics of getting set up and using our platform.</p>
+        <div class="content-container">
+            <div class="section-header animate-on-scroll animate-from-bottom">
+                <h2 class="section-title">Quick Start Guides</h2>
+                <p class="section-subtitle">New here? These cover the basics of getting set up and using our platform.</p>
+            </div>
             <div class="docs-grid">
-                <div class="doc-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="doc-card animate-on-scroll animate-tilt-left delay-1">
                     <span class="doc-icon">&#128640;</span>
                     <h3>Getting Started</h3>
-                    <p>Learn how to add RoSecure to your Discord server and start protecting your community in minutes.</p>
+                    <p>Add RoSecure to your Discord server and start protecting your community in minutes.</p>
                 </div>
-                <div class="doc-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="doc-card animate-on-scroll animate-tilt-right delay-2">
                     <span class="doc-icon">&#128736;</span>
                     <h3>Configuration</h3>
                     <p>Customize alert settings, moderation thresholds, and notification preferences for your server.</p>
                 </div>
-                <div class="doc-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="doc-card animate-on-scroll animate-tilt-left delay-3">
                     <span class="doc-icon">&#128269;</span>
                     <h3>Lookup Commands</h3>
-                    <p>Use our lookup tools to check users, links, and game IDs against our safety database.</p>
+                    <p>Check users, links, and game IDs against our safety database with lookup tools.</p>
                 </div>
-                <div class="doc-card animate-on-scroll animate-from-bottom delay-4">
+                <div class="doc-card animate-on-scroll animate-tilt-right delay-4">
                     <span class="doc-icon">&#128230;</span>
                     <h3>Reporting</h3>
-                    <p>How to submit scam reports, provide evidence, and track the status of your submissions.</p>
+                    <p>Submit scam reports, provide evidence, and track the status of your submissions.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="content-section">
-        <div class="content-box animate-on-scroll animate-from-bottom">
-            <h2>API reference <span class="muted">for developers.</span></h2>
-            <p class="section-desc">Building something that integrates with RoSecure? Our API lets you query our safety database, submit reports, and more.</p>
-            <div class="feature-list">
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span><strong>User Lookup API</strong> &mdash; Check if a Roblox or Discord user has been flagged in our database</span>
-                </div>
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span><strong>Link Scanner API</strong> &mdash; Verify URLs against our known malicious link database</span>
-                </div>
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span><strong>Report Submission API</strong> &mdash; Programmatically submit scam reports with evidence</span>
-                </div>
-                <div class="feature-list-item">
-                    <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span><strong>Webhook Events</strong> &mdash; Get real-time notifications when new threats are identified</span>
-                </div>
+        <div class="content-container">
+            <div class="section-header animate-on-scroll animate-from-bottom">
+                <h2 class="section-title">API Reference</h2>
+                <p class="section-subtitle">Building something that integrates with RoSecure? Here's what our API offers.</p>
+            </div>
+            <div class="learn-box animate-on-scroll animate-tilt-left">
+                <h3 class="learn-title">Available Endpoints</h3>
+                <p class="learn-text">Our API lets you query our safety database, submit reports, and receive real-time threat notifications.</p>
+                <ul class="learn-list">
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">User Lookup API</h4>
+                            <p class="learn-list-desc">Check if a Roblox or Discord user has been flagged in our database.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Link Scanner API</h4>
+                            <p class="learn-list-desc">Verify URLs against our known malicious link database in real time.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Report Submission API</h4>
+                            <p class="learn-list-desc">Programmatically submit scam reports with evidence from your own tools.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="learn-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        </div>
+                        <div class="learn-list-content">
+                            <h4 class="learn-list-title">Webhook Events</h4>
+                            <p class="learn-list-desc">Get real-time notifications when new threats are identified in your server.</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
 
     <section class="content-section">
-        <div class="content-box animate-on-scroll animate-from-bottom">
-            <h2>Community guides <span class="muted">& best practices.</span></h2>
-            <p class="section-desc">Practical advice for server owners, moderators, and community members who want to keep their spaces safe.</p>
+        <div class="content-container">
+            <div class="section-header animate-on-scroll animate-from-bottom">
+                <h2 class="section-title">Community Guides</h2>
+                <p class="section-subtitle">Practical advice for server owners, moderators, and community members.</p>
+            </div>
             <div class="docs-grid">
-                <div class="doc-card animate-on-scroll animate-from-bottom delay-1">
+                <div class="doc-card animate-on-scroll animate-tilt-left delay-1">
                     <span class="doc-icon">&#128737;</span>
                     <h3>Server Security</h3>
-                    <p>Best practices for securing your Discord server against raids, scam bots, and social engineering attacks.</p>
+                    <p>Best practices for securing your Discord server against raids, scam bots, and social engineering.</p>
                 </div>
-                <div class="doc-card animate-on-scroll animate-from-bottom delay-2">
+                <div class="doc-card animate-on-scroll animate-tilt-right delay-2">
                     <span class="doc-icon">&#9888;</span>
                     <h3>Scam Identification</h3>
-                    <p>Learn how to spot common Roblox and Discord scams, from fake giveaways to phishing links.</p>
+                    <p>Spot common Roblox and Discord scams, from fake giveaways to phishing links.</p>
                 </div>
-                <div class="doc-card animate-on-scroll animate-from-bottom delay-3">
+                <div class="doc-card animate-on-scroll animate-tilt-left delay-3">
                     <span class="doc-icon">&#128100;</span>
                     <h3>Account Safety</h3>
-                    <p>Protect your accounts with 2FA, recognize suspicious DMs, and recover from compromised accounts.</p>
+                    <p>Protect your accounts with 2FA, recognize suspicious DMs, and recover compromised accounts.</p>
                 </div>
-                <div class="doc-card animate-on-scroll animate-from-bottom delay-4">
+                <div class="doc-card animate-on-scroll animate-tilt-right delay-4">
                     <span class="doc-icon">&#128483;</span>
                     <h3>Incident Response</h3>
-                    <p>What to do when your server is targeted, how to gather evidence, and when to escalate to us.</p>
+                    <p>What to do when your server is targeted, how to gather evidence, and when to escalate.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="cta-section">
-        <div class="cta-box animate-on-scroll animate-from-bottom">
-            <h2>Can't find what you need?</h2>
-            <p>Our documentation is always growing. If you have a question that isn't covered here, reach out through our Discord server, email us at hello@rosecure.org, or use the live chat widget.</p>
+        <div class="cta-content animate-on-scroll animate-from-bottom">
+            <h2 class="cta-title">Can't find what you need?</h2>
+            <p class="cta-text">Reach out through Discord, email us at hello@rosecure.org, or use the live chat widget.</p>
             <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="cta-btn">Join Our Discord</a>
         </div>
     </section>
