@@ -1060,7 +1060,22 @@
         }
     </style>
 </head>
-<body>
+<body class="banner-visible">
+
+    <div class="announcement-banner" id="announcementBanner">
+        <div class="announcement-inner">
+            <span class="announcement-badge">BETA</span>
+            <span class="announcement-sep">·</span>
+            <span class="announcement-text">Beacon, Admin &amp; Discover — all free, at no cost.</span>
+            <a href="beacon.html" class="announcement-link">
+                Learn more
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+        </div>
+        <button class="announcement-close" onclick="dismissBanner()" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
 
     <div class="header-wrapper">
         <header class="header">
@@ -1310,7 +1325,6 @@
                 <div class="product-tile">
                     <img src="beacon-rosecure.svg" alt="Beacon" class="product-tile-icon">
                     <h3 class="product-tile-name">Beacon</h3>
-                    <span class="product-tile-badge badge--purple">COMING SOON</span>
                     <p class="product-tile-desc">Mental health crisis detection for Discord communities. When a member is struggling, Beacon gets them the support they need — fast.</p>
                     <a href="beacon.html" class="product-tile-link">
                         Learn more
@@ -1321,7 +1335,6 @@
                 <div class="product-tile">
                     <img src="admin-rosecure.svg" alt="Admin" class="product-tile-icon">
                     <h3 class="product-tile-name">Admin</h3>
-                    <span class="product-tile-badge badge--blue">COMING SOON</span>
                     <p class="product-tile-desc">A complete server management system. Manage roles, members, and automated moderation workflows — all from one bot.</p>
                     <a href="admin.html" class="product-tile-link">
                         Learn more
@@ -1332,7 +1345,6 @@
                 <div class="product-tile">
                     <img src="rosecure-discover.svg" alt="Discover" class="product-tile-icon">
                     <h3 class="product-tile-name">Discover</h3>
-                    <span class="product-tile-badge badge--green">COMING SOON</span>
                     <p class="product-tile-desc">Server analytics and insights for administrators. Track growth, activity trends, and performance across your community.</p>
                     <a href="discover.html" class="product-tile-link">
                         Learn more
