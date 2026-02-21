@@ -420,6 +420,74 @@
         }
         .mobile-nav a:hover, .mobile-nav a.active { color: #fff; background: rgba(255, 255, 255, 0.08); }
 
+        .innovation-section {
+            padding: 120px 48px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        .innovation-section::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px; height: 400px;
+            background: radial-gradient(ellipse at center, rgba(31, 77, 255, 0.07) 0%, transparent 65%);
+            filter: blur(40px);
+            pointer-events: none;
+        }
+        .innovation-content { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+        .innovation-label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 28px;
+        }
+        .innovation-title {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 48px;
+        }
+        .innovation-title .muted { color: rgba(255, 255, 255, 0.35); }
+        .innovation-quote {
+            position: relative;
+            padding: 36px 48px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 20px;
+            text-align: left;
+        }
+        .innovation-quote::before {
+            content: '\201C';
+            position: absolute;
+            top: -24px; left: 40px;
+            font-size: 80px;
+            font-family: Georgia, serif;
+            color: rgba(255, 255, 255, 0.08);
+            line-height: 1;
+        }
+        .innovation-quote-text {
+            font-size: 18px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            font-style: italic;
+        }
+        .innovation-quote-author {
+            margin-top: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         @media (max-width: 768px) {
             .header-wrapper { width: 95%; }
             .header { gap: 16px; padding: 10px 16px; }
@@ -438,6 +506,10 @@
             .cta-section { padding: 100px 20px; }
             .cta-title { font-size: 36px; }
             .cta-buttons { flex-direction: column; }
+            .innovation-section { padding: 80px 24px; }
+            .innovation-title { font-size: 32px; }
+            .innovation-quote { padding: 28px 24px; }
+            .innovation-quote-text { font-size: 16px; }
             .footer { padding: 60px 20px 30px; }
             .footer-main { grid-template-columns: 1fr; gap: 32px; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
@@ -712,6 +784,17 @@
             <a href="https://discord.com/oauth2/authorize?client_id=1457385555103977502" target="_blank" rel="noopener noreferrer" class="btn-secondary">
                 Get Started
             </a>
+        </div>
+    </section>
+
+    <section class="innovation-section">
+        <div class="innovation-content animate-on-scroll animate-tilt-up">
+            <span class="innovation-label">Our philosophy</span>
+            <h2 class="innovation-title">Innovation in protection, <span class="muted">done right.</span></h2>
+            <div class="innovation-quote">
+                <p class="innovation-quote-text">Protection is the best thing you can do for your community. We're building the tools to make that easier — so every server, every member, and every interaction has the safety it deserves. Growth should never come at the cost of security.</p>
+                <p class="innovation-quote-author">— The RoSecure Team</p>
+            </div>
         </div>
     </section>
 

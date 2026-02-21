@@ -244,36 +244,22 @@
 
         /* CTA Section */
         .cta-section {
-            padding: 120px 48px;
+            padding: 80px 48px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-        }
-        .cta-content { position: relative; z-index: 1; }
         .cta-title {
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 600;
-            letter-spacing: -1px;
-            margin-bottom: 16px;
-            color: #fff;
+            margin-bottom: 12px;
         }
         .cta-text {
-            font-size: 16px;
-            color: #fff;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.5);
             margin-bottom: 32px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
         }
-        .apply-btn {
-            display: inline-block;
+        .cta-buttons { display: flex; gap: 12px; justify-content: center; }
+        .btn-primary {
             padding: 14px 28px;
             background: #fff;
             border: 1px solid #fff;
@@ -282,9 +268,21 @@
             font-size: 14px;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
-        .apply-btn:hover { background: rgba(255, 255, 255, 0.85); }
+        .btn-primary:hover { background: rgba(255, 255, 255, 0.9); }
+        .btn-secondary {
+            padding: 14px 28px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.5); }
 
         /* Animations */
         .animate-on-scroll {
@@ -329,7 +327,10 @@
             .hero { padding: 140px 20px 80px; }
             .hero-title { font-size: 36px; }
             .content-section { padding: 60px 20px; }
-            .cta-section { padding: 80px 20px; }
+            .cta-section { padding: 60px 20px; }
+            .cta-title { font-size: 24px; }
+            .cta-buttons { flex-direction: column; }
+            .btn-primary, .btn-secondary { width: 100%; text-align: center; }
             .learn-box { padding: 28px 24px; }
             .learn-list-icon { width: 44px; height: 44px; border-radius: 12px; }
             .learn-list-icon svg { width: 22px; height: 22px; }
@@ -629,10 +630,11 @@
     </section>
 
     <section class="cta-section">
-        <div class="cta-content animate-on-scroll animate-from-bottom">
-            <h2 class="cta-title">Ready to make a difference?</h2>
-            <p class="cta-text">Fill out a quick application and we'll get back to you within a few days.</p>
-            <a href="https://forms.gle/KkNd7VhZrpvhVJzN7" target="_blank" class="apply-btn">Apply Now</a>
+        <h2 class="cta-title">Still have questions?</h2>
+        <p class="cta-text">Use the live chat widget, email us at hello@rosecure.org, or open a ticket on Discord.</p>
+        <div class="cta-buttons">
+            <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="btn-primary">Discord Support</a>
+            <a href="mailto:hello@rosecure.org" class="btn-secondary">Email Us</a>
         </div>
     </section>
 

@@ -291,6 +291,48 @@
             letter-spacing: 0.5px;
         }
 
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 48px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .cta-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .cta-text {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 32px;
+        }
+        .cta-buttons { display: flex; gap: 12px; justify-content: center; }
+        .btn-primary {
+            padding: 14px 28px;
+            background: #fff;
+            border: 1px solid #fff;
+            border-radius: 50px;
+            color: #0d0d12;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { background: rgba(255, 255, 255, 0.9); }
+        .btn-secondary {
+            padding: 14px 28px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.5); }
+
         .footer {
             padding: 80px 48px 40px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -601,13 +643,12 @@
         </div>
     </section>
 
-    <section class="content-section">
-        <div class="content-container animate-on-scroll animate-tilt-up" style="text-align: center;">
-            <h2 class="section-title">Have questions?</h2>
-            <p class="section-text" style="max-width: 500px; margin: 0 auto 24px;">
-                We're an open book. If there's something you want to know that isn't covered here, just ask.
-            </p>
-            <a href="https://discord.gg/mbXQCEJS58" target="_blank" style="display: inline-block; padding: 14px 28px; background: #fff; border-radius: 50px; color: #0d0d12; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.3s;">Ask on Discord</a>
+    <section class="cta-section">
+        <h2 class="cta-title">Still have questions?</h2>
+        <p class="cta-text">Use the live chat widget, email us at hello@rosecure.org, or open a ticket on Discord.</p>
+        <div class="cta-buttons">
+            <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="btn-primary">Discord Support</a>
+            <a href="mailto:hello@rosecure.org" class="btn-secondary">Email Us</a>
         </div>
     </section>
 

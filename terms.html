@@ -81,8 +81,12 @@
         /* Hero Section */
         .hero {
             min-height: 70vh;
-            padding: 160px 32px 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            padding: 160px 32px 100px;
             position: relative;
             overflow: hidden;
         }
@@ -172,6 +176,48 @@
             text-decoration: none;
         }
         .legal-text a:hover { text-decoration: underline; }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 48px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .cta-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .cta-text {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 32px;
+        }
+        .cta-buttons { display: flex; gap: 12px; justify-content: center; }
+        .btn-primary {
+            padding: 14px 28px;
+            background: #fff;
+            border: 1px solid #fff;
+            border-radius: 50px;
+            color: #0d0d12;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { background: rgba(255, 255, 255, 0.9); }
+        .btn-secondary {
+            padding: 14px 28px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.5); }
 
         /* Footer */
         .footer {
@@ -438,6 +484,15 @@
 
             <h2>15. Contact Information</h2>
             <p>If you have any questions about these Terms of Service, please contact us at <a href="mailto:hello@rosecure.org">hello@rosecure.org</a>.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2 class="cta-title">Still have questions?</h2>
+        <p class="cta-text">Use the live chat widget, email us at hello@rosecure.org, or open a ticket on Discord.</p>
+        <div class="cta-buttons">
+            <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="btn-primary">Discord Support</a>
+            <a href="mailto:hello@rosecure.org" class="btn-secondary">Email Us</a>
         </div>
     </section>
 
