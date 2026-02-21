@@ -390,6 +390,21 @@
             max-width: 560px; margin: 0 auto 40px; line-height: 1.65;
         }
 
+        /* ---- FEATURES GRID ---- */
+        .features-grid-section { padding: 120px 48px; border-top: 1px solid rgba(255,255,255,0.06); }
+        .features-grid-container { max-width: 1040px; margin: 0 auto; }
+        .features-grid-header { text-align: center; margin-bottom: 64px; }
+        .features-grid-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+        .features-grid-title { font-size: 36px; font-weight: 600; color: #fff; letter-spacing: -0.5px; margin-bottom: 16px; }
+        .features-grid-desc { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 520px; margin: 0 auto; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .feature-card { padding: 24px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 18px; transition: border-color 0.2s; }
+        .feature-card:hover { border-color: rgba(255,255,255,0.13); }
+        .feature-card-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; margin-bottom: 16px; }
+        .feature-card-icon svg { width: 18px; height: 18px; }
+        .feature-card-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+        .feature-card-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
         /* ---- SMART ALERTS ---- */
         .smart-alerts-section { padding: 120px 48px; border-top: 1px solid rgba(255,255,255,0.06); }
         .smart-alerts-container { max-width: 1040px; margin: 0 auto; }
@@ -444,6 +459,10 @@
             .feat-title { font-size: 28px; }
             .faq-section { padding: 72px 20px; }
             .faq-title { font-size: 28px; }
+            .features-grid-section { padding: 72px 20px; }
+            .features-grid { grid-template-columns: 1fr; gap: 12px; }
+            .smart-alerts-section { padding: 72px 20px; }
+            .smart-alerts-content { grid-template-columns: 1fr; gap: 40px; }
             .cta-section { padding: 60px 20px; }
             .cta-buttons { flex-direction: column; }
             .footer { padding: 60px 20px 30px; }
@@ -491,7 +510,6 @@
         <div class="hero-content animate-on-scroll animate-from-bottom">
             <img src="admin-rosecure.svg" alt="Admin" class="product-hero-icon">
             <h1 class="product-hero-name">Admin</h1>
-            <span class="product-hero-status">Coming Soon</span>
             <p class="product-hero-tagline">The solution to protecting your server and managing your server's security.</p>
             <div class="hero-buttons">
                 <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="btn-blue">Join Discord for Updates</a>
@@ -740,6 +758,81 @@
         </div>
     </section>
 
+    <!-- FEATURES GRID -->
+    <section class="features-grid-section">
+        <div class="features-grid-container">
+            <div class="features-grid-header animate-on-scroll animate-from-bottom">
+                <p class="features-grid-label">What's included</p>
+                <h2 class="features-grid-title">Everything Admin does.</h2>
+            </div>
+            <div class="features-grid animate-on-scroll animate-from-bottom">
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(75,191,255,0.1);border:1px solid rgba(75,191,255,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7ec9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Advanced auto-moderation</h3>
+                    <p class="feature-card-desc">Comprehensive rules that automatically filter content, links, and behavior across your server.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(75,191,255,0.1);border:1px solid rgba(75,191,255,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7ec9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Smart alerts</h3>
+                    <p class="feature-card-desc">Flagged content is routed to the right moderator with full context for human review before any action is taken.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(75,191,255,0.1);border:1px solid rgba(75,191,255,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7ec9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Customizable filtering policies</h3>
+                    <p class="feature-card-desc">Define your own rules — keyword blocks, link filters, and behavioral triggers tailored to your server.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(75,191,255,0.1);border:1px solid rgba(75,191,255,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7ec9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Organization-level permissions</h3>
+                    <p class="feature-card-desc">Control which staff can access which tools — including the ability to restrict Discover or Beacon entirely.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(75,191,255,0.1);border:1px solid rgba(75,191,255,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7ec9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Predator blocking</h3>
+                    <p class="feature-card-desc">Cross-server protection database that expands over time — automatically blocking known bad actors.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(75,191,255,0.1);border:1px solid rgba(75,191,255,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7ec9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Smart Gate Filtering</h3>
+                    <p class="feature-card-desc">Reviews new member accounts for rule violations upon joining — before they can interact with your server.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(75,191,255,0.1);border:1px solid rgba(75,191,255,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7ec9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Randomized scanning</h3>
+                    <p class="feature-card-desc">Unpredictable scanning intervals and filtering policies designed to detect bypass attempts before they succeed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(75,191,255,0.1);border:1px solid rgba(75,191,255,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7ec9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Priority alerts</h3>
+                    <p class="feature-card-desc">Interactive statistical insights delivered with every priority alert — context first, action second.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(75,191,255,0.1);border:1px solid rgba(75,191,255,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7ec9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Ongoing expansion</h3>
+                    <p class="feature-card-desc">Admin is continuously updated with new safety initiatives, features, and system upgrades.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- SMART ALERTS -->
     <section class="smart-alerts-section">
         <div class="smart-alerts-container">
@@ -851,7 +944,7 @@
                         <span class="faq-question-text">When does Admin launch?</span>
                         <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
                     </button>
-                    <div class="faq-answer"><div class="faq-answer-inner">Admin is in development. Join our Discord server to get updates when early access opens.</div></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">Admin is in beta. Join our Discord server to get updates and early access.</div></div>
                 </div>
             </div>
         </div>

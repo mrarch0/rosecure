@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="RoSecure Discover — server analytics and insights for Discord administrators. Track growth, activity, and community health.">
-    <meta name="theme-color" content="#22c55e">
+    <meta name="theme-color" content="#75D56C">
     <title>Discover - RoSecure</title>
     <link rel="icon" type="image/png" href="rosecurelogo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -97,11 +97,11 @@
         .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
         .btn-green {
             padding: 14px 28px;
-            background: #22c55e; border: 1px solid #22c55e;
+            background: #75D56C; border: 1px solid #75D56C;
             border-radius: 50px; color: #0d0d12; font-size: 14px; font-weight: 600;
             text-decoration: none; transition: all 0.2s; display: inline-block;
         }
-        .btn-green:hover { background: #16a34a; border-color: #16a34a; }
+        .btn-green:hover { background: #5aba52; border-color: #5aba52; }
 
         /* ---- ANIMATIONS ---- */
         .animate-on-scroll {
@@ -142,31 +142,31 @@
             content: ''; position: absolute;
             top: -200px; left: -200px;
             width: 700px; height: 700px;
-            background: radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 60%);
+            background: radial-gradient(circle, rgba(117,213,108,0.12) 0%, transparent 60%);
             filter: blur(80px); pointer-events: none;
         }
         .hero::after {
             content: ''; position: absolute;
             top: -100px; right: -200px;
             width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(22,163,74,0.09) 0%, transparent 60%);
+            background: radial-gradient(circle, rgba(90,186,82,0.09) 0%, transparent 60%);
             filter: blur(80px); pointer-events: none;
         }
         .hero-content { position: relative; z-index: 1; max-width: 800px; }
         .hero-badge {
             display: inline-flex; align-items: center; gap: 10px;
             padding: 6px 16px 6px 8px;
-            background: rgba(34,197,94,0.1);
-            border: 1px solid rgba(34,197,94,0.25);
+            background: rgba(117,213,108,0.1);
+            border: 1px solid rgba(117,213,108,0.25);
             border-radius: 50px; margin-bottom: 32px;
         }
         .hero-badge-icon {
             width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
+            background: linear-gradient(135deg, #75D56C, #5aba52);
         }
         .hero-badge-icon svg { width: 13px; height: 13px; }
-        .hero-badge-text { font-size: 12px; font-weight: 600; color: #86efac; letter-spacing: 0.3px; }
+        .hero-badge-text { font-size: 12px; font-weight: 600; color: #b8f5b0; letter-spacing: 0.3px; }
         .hero-title {
             font-size: 56px; font-weight: 700;
             line-height: 1.1; letter-spacing: -1.5px;
@@ -197,7 +197,7 @@
             font-size: 48px; font-weight: 700;
             letter-spacing: -2px; color: #fff; line-height: 1; margin-bottom: 8px;
         }
-        .stat-number span { color: #86efac; }
+        .stat-number span { color: #b8f5b0; }
         .stat-label { font-size: 14px; color: #fff; line-height: 1.5; max-width: 180px; margin: 0 auto; }
 
         /* ---- SECTION DIVIDER ---- */
@@ -236,10 +236,10 @@
         .feat-list-icon {
             width: 32px; height: 32px; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
-            background: rgba(34,197,94,0.1);
-            border-radius: 8px; border: 1px solid rgba(34,197,94,0.2);
+            background: rgba(117,213,108,0.1);
+            border-radius: 8px; border: 1px solid rgba(117,213,108,0.2);
         }
-        .feat-list-icon svg { width: 16px; height: 16px; color: #86efac; }
+        .feat-list-icon svg { width: 16px; height: 16px; color: #b8f5b0; }
         .feat-list-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 3px; }
         .feat-list-desc { font-size: 13px; color: #fff; line-height: 1.55; }
 
@@ -272,8 +272,8 @@
         .growth-row { display: flex; align-items: center; gap: 12px; }
         .growth-label { font-size: 11px; color: rgba(255,255,255,0.45); width: 32px; flex-shrink: 0; text-align: right; }
         .growth-bar-wrap { flex: 1; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
-        .growth-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #22c55e, #86efac); }
-        .growth-val { font-size: 12px; font-weight: 600; color: #86efac; width: 40px; flex-shrink: 0; }
+        .growth-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #75D56C, #b8f5b0); }
+        .growth-val { font-size: 12px; font-weight: 600; color: #b8f5b0; width: 40px; flex-shrink: 0; }
 
         /* ---- FAQ ---- */
         .faq-section {
@@ -304,8 +304,8 @@
             transition: all 0.3s;
         }
         .faq-icon svg { width: 14px; height: 14px; color: #fff; transition: transform 0.3s; }
-        .faq-item.open .faq-icon { background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.3); }
-        .faq-item.open .faq-icon svg { transform: rotate(45deg); color: #86efac; }
+        .faq-item.open .faq-icon { background: rgba(117,213,108,0.15); border-color: rgba(34,197,94,0.3); }
+        .faq-item.open .faq-icon svg { transform: rotate(45deg); color: #b8f5b0; }
         .faq-answer { overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
         .faq-answer-inner { padding: 0 0 24px; font-size: 15px; color: #fff; line-height: 1.75; }
         .faq-item.open .faq-answer { max-height: 300px; }
@@ -370,6 +370,21 @@
         }
         .modal-close:hover { background: rgba(255,255,255,0.15); }
 
+        /* ---- FEATURES GRID ---- */
+        .features-grid-section { padding: 120px 48px; border-top: 1px solid rgba(255,255,255,0.06); }
+        .features-grid-container { max-width: 1040px; margin: 0 auto; }
+        .features-grid-header { text-align: center; margin-bottom: 64px; }
+        .features-grid-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+        .features-grid-title { font-size: 36px; font-weight: 600; color: #fff; letter-spacing: -0.5px; margin-bottom: 16px; }
+        .features-grid-desc { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 520px; margin: 0 auto; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .feature-card { padding: 24px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 18px; transition: border-color 0.2s; }
+        .feature-card:hover { border-color: rgba(255,255,255,0.13); }
+        .feature-card-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; margin-bottom: 16px; }
+        .feature-card-icon svg { width: 18px; height: 18px; }
+        .feature-card-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+        .feature-card-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
         /* ---- PRODUCT HERO ---- */
         .product-hero-icon { width: 88px; height: 88px; border-radius: 50%; margin: 0 auto 20px; display: block; }
         .product-hero-name { font-size: 56px; font-weight: 800; letter-spacing: -2px; color: #fff; margin-bottom: 10px; line-height: 1; }
@@ -406,6 +421,8 @@
             .feat-title { font-size: 28px; }
             .faq-section { padding: 72px 20px; }
             .faq-title { font-size: 28px; }
+            .features-grid-section { padding: 72px 20px; }
+            .features-grid { grid-template-columns: 1fr; gap: 12px; }
             .cta-section { padding: 60px 20px; }
             .cta-buttons { flex-direction: column; }
             .footer { padding: 60px 20px 30px; }
@@ -453,7 +470,6 @@
         <div class="hero-content animate-on-scroll animate-from-bottom">
             <img src="rosecure-discover.svg" alt="Discover" class="product-hero-icon">
             <h1 class="product-hero-name">Discover</h1>
-            <span class="product-hero-status">Coming Soon</span>
             <p class="product-hero-tagline">The solution to understanding your server's growth and activity.</p>
             <div class="hero-buttons">
                 <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="btn-green">Join Discord for Updates</a>
@@ -675,8 +691,8 @@
             <div class="feat-visual">
                 <div class="feat-visual-items">
                     <div class="feat-visual-item">
-                        <div class="feat-visual-item-icon" style="background:rgba(34,197,94,0.12);border-color:rgba(34,197,94,0.2);">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <div class="feat-visual-item-icon" style="background:rgba(117,213,108,0.12);border-color:rgba(117,213,108,0.2);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#b8f5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                         </div>
                         <div>
                             <p class="feat-visual-item-text">RoSecure Bot — Online</p>
@@ -684,8 +700,8 @@
                         </div>
                     </div>
                     <div class="feat-visual-item">
-                        <div class="feat-visual-item-icon" style="background:rgba(34,197,94,0.12);border-color:rgba(34,197,94,0.2);">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#86efac" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <div class="feat-visual-item-icon" style="background:rgba(117,213,108,0.12);border-color:rgba(117,213,108,0.2);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#b8f5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                         </div>
                         <div>
                             <p class="feat-visual-item-text">Admin Bot — Online</p>
@@ -701,6 +717,60 @@
                             <p class="feat-visual-item-sub">0 errors in the last 24h</p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES GRID -->
+    <section class="features-grid-section">
+        <div class="features-grid-container">
+            <div class="features-grid-header animate-on-scroll animate-from-bottom">
+                <p class="features-grid-label">What's included</p>
+                <h2 class="features-grid-title">Everything Discover does.</h2>
+            </div>
+            <div class="features-grid animate-on-scroll animate-from-bottom">
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(117,213,108,0.12);border:1px solid rgba(117,213,108,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#b8f5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Trend analysis</h3>
+                    <p class="feature-card-desc">See what topics and discussions are gaining traction in your community over time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(117,213,108,0.12);border:1px solid rgba(117,213,108,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#b8f5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Inactive channel detection</h3>
+                    <p class="feature-card-desc">Identify channels with little or no activity so you can reorganize or remove clutter.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(117,213,108,0.12);border:1px solid rgba(117,213,108,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#b8f5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Activity pattern insights</h3>
+                    <p class="feature-card-desc">Two months of activity data showing peak hours, quiet periods, and engagement patterns across your server.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(117,213,108,0.12);border:1px solid rgba(117,213,108,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#b8f5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Growth visibility</h3>
+                    <p class="feature-card-desc">Track member growth, departures, and retention across any time window you select.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(117,213,108,0.12);border:1px solid rgba(117,213,108,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#b8f5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Privacy-forward controls</h3>
+                    <p class="feature-card-desc">Your server's data stays private. No cross-server sharing, no public dashboards — ever.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon" style="background:rgba(117,213,108,0.12);border:1px solid rgba(117,213,108,0.2);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#b8f5b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M5.34 5.34a10 10 0 0 0 0 13.32"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.47 8.47a5 5 0 0 0 0 7.06"/></svg>
+                    </div>
+                    <h3 class="feature-card-title">Flexible org settings</h3>
+                    <p class="feature-card-desc">Configure access and visibility to align with your server's governance model and admin structure.</p>
                 </div>
             </div>
         </div>
@@ -747,7 +817,7 @@
                         <span class="faq-question-text">When does Discover launch?</span>
                         <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
                     </button>
-                    <div class="faq-answer"><div class="faq-answer-inner">Discover is in development. Join our Discord server to get updates when early access opens.</div></div>
+                    <div class="faq-answer"><div class="faq-answer-inner">Discover is in beta. Join our Discord server to get updates and early access.</div></div>
                 </div>
             </div>
         </div>
