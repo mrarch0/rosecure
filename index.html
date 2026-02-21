@@ -878,42 +878,172 @@
         }
         .modal-close:hover { background: rgba(255,255,255,0.15); }
 
-        .innovation-section {
+        /* Announcement Banner */
+        .announcement-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1100;
+            background: linear-gradient(90deg, #1534c9 0%, #1f4dff 50%, #1534c9 100%);
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 48px;
+            gap: 0;
+            transition: all 0.3s ease;
+        }
+        .announcement-banner.hidden { display: none; }
+        .announcement-inner {
+            display: flex; align-items: center; gap: 10px;
+            flex: 1; justify-content: center;
+        }
+        .announcement-badge {
+            font-size: 10px; font-weight: 700;
+            color: #1f4dff; background: #fff;
+            padding: 2px 8px; border-radius: 50px;
+            letter-spacing: 0.5px; flex-shrink: 0;
+        }
+        .announcement-sep {
+            color: rgba(255,255,255,0.4); font-size: 13px;
+        }
+        .announcement-text {
+            font-size: 13px; font-weight: 500; color: #fff;
+        }
+        .announcement-link {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 13px; font-weight: 600; color: #fff;
+            text-decoration: none; margin-left: 10px;
+            opacity: 0.85; transition: opacity 0.2s;
+            flex-shrink: 0;
+        }
+        .announcement-link:hover { opacity: 1; }
+        .announcement-link svg { width: 13px; height: 13px; }
+        .announcement-close {
+            position: absolute; right: 16px;
+            background: none; border: none;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer; padding: 6px;
+            display: flex; align-items: center;
+            border-radius: 6px; transition: all 0.2s;
+        }
+        .announcement-close:hover { color: #fff; background: rgba(255,255,255,0.1); }
+        .announcement-close svg { width: 14px; height: 14px; }
+
+        body.banner-visible .header-wrapper { top: 64px; }
+
+        /* Hero eyebrow */
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 12px; font-weight: 500;
+            color: rgba(255,255,255,0.5);
+            padding: 5px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50px;
+            margin-bottom: 24px;
+        }
+
+        /* Products Section */
+        .products-section {
             padding: 120px 48px;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            border-top: 1px solid rgba(255,255,255,0.06);
         }
-        .innovation-content { max-width: 720px; margin: 0 auto; }
-        .innovation-title {
-            font-size: 32px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-            color: #fff;
-            margin-bottom: 32px;
+        .products-container { max-width: 1040px; margin: 0 auto; }
+        .products-header { margin-bottom: 56px; }
+        .products-label {
+            font-size: 11px; font-weight: 600;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 12px;
         }
-        .innovation-quote {
-            padding: 32px 40px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 20px;
-            text-align: left;
+        .products-title {
+            font-size: 40px; font-weight: 600;
+            letter-spacing: -1px; color: #fff; line-height: 1.1;
         }
-        .innovation-quote-text {
-            font-size: 17px;
-            font-weight: 400;
-            color: #fff;
-            line-height: 1.8;
+        .product-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 28px;
+            padding: 52px 56px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 72px;
+            align-items: start;
+            transition: border-color 0.3s;
         }
-        .innovation-quote-author {
-            margin-top: 16px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #fff;
+        .product-card:hover { border-color: rgba(255,255,255,0.13); }
+        .product-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+        .product-icon-wrap {
+            width: 60px; height: 60px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.06);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
+        }
+        .product-icon-wrap svg { width: 28px; height: 28px; color: rgba(255,255,255,0.85); }
+        .product-status {
+            display: inline-block; padding: 4px 12px;
+            background: rgba(31,77,255,0.15);
+            border: 1px solid rgba(31,77,255,0.3);
+            border-radius: 50px; font-size: 11px;
+            font-weight: 600; color: #7da4ff; letter-spacing: 0.5px;
+        }
+        .product-name {
+            font-size: 38px; font-weight: 600;
+            color: #fff; letter-spacing: -0.5px; margin-bottom: 10px;
+        }
+        .product-tagline {
+            font-size: 17px; font-weight: 500;
+            color: #fff; margin-bottom: 20px; line-height: 1.4;
+        }
+        .product-desc { font-size: 15px; color: #fff; line-height: 1.75; }
+        .product-features { list-style: none; margin-bottom: 32px; }
+        .product-features li {
+            display: flex; align-items: flex-start; gap: 14px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .product-features li:last-child { border-bottom: none; padding-bottom: 0; }
+        .product-feat-icon {
+            width: 36px; height: 36px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.06);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.09);
+        }
+        .product-feat-icon svg { width: 18px; height: 18px; color: rgba(255,255,255,0.8); }
+        .product-feat-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+        .product-feat-desc { font-size: 13px; color: #fff; line-height: 1.55; }
+
+        @media (max-width: 768px) {
+            .announcement-text { display: none; }
+            .announcement-banner { padding: 0 48px 0 16px; }
+            .products-section { padding: 80px 20px; }
+            .products-title { font-size: 28px; }
+            .product-card { grid-template-columns: 1fr; gap: 40px; padding: 32px 24px; }
+            .product-name { font-size: 30px; }
         }
     </style>
 </head>
-<body>
+<body class="banner-visible">
+    <!-- Announcement Banner -->
+    <div class="announcement-banner" id="announcementBanner">
+        <div class="announcement-inner">
+            <span class="announcement-badge">NEW</span>
+            <span class="announcement-sep">|</span>
+            <span class="announcement-text">Beacon — ensure your community members get the mental help they need in a crisis.</span>
+            <a href="#products" class="announcement-link">
+                Learn more
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+        </div>
+        <button class="announcement-close" onclick="dismissBanner()" aria-label="Dismiss">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+
     <div class="header-wrapper">
         <header class="header">
             <a href="index.html" class="logo">
@@ -951,6 +1081,10 @@
 
     <section class="hero">
         <div class="hero-content">
+            <div class="hero-eyebrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Innovation in protection, done right.
+            </div>
             <h1 class="hero-title">Supercharged safety solutions for your community.</h1>
             <p class="hero-description">
                 Predators, scammers, bad actors. They shouldn't be anywhere near your server. We make sure they aren't.
@@ -1147,12 +1281,67 @@
         </div>
     </section>
 
-    <section class="innovation-section">
-        <div class="innovation-content animate-on-scroll animate-tilt-up">
-            <h2 class="innovation-title">Innovation in protection, done right.</h2>
-            <div class="innovation-quote">
-                <p class="innovation-quote-text">Protection is the best thing you can do for your community. We're building the tools to make that easier — so every server, every member, and every interaction has the safety it deserves. Growth should never come at the cost of security.</p>
-                <p class="innovation-quote-author">— The RoSecure Team</p>
+    <section class="products-section" id="products">
+        <div class="products-container animate-on-scroll animate-tilt-up">
+            <div class="products-header">
+                <p class="products-label">Our Products</p>
+                <h2 class="products-title">Built for communities,<br>built for people.</h2>
+            </div>
+            <div class="product-card">
+                <!-- Left: identity + description -->
+                <div>
+                    <div class="product-meta">
+                        <div class="product-icon-wrap">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <span class="product-status">Coming Soon</span>
+                    </div>
+                    <h3 class="product-name">Beacon</h3>
+                    <p class="product-tagline">Saving lives, helping support the community.</p>
+                    <p class="product-desc">When a community member is struggling, Beacon connects them with the right resources and human support — fast. Because safety isn't just about keeping bad actors out. It's about making sure the people inside are okay too.</p>
+                </div>
+                <!-- Right: features -->
+                <div>
+                    <ul class="product-features">
+                        <li>
+                            <div class="product-feat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="product-feat-title">Crisis Intervention</p>
+                                <p class="product-feat-desc">Detects distress signals in your community and routes support immediately.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="product-feat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            </div>
+                            <div>
+                                <p class="product-feat-title">Human Support Connections</p>
+                                <p class="product-feat-desc">Links members with trained volunteers and mental health resources in seconds.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="product-feat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="product-feat-title">Safe Reporting</p>
+                                <p class="product-feat-desc">Anonymous, confidential channels so members feel safe reaching out.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="product-feat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                            </div>
+                            <div>
+                                <p class="product-feat-title">Moderator Alerts</p>
+                                <p class="product-feat-desc">Your team gets notified instantly so no one falls through the cracks.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="#" class="btn-secondary" style="display: inline-block;">Get Notified</a>
+                </div>
             </div>
         </div>
     </section>
@@ -1206,6 +1395,13 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        function dismissBanner() {
+            document.getElementById('announcementBanner').classList.add('hidden');
+            document.body.classList.remove('banner-visible');
+        }
+    </script>
 
     <script>
         // Scroll animation observer
