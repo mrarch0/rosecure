@@ -189,23 +189,32 @@
         .role-card-title { font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 10px; }
         .role-card-desc { font-size: 14px; color: #fff; line-height: 1.7; }
 
-        /* Impact Banner */
-        .impact-banner {
+        /* Impact inline (within combined section) */
+        .impact-inline {
             text-align: center;
-            padding: 80px 48px;
+            padding: 60px 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin: 56px 0;
         }
-        .impact-text {
-            font-size: 28px;
+        .impact-inline p {
+            font-size: 24px;
             font-weight: 600;
             color: #fff;
-            max-width: 600px;
-            margin: 0 auto 12px;
+            letter-spacing: -0.3px;
             line-height: 1.4;
-            letter-spacing: -0.5px;
         }
-        .impact-sub {
-            font-size: 16px;
+        .section-header-inner { margin-top: 0; }
+        .apply-block {
+            text-align: center;
+            margin-top: 56px;
+            padding-top: 48px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .apply-block p {
+            font-size: 15px;
             color: #fff;
+            margin-bottom: 20px;
         }
 
         /* CTA Section */
@@ -518,19 +527,12 @@
                     <p class="role-card-desc">Help build and improve our bots, website, safety databases, and documentation.</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section class="content-section">
-        <div class="impact-banner animate-on-scroll animate-from-bottom">
-            <h2 class="impact-text">When you work here, you make a difference in every way possible.</h2>
-            <p class="impact-sub">Join us.</p>
-        </div>
-    </section>
+            <div class="impact-inline animate-on-scroll animate-from-bottom">
+                <p>When you work here, you make a difference in every way possible.</p>
+            </div>
 
-    <section class="content-section">
-        <div class="content-container">
-            <div class="section-header animate-on-scroll animate-from-bottom">
+            <div class="section-header section-header-inner animate-on-scroll animate-from-bottom">
                 <h2 class="section-title">What to Expect</h2>
                 <p class="section-subtitle">No surprises. Here's exactly what volunteering with us looks like.</p>
             </div>
@@ -564,6 +566,12 @@
                     <p class="role-card-desc">You'll work alongside people who genuinely care about keeping others safe online.</p>
                 </div>
             </div>
+
+            <div class="apply-block animate-on-scroll animate-from-bottom">
+                <p>Ready to join? Fill out our volunteer application and we'll be in touch.</p>
+                <!-- TODO: Replace YOUR_GOOGLE_FORMS_URL with your actual Google Forms link -->
+                <a href="https://forms.gle/YOUR_GOOGLE_FORMS_URL" class="btn-primary offsite-link">Apply to Volunteer</a>
+            </div>
         </div>
     </section>
 
@@ -575,6 +583,23 @@
             <a href="mailto:hello@rosecure.org" class="btn-secondary">Email Us</a>
         </div>
     </section>
+
+    <!-- Offsite Warning Modal -->
+    <div class="modal-overlay" id="offsiteModal">
+        <div class="modal" style="max-width: 440px;">
+            <div class="modal-icon">🔗</div>
+            <h2 class="modal-title">Leaving RoSecure</h2>
+            <p class="modal-text">You're being redirected to a third-party site. RoSecure is not responsible for external content.</p>
+            <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px 16px; margin-bottom: 24px; word-break: break-all;">
+                <p style="font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Destination</p>
+                <p id="offsiteUrl" style="font-size: 13px; color: #fff; font-family: monospace;"></p>
+            </div>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button class="btn-primary" onclick="confirmOffsite()" style="cursor: pointer; border: none;">Continue</button>
+                <button class="btn-secondary" onclick="cancelOffsite()" style="cursor: pointer;">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <div class="modal-overlay" id="constructionModal" onclick="if(event.target===this)this.classList.remove('open')">
         <div class="modal">
@@ -674,6 +699,45 @@
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    </script>
+
+    <script>
+        let pendingOffsiteUrl = null;
+
+        function confirmOffsite() {
+            if (pendingOffsiteUrl) {
+                window.open(pendingOffsiteUrl, '_blank', 'noopener,noreferrer');
+                pendingOffsiteUrl = null;
+            }
+            document.getElementById('offsiteModal').classList.remove('open');
+        }
+
+        function cancelOffsite() {
+            pendingOffsiteUrl = null;
+            document.getElementById('offsiteModal').classList.remove('open');
+        }
+
+        document.getElementById('offsiteModal').addEventListener('click', function(e) {
+            if (e.target === this) cancelOffsite();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a[href]').forEach(function(link) {
+                const href = link.getAttribute('href');
+                if (!href) return;
+                const isExternal = (href.startsWith('http://') || href.startsWith('https://')) &&
+                    !href.includes('rosecure.org') &&
+                    !href.startsWith('mailto:');
+                if (isExternal) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        pendingOffsiteUrl = href;
+                        document.getElementById('offsiteUrl').textContent = href;
+                        document.getElementById('offsiteModal').classList.add('open');
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
