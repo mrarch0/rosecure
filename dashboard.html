@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RoSecure Dashboard — manage your Discord servers with Beacon, Admin, and Discover.">
+    <title>Dashboard - RoSecure</title>
+    <link rel="icon" type="image/png" href="rosecurelogo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0d0d12; color: #fff;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ---- PUBLIC HEADER (auth + server select screens) ---- */
+        .header-wrapper {
+            position: fixed; top: 20px; left: 50%;
+            transform: translateX(-50%); z-index: 1000;
+            max-width: 90%; width: auto;
+        }
+        .header {
+            display: flex; align-items: center; justify-content: center;
+            gap: 32px; padding: 12px 24px;
+            background: rgba(10,10,15,0.9);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50px; backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); white-space: nowrap;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-img { width: 28px; height: 28px; border-radius: 6px; }
+        .logo-text { font-size: 15px; font-weight: 600; color: #fff; }
+
+        /* ---- AUTH SCREEN ---- */
+        .view-auth {
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 120px 20px 60px; position: relative; overflow: hidden;
+        }
+        .view-auth::before {
+            content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+            width: 900px; height: 900px;
+            background: radial-gradient(circle, rgba(88,101,242,0.1) 0%, transparent 60%);
+            filter: blur(80px); pointer-events: none;
+        }
+        .view-auth::after {
+            content: ''; position: absolute; bottom: -100px; right: -100px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(168,85,247,0.07) 0%, transparent 60%);
+            filter: blur(60px); pointer-events: none;
+        }
+        .auth-card {
+            position: relative; z-index: 1;
+            width: 100%; max-width: 400px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px; padding: 48px 40px; text-align: center;
+        }
+        .auth-logo { width: 64px; height: 64px; border-radius: 16px; margin: 0 auto 22px; display: block; }
+        .auth-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px; letter-spacing: -0.3px; }
+        .auth-sub { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.65; margin-bottom: 32px; }
+        .btn-discord {
+            width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 14px 24px; background: #5865F2; border: none; border-radius: 12px;
+            color: #fff; font-size: 15px; font-weight: 600; cursor: pointer;
+            font-family: 'Inter', sans-serif; transition: background 0.2s;
+        }
+        .btn-discord:hover { background: #4752c4; }
+        .btn-discord svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .auth-loading {
+            display: none; align-items: center; gap: 10px; justify-content: center;
+            padding: 14px 0; font-size: 14px; color: rgba(255,255,255,0.45);
+        }
+        .auth-loading.active { display: flex; }
+        .spinner {
+            width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.08);
+            border-top-color: #5865F2; border-radius: 50%;
+            animation: spin 0.7s linear infinite; flex-shrink: 0;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .auth-note { font-size: 12px; color: rgba(255,255,255,0.25); margin-top: 20px; line-height: 1.65; }
+
+        /* ---- SERVER SELECT SCREEN ---- */
+        .view-servers {
+            display: none; min-height: 100vh;
+            padding: 120px 32px 80px;
+        }
+        .view-servers.active { display: block; }
+        .servers-container { max-width: 860px; margin: 0 auto; }
+        .servers-header { margin-bottom: 36px; }
+        .servers-title { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.5px; }
+        .servers-sub { font-size: 14px; color: rgba(255,255,255,0.4); }
+        .servers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+        .server-card {
+            padding: 22px; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07); border-radius: 18px;
+            cursor: pointer; transition: all 0.18s;
+        }
+        .server-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); transform: translateY(-1px); }
+        .server-icon {
+            width: 48px; height: 48px; border-radius: 12px; margin-bottom: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 700; color: #fff;
+        }
+        .server-name { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+        .server-members { font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 12px; }
+        .server-products { display: flex; gap: 5px; flex-wrap: wrap; }
+        .server-pill {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 2px 9px; border-radius: 50px;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.3px;
+        }
+        .pill-beacon { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.25); color: #c4b5fd; }
+        .pill-admin { background: rgba(75,191,255,0.1); border: 1px solid rgba(75,191,255,0.25); color: #7ec9ff; }
+        .pill-discover { background: rgba(117,213,108,0.1); border: 1px solid rgba(117,213,108,0.25); color: #b8f5b0; }
+        .servers-footer {
+            padding: 18px 22px; background: rgba(255,255,255,0.02);
+            border: 1px dashed rgba(255,255,255,0.07); border-radius: 14px;
+            text-align: center;
+        }
+        .servers-footer p { font-size: 13px; color: rgba(255,255,255,0.35); }
+        .servers-footer a { color: rgba(255,255,255,0.6); font-weight: 600; text-decoration: none; transition: color 0.2s; }
+        .servers-footer a:hover { color: #fff; }
+
+        /* ---- DASHBOARD HEADER ---- */
+        .dash-header {
+            display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+            height: 56px; background: rgba(10,10,15,0.97);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            align-items: center; padding: 0 20px; gap: 14px;
+        }
+        .dash-header.active { display: flex; }
+        .dash-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0; }
+        .dash-logo-img { width: 22px; height: 22px; border-radius: 5px; }
+        .dash-logo-text { font-size: 13px; font-weight: 600; color: #fff; }
+        .dash-divider { width: 1px; height: 18px; background: rgba(255,255,255,0.08); flex-shrink: 0; }
+
+        /* Server button */
+        .dash-server-btn {
+            display: flex; align-items: center; gap: 8px;
+            padding: 5px 10px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+            cursor: pointer; transition: all 0.15s; flex-shrink: 0; min-width: 0;
+        }
+        .dash-server-btn:hover { background: rgba(255,255,255,0.09); }
+        .dash-server-icon {
+            width: 20px; height: 20px; border-radius: 5px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 9px; font-weight: 700; color: #fff;
+        }
+        .dash-server-name { font-size: 12px; font-weight: 500; color: #fff; white-space: nowrap; max-width: 130px; overflow: hidden; text-overflow: ellipsis; }
+        .dash-chevron { width: 12px; height: 12px; color: rgba(255,255,255,0.35); flex-shrink: 0; }
+
+        .dash-flex { flex: 1; }
+
+        /* Product switcher */
+        .product-switcher { position: relative; flex-shrink: 0; }
+        .product-switcher-btn {
+            display: flex; align-items: center; gap: 8px;
+            padding: 5px 12px; border-radius: 8px; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1); transition: all 0.15s;
+            background: rgba(255,255,255,0.03);
+        }
+        .product-switcher-btn:hover { background: rgba(255,255,255,0.07); }
+        .product-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+        .product-switcher-name { font-size: 13px; font-weight: 600; color: #fff; }
+        .product-switcher-arrow { width: 12px; height: 12px; color: rgba(255,255,255,0.35); transition: transform 0.2s; }
+        .product-switcher-btn.open .product-switcher-arrow { transform: rotate(180deg); }
+
+        .product-dropdown {
+            position: absolute; top: calc(100% + 8px); right: 0;
+            background: rgba(14,14,20,0.98); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 6px; min-width: 190px;
+            backdrop-filter: blur(20px); box-shadow: 0 20px 48px rgba(0,0,0,0.6);
+            display: none; flex-direction: column; gap: 1px; z-index: 300;
+        }
+        .product-dropdown.open { display: flex; }
+        .pd-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 12px; border-radius: 8px; cursor: pointer;
+            transition: background 0.12s; user-select: none;
+        }
+        .pd-item:hover { background: rgba(255,255,255,0.06); }
+        .pd-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .pd-name { font-size: 13px; font-weight: 500; color: #fff; flex: 1; }
+        .pd-check { width: 14px; height: 14px; color: rgba(255,255,255,0.5); flex-shrink: 0; }
+        .pd-sep { height: 1px; background: rgba(255,255,255,0.06); margin: 4px 0; }
+
+        /* User pill */
+        .dash-user {
+            display: flex; align-items: center; gap: 8px;
+            padding: 4px 10px 4px 5px;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 8px; flex-shrink: 0;
+        }
+        .dash-avatar {
+            width: 24px; height: 24px; border-radius: 50%;
+            background: linear-gradient(135deg, #5865F2, #a855f7);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0;
+        }
+        .dash-username { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.65); }
+        .dash-signout {
+            font-size: 11px; color: rgba(255,255,255,0.25); cursor: pointer;
+            padding: 2px 6px; border-radius: 4px; transition: all 0.15s;
+            border: none; background: none; font-family: 'Inter', sans-serif; margin-left: 2px;
+        }
+        .dash-signout:hover { color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.05); }
+
+        /* ---- DASHBOARD CONTENT ---- */
+        .view-dashboard { display: none; min-height: 100vh; }
+        .view-dashboard.active { display: block; }
+        .dash-content { padding: 72px 32px 60px; max-width: 1120px; margin: 0 auto; }
+
+        /* Panels */
+        .dash-panel { display: none; animation: fadeIn 0.2s ease; }
+        .dash-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        .panel-header { margin-bottom: 28px; display: flex; align-items: flex-end; justify-content: space-between; }
+        .panel-title { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.3px; margin-bottom: 3px; }
+        .panel-sub { font-size: 13px; color: rgba(255,255,255,0.35); }
+        .panel-actions { display: flex; gap: 8px; }
+        .panel-btn {
+            padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600;
+            cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s;
+            text-decoration: none; display: inline-block;
+        }
+        .panel-btn-primary { background: #fff; color: #0d0d12; border: 1px solid #fff; }
+        .panel-btn-primary:hover { background: rgba(255,255,255,0.88); }
+        .panel-btn-ghost { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+        .panel-btn-ghost:hover { background: rgba(255,255,255,0.09); }
+
+        /* Stats row */
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+        .stat-card {
+            padding: 20px 22px; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07); border-radius: 14px;
+        }
+        .stat-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
+        .stat-value { font-size: 26px; font-weight: 700; color: #fff; letter-spacing: -0.5px; line-height: 1; margin-bottom: 5px; }
+        .stat-change { font-size: 11px; color: rgba(255,255,255,0.3); }
+        .stat-change.up { color: #75D56C; }
+        .stat-change.warn { color: #fbbf24; }
+
+        /* Cards */
+        .card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px; overflow: hidden; margin-bottom: 14px;
+        }
+        .card-header {
+            padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .card-title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.7); }
+        .card-link { font-size: 11px; color: rgba(255,255,255,0.35); cursor: pointer; transition: color 0.15s; text-decoration: none; }
+        .card-link:hover { color: rgba(255,255,255,0.7); }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+        /* Alert rows (Beacon) */
+        .alert-row {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 18px; border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .alert-row:last-child { border-bottom: none; }
+        .alert-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+        .alert-body { flex: 1; min-width: 0; }
+        .alert-user { font-size: 13px; font-weight: 500; color: #fff; margin-bottom: 2px; }
+        .alert-snippet { font-size: 11px; color: rgba(255,255,255,0.35); font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px; }
+        .alert-time { font-size: 11px; color: rgba(255,255,255,0.25); flex-shrink: 0; }
+        .alert-badge {
+            font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 50px;
+            text-transform: uppercase; letter-spacing: 0.4px; flex-shrink: 0;
+        }
+        .badge-pending { background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.25); color: #fbbf24; }
+        .badge-reviewed { background: rgba(117,213,108,0.1); border: 1px solid rgba(117,213,108,0.25); color: #75D56C; }
+        .badge-dismissed { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.3); }
+
+        /* Mod rows (Admin) */
+        .mod-row {
+            display: flex; align-items: center; gap: 12px;
+            padding: 11px 18px; border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .mod-row:last-child { border-bottom: none; }
+        .mod-icon {
+            width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.05);
+        }
+        .mod-icon svg { width: 13px; height: 13px; }
+        .mod-body { flex: 1; min-width: 0; }
+        .mod-action { font-size: 12px; font-weight: 500; color: #fff; }
+        .mod-action span { color: rgba(255,255,255,0.6); }
+        .mod-reason { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+        .mod-time { font-size: 11px; color: rgba(255,255,255,0.25); flex-shrink: 0; }
+
+        .rule-row {
+            display: flex; align-items: center; gap: 12px;
+            padding: 11px 18px; border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .rule-row:last-child { border-bottom: none; }
+        .rule-on { width: 7px; height: 7px; border-radius: 50%; background: #75D56C; flex-shrink: 0; }
+        .rule-name { font-size: 12px; font-weight: 500; color: #fff; flex: 1; }
+        .rule-desc { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+
+        /* Bar chart (Discover) */
+        .bar-chart { padding: 16px 18px; display: flex; flex-direction: column; gap: 9px; }
+        .bar-row { display: flex; align-items: center; gap: 10px; }
+        .bar-label { font-size: 11px; color: rgba(255,255,255,0.35); width: 28px; text-align: right; flex-shrink: 0; }
+        .bar-track { flex: 1; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 3px; }
+        .bar-val { font-size: 11px; font-weight: 600; width: 30px; flex-shrink: 0; }
+
+        .channel-row {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 18px; border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .channel-row:last-child { border-bottom: none; }
+        .channel-name { font-size: 12px; color: rgba(255,255,255,0.65); flex: 1; }
+        .channel-track { width: 100px; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; }
+        .channel-bar { height: 100%; border-radius: 2px; }
+        .channel-val { font-size: 11px; color: rgba(255,255,255,0.4); width: 64px; text-align: right; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .servers-grid { grid-template-columns: 1fr; }
+            .stats-row { grid-template-columns: 1fr; }
+            .two-col { grid-template-columns: 1fr; }
+            .dash-content { padding: 68px 16px 48px; }
+            .dash-logo-text { display: none; }
+            .dash-header { padding: 0 14px; gap: 10px; }
+            .dash-username { display: none; }
+        }
+        @media (max-width: 480px) {
+            .servers-container { padding: 0 4px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ---- PUBLIC HEADER ---- -->
+<div class="header-wrapper" id="publicHeader">
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="rosecurelogo.png" alt="RoSecure" class="logo-img">
+            <span class="logo-text">RoSecure</span>
+        </a>
+    </header>
+</div>
+
+<!-- ---- DASHBOARD HEADER ---- -->
+<div class="dash-header" id="dashHeader">
+    <a href="index.html" class="dash-logo">
+        <img src="rosecurelogo.png" alt="RoSecure" class="dash-logo-img">
+        <span class="dash-logo-text">RoSecure</span>
+    </a>
+    <div class="dash-divider"></div>
+    <button class="dash-server-btn" onclick="goToServerSelect()">
+        <div class="dash-server-icon" id="dashServerIcon">YC</div>
+        <span class="dash-server-name" id="dashServerName">Your Community</span>
+        <svg class="dash-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="dash-flex"></div>
+    <!-- Product Switcher -->
+    <div class="product-switcher" id="productSwitcher">
+        <button class="product-switcher-btn" onclick="toggleProductMenu(event)" id="productSwitcherBtn">
+            <div class="product-dot" id="productDot" style="background:#75D56C;"></div>
+            <span class="product-switcher-name" id="productSwitcherName">Discover</span>
+            <svg class="product-switcher-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="product-dropdown" id="productDropdown">
+            <div class="pd-item" onclick="setProduct('beacon')" id="pd-beacon">
+                <div class="pd-dot" style="background:#a855f7;"></div>
+                <span class="pd-name">Beacon</span>
+                <svg class="pd-check" id="chk-beacon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="pd-item" onclick="setProduct('admin')" id="pd-admin">
+                <div class="pd-dot" style="background:#4BBFFF;"></div>
+                <span class="pd-name">Admin</span>
+                <svg class="pd-check" id="chk-admin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="pd-sep"></div>
+            <div class="pd-item" onclick="setProduct('discover')" id="pd-discover">
+                <div class="pd-dot" style="background:#75D56C;"></div>
+                <span class="pd-name">Discover</span>
+                <svg class="pd-check" id="chk-discover" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+        </div>
+    </div>
+    <div class="dash-user">
+        <div class="dash-avatar" id="dashAvatar">U</div>
+        <span class="dash-username" id="dashUsername">username</span>
+        <button class="dash-signout" onclick="signOut()">Sign out</button>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- AUTH SCREEN -->
+<!-- ================================================================ -->
+<div class="view-auth" id="viewAuth">
+    <div class="auth-card">
+        <img src="rosecurelogo.png" alt="RoSecure" class="auth-logo">
+        <h1 class="auth-title">Sign in to Dashboard</h1>
+        <p class="auth-sub">Connect your Discord account to manage your servers and access RoSecure tools.</p>
+        <button class="btn-discord" id="signInBtn" onclick="signInWithDiscord()">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.947 2.418-2.157 2.418z"/></svg>
+            Sign in with Discord
+        </button>
+        <div class="auth-loading" id="authLoading">
+            <div class="spinner"></div>
+            Connecting to Discord…
+        </div>
+        <p class="auth-note">We only request access to your server list and basic profile info. We never read your messages.</p>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SERVER SELECT SCREEN -->
+<!-- ================================================================ -->
+<div class="view-servers" id="viewServers">
+    <div class="servers-container">
+        <div class="servers-header">
+            <h1 class="servers-title">Choose a server</h1>
+            <p class="servers-sub">Select the Discord server you want to manage.</p>
+        </div>
+        <div class="servers-grid" id="serversGrid"></div>
+        <div class="servers-footer">
+            <p>Don't see your server? <a href="https://discord.com/oauth2/authorize?client_id=1457385555103977502" target="_blank">Add RoSecure to a new server →</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- DASHBOARD SCREEN -->
+<!-- ================================================================ -->
+<div class="view-dashboard" id="viewDashboard">
+    <div class="dash-content">
+
+        <!-- ---- BEACON PANEL ---- -->
+        <div class="dash-panel" id="panel-beacon">
+            <div class="panel-header">
+                <div>
+                    <p class="panel-title">Beacon</p>
+                    <p class="panel-sub">Mental health crisis monitoring</p>
+                </div>
+                <div class="panel-actions">
+                    <a href="beacon.html" class="panel-btn panel-btn-ghost">Learn more</a>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <p class="stat-label">Alerts this week</p>
+                    <p class="stat-value" style="color:#c4b5fd;">3</p>
+                    <p class="stat-change up">↑ 1 from last week</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Pending review</p>
+                    <p class="stat-value">1</p>
+                    <p class="stat-change warn">Needs attention</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Resolved</p>
+                    <p class="stat-value" style="color:#75D56C;">2</p>
+                    <p class="stat-change up">All actioned</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Recent Alerts</span>
+                    <a href="#" class="card-link">View all</a>
+                </div>
+                <div class="alert-row">
+                    <div class="alert-dot" style="background:#ed4245;box-shadow:0 0 6px rgba(237,66,69,0.5);"></div>
+                    <div class="alert-body">
+                        <p class="alert-user">@user_1234</p>
+                        <p class="alert-snippet">"i dont know if i can keep going like this..."</p>
+                    </div>
+                    <span class="alert-time">2m ago</span>
+                    <span class="alert-badge badge-pending">Pending</span>
+                </div>
+                <div class="alert-row">
+                    <div class="alert-dot" style="background:#fbbf24;"></div>
+                    <div class="alert-body">
+                        <p class="alert-user">@cooluser</p>
+                        <p class="alert-snippet">"i've been feeling really low lately"</p>
+                    </div>
+                    <span class="alert-time">1h ago</span>
+                    <span class="alert-badge badge-reviewed">Reviewed</span>
+                </div>
+                <div class="alert-row">
+                    <div class="alert-dot" style="background:#fbbf24;"></div>
+                    <div class="alert-body">
+                        <p class="alert-user">@member_abc</p>
+                        <p class="alert-snippet">"everything feels pointless"</p>
+                    </div>
+                    <span class="alert-time">Yesterday</span>
+                    <span class="alert-badge badge-reviewed">Reviewed</span>
+                </div>
+                <div class="alert-row">
+                    <div class="alert-dot" style="background:rgba(255,255,255,0.15);"></div>
+                    <div class="alert-body">
+                        <p class="alert-user">@test_user</p>
+                        <p class="alert-snippet">"not a real alert — test message"</p>
+                    </div>
+                    <span class="alert-time">2 days ago</span>
+                    <span class="alert-badge badge-dismissed">Dismissed</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ---- ADMIN PANEL ---- -->
+        <div class="dash-panel" id="panel-admin">
+            <div class="panel-header">
+                <div>
+                    <p class="panel-title">Admin</p>
+                    <p class="panel-sub">Server management and moderation</p>
+                </div>
+                <div class="panel-actions">
+                    <a href="admin.html" class="panel-btn panel-btn-ghost">Learn more</a>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <p class="stat-label">Total Members</p>
+                    <p class="stat-value" style="color:#7ec9ff;">1,248</p>
+                    <p class="stat-change up">↑ 12 this week</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Actions today</p>
+                    <p class="stat-value">7</p>
+                    <p class="stat-change">Kicks, warns, mutes</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Automod blocks</p>
+                    <p class="stat-value" style="color:#7ec9ff;">34</p>
+                    <p class="stat-change">This week</p>
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Moderation Log</span>
+                        <a href="#" class="card-link">View all</a>
+                    </div>
+                    <div class="mod-row">
+                        <div class="mod-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
+                        </div>
+                        <div class="mod-body">
+                            <p class="mod-action">Banned <span>@spammer99</span></p>
+                            <p class="mod-reason">Repeated spam across channels</p>
+                        </div>
+                        <span class="mod-time">4m ago</span>
+                    </div>
+                    <div class="mod-row">
+                        <div class="mod-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        </div>
+                        <div class="mod-body">
+                            <p class="mod-action">Warned <span>@user_xyz</span></p>
+                            <p class="mod-reason">Off-topic posting in #general</p>
+                        </div>
+                        <span class="mod-time">22m ago</span>
+                    </div>
+                    <div class="mod-row">
+                        <div class="mod-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#7ec9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+                        </div>
+                        <div class="mod-body">
+                            <p class="mod-action">Kicked <span>@new_member</span></p>
+                            <p class="mod-reason">Smart Gate: Rule violation on join</p>
+                        </div>
+                        <span class="mod-time">1h ago</span>
+                    </div>
+                    <div class="mod-row">
+                        <div class="mod-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#75D56C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div class="mod-body">
+                            <p class="mod-action">Automod blocked invite link</p>
+                            <p class="mod-reason">In #general — message deleted</p>
+                        </div>
+                        <span class="mod-time">2h ago</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Active Automod Rules</span>
+                        <a href="#" class="card-link">Manage</a>
+                    </div>
+                    <div class="rule-row">
+                        <div class="rule-on"></div>
+                        <div class="mod-body">
+                            <p class="rule-name">Block invite links</p>
+                            <p class="rule-desc">Delete + warn on detection</p>
+                        </div>
+                    </div>
+                    <div class="rule-row">
+                        <div class="rule-on"></div>
+                        <div class="mod-body">
+                            <p class="rule-name">Filter slurs & hate speech</p>
+                            <p class="rule-desc">Delete + 10 min timeout</p>
+                        </div>
+                    </div>
+                    <div class="rule-row">
+                        <div class="rule-on"></div>
+                        <div class="mod-body">
+                            <p class="rule-name">Smart Gate filtering</p>
+                            <p class="rule-desc">New member account scan</p>
+                        </div>
+                    </div>
+                    <div class="rule-row">
+                        <div class="rule-on"></div>
+                        <div class="mod-body">
+                            <p class="rule-name">Predator database</p>
+                            <p class="rule-desc">Cross-server block list active</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ---- DISCOVER PANEL ---- -->
+        <div class="dash-panel" id="panel-discover">
+            <div class="panel-header">
+                <div>
+                    <p class="panel-title">Discover</p>
+                    <p class="panel-sub">Analytics and insights for your server</p>
+                </div>
+                <div class="panel-actions">
+                    <a href="discover.html" class="panel-btn panel-btn-ghost">Learn more</a>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <p class="stat-label">Total Members</p>
+                    <p class="stat-value" style="color:#b8f5b0;">1,248</p>
+                    <p class="stat-change up">↑ 12 this week</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Messages today</p>
+                    <p class="stat-value">482</p>
+                    <p class="stat-change up">↑ 18% vs. yesterday</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">30-day retention</p>
+                    <p class="stat-value" style="color:#b8f5b0;">86%</p>
+                    <p class="stat-change up">Strong</p>
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Member Growth — Last 7 Days</span>
+                    </div>
+                    <div class="bar-chart">
+                        <div class="bar-row">
+                            <span class="bar-label">Mon</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:55%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                            <span class="bar-val" style="color:#b8f5b0;">+24</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Tue</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:40%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                            <span class="bar-val" style="color:#b8f5b0;">+18</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Wed</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:80%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                            <span class="bar-val" style="color:#b8f5b0;">+35</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Thu</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:60%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                            <span class="bar-val" style="color:#b8f5b0;">+27</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Fri</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                            <span class="bar-val" style="color:#b8f5b0;">+44</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Sat</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:90%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                            <span class="bar-val" style="color:#b8f5b0;">+40</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">Sun</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:70%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                            <span class="bar-val" style="color:#b8f5b0;">+31</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Top Channels by Activity</span>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name">#general</span>
+                        <div class="channel-track"><div class="channel-bar" style="width:100%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                        <span class="channel-val">1,240 msgs</span>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name">#off-topic</span>
+                        <div class="channel-track"><div class="channel-bar" style="width:72%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                        <span class="channel-val">893 msgs</span>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name">#introductions</span>
+                        <div class="channel-track"><div class="channel-bar" style="width:45%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                        <span class="channel-val">558 msgs</span>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name">#announcements</span>
+                        <div class="channel-track"><div class="channel-bar" style="width:18%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                        <span class="channel-val">224 msgs</span>
+                    </div>
+                    <div class="channel-row">
+                        <span class="channel-name">#help</span>
+                        <div class="channel-track"><div class="channel-bar" style="width:12%;background:linear-gradient(90deg,#75D56C,#b8f5b0);"></div></div>
+                        <span class="channel-val">148 msgs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const COLORS = { beacon: '#a855f7', admin: '#4BBFFF', discover: '#75D56C' };
+
+    const MOCK_SERVERS = [
+        { id: 'yc', name: 'Your Community', initials: 'YC', color: '#5865F2', members: '1,248 members', products: ['beacon','admin','discover'] },
+        { id: 'ts', name: 'Test Server',     initials: 'TS', color: '#ed4245', members: '342 members',   products: ['admin','discover'] },
+        { id: 'gd', name: 'Gaming Den',      initials: 'GD', color: '#f59e0b', members: '87 members',    products: ['discover'] },
+    ];
+
+    let currentProduct = 'discover';
+    let currentServer = null;
+
+    /* ---- VIEW SWITCHING ---- */
+    function showView(name) {
+        document.getElementById('viewAuth').style.display      = name === 'auth'      ? '' : 'none';
+        document.getElementById('viewServers').style.display   = name === 'servers'   ? 'block' : 'none';
+        document.getElementById('viewDashboard').style.display = name === 'dashboard' ? 'block' : 'none';
+        document.getElementById('publicHeader').style.display  = name !== 'dashboard' ? '' : 'none';
+        document.getElementById('dashHeader').style.display    = name === 'dashboard' ? 'flex' : 'none';
+    }
+
+    /* ---- AUTH ---- */
+    function signInWithDiscord() {
+        const btn     = document.getElementById('signInBtn');
+        const loading = document.getElementById('authLoading');
+        btn.style.display = 'none';
+        loading.classList.add('active');
+        // Simulate OAuth handshake (replace with real redirect in production)
+        setTimeout(() => {
+            loading.classList.remove('active');
+            btn.style.display = '';
+            renderServers();
+            showView('servers');
+        }, 1600);
+    }
+
+    function signOut() {
+        currentServer = null;
+        currentProduct = 'discover';
+        showView('auth');
+    }
+
+    /* ---- SERVER SELECT ---- */
+    function renderServers() {
+        document.getElementById('serversGrid').innerHTML = MOCK_SERVERS.map(s => `
+            <div class="server-card" onclick="selectServer('${s.id}')">
+                <div class="server-icon" style="background:${s.color};">${s.initials}</div>
+                <p class="server-name">${s.name}</p>
+                <p class="server-members">${s.members}</p>
+                <div class="server-products">
+                    ${s.products.includes('beacon')  ? '<span class="server-pill pill-beacon">Beacon</span>'  : ''}
+                    ${s.products.includes('admin')   ? '<span class="server-pill pill-admin">Admin</span>'   : ''}
+                    ${s.products.includes('discover')? '<span class="server-pill pill-discover">Discover</span>': ''}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function selectServer(id) {
+        currentServer = MOCK_SERVERS.find(s => s.id === id);
+        document.getElementById('dashServerIcon').textContent  = currentServer.initials;
+        document.getElementById('dashServerIcon').style.background = currentServer.color;
+        document.getElementById('dashServerName').textContent  = currentServer.name;
+        // Go to first available product
+        setProduct(currentServer.products[0] || 'discover');
+        showView('dashboard');
+    }
+
+    function goToServerSelect() {
+        renderServers();
+        showView('servers');
+    }
+
+    /* ---- PRODUCT SWITCHER ---- */
+    function setProduct(product) {
+        currentProduct = product;
+        // Update header button
+        document.getElementById('productDot').style.background = COLORS[product];
+        document.getElementById('productSwitcherName').textContent = product.charAt(0).toUpperCase() + product.slice(1);
+        // Checkmarks
+        ['beacon','admin','discover'].forEach(p => {
+            document.getElementById('chk-' + p).style.display = p === product ? '' : 'none';
+        });
+        // Panels
+        document.querySelectorAll('.dash-panel').forEach(el => el.classList.remove('active'));
+        document.getElementById('panel-' + product).classList.add('active');
+        closeProductMenu();
+    }
+
+    function toggleProductMenu(e) {
+        e.stopPropagation();
+        const dd  = document.getElementById('productDropdown');
+        const btn = document.getElementById('productSwitcherBtn');
+        const open = dd.classList.contains('open');
+        dd.classList.toggle('open', !open);
+        btn.classList.toggle('open', !open);
+    }
+
+    function closeProductMenu() {
+        document.getElementById('productDropdown').classList.remove('open');
+        document.getElementById('productSwitcherBtn').classList.remove('open');
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!document.getElementById('productSwitcher').contains(e.target)) {
+            closeProductMenu();
+        }
+    });
+
+    /* ---- INIT ---- */
+    showView('auth');
+</script>
+</body>
+</html>
