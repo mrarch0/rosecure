@@ -1017,13 +1017,46 @@
         .product-feat-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 3px; }
         .product-feat-desc { font-size: 13px; color: #fff; line-height: 1.55; }
 
+        /* Product Tiles (3-column) */
+        .product-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .product-tile {
+            display: flex; flex-direction: column;
+            padding: 32px 28px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            transition: border-color 0.2s;
+            text-decoration: none;
+        }
+        .product-tile:hover { border-color: rgba(255,255,255,0.15); }
+        .product-tile-icon { width: 48px; height: 48px; margin-bottom: 20px; border-radius: 50%; }
+        .product-tile-icon-custom {
+            width: 48px; height: 48px; margin-bottom: 20px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .product-tile-name { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .product-tile-badge {
+            display: inline-block; padding: 3px 10px; margin-bottom: 16px;
+            border-radius: 50px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+        }
+        .badge--purple { background: rgba(186,137,215,0.15); border: 1px solid rgba(186,137,215,0.3); color: #d4a9ef; }
+        .badge--blue { background: rgba(75,191,255,0.15); border: 1px solid rgba(75,191,255,0.3); color: #7ec9ff; }
+        .badge--green { background: rgba(74,222,128,0.15); border: 1px solid rgba(74,222,128,0.3); color: #86efac; }
+        .product-tile-desc { font-size: 14px; color: #fff; line-height: 1.75; flex: 1; margin-bottom: 28px; }
+        .product-tile-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6);
+            text-decoration: none; transition: color 0.2s;
+        }
+        .product-tile-link:hover { color: #fff; }
+        .product-tile-link svg { width: 13px; height: 13px; }
+
         @media (max-width: 768px) {
             .announcement-text { display: none; }
             .announcement-banner { padding: 0 48px 0 16px; }
             .products-section { padding: 80px 20px; }
             .products-title { font-size: 28px; }
-            .product-card { grid-template-columns: 1fr; gap: 40px; padding: 32px 24px; }
-            .product-name { font-size: 30px; }
+            .product-tiles { grid-template-columns: 1fr; gap: 14px; }
         }
     </style>
 </head>
@@ -1287,60 +1320,39 @@
                 <p class="products-label">Our Products</p>
                 <h2 class="products-title">Built for communities,<br>built for people.</h2>
             </div>
-            <div class="product-card">
-                <!-- Left: identity + description -->
-                <div>
-                    <div class="product-meta">
-                        <div class="product-icon-wrap">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                        </div>
-                        <span class="product-status">Coming Soon</span>
-                    </div>
-                    <h3 class="product-name">Beacon</h3>
-                    <p class="product-tagline">Saving lives, helping support the community.</p>
-                    <p class="product-desc">When a community member is struggling, Beacon connects them with the right resources and human support — fast. Because safety isn't just about keeping bad actors out. It's about making sure the people inside are okay too.</p>
+            <div class="product-tiles">
+                <!-- Beacon -->
+                <div class="product-tile">
+                    <img src="beacon-rosecure.svg" alt="Beacon" class="product-tile-icon">
+                    <h3 class="product-tile-name">Beacon</h3>
+                    <span class="product-tile-badge badge--purple">COMING SOON</span>
+                    <p class="product-tile-desc">Mental health crisis detection for Discord communities. When a member is struggling, Beacon gets them the support they need — fast.</p>
+                    <a href="beacon.html" class="product-tile-link">
+                        Learn more
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
                 </div>
-                <!-- Right: features -->
-                <div>
-                    <ul class="product-features">
-                        <li>
-                            <div class="product-feat-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                            </div>
-                            <div>
-                                <p class="product-feat-title">Crisis Intervention</p>
-                                <p class="product-feat-desc">Detects distress signals in your community and routes support immediately.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="product-feat-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                            </div>
-                            <div>
-                                <p class="product-feat-title">Human Support Connections</p>
-                                <p class="product-feat-desc">Links members with trained volunteers and mental health resources in seconds.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="product-feat-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            </div>
-                            <div>
-                                <p class="product-feat-title">Safe Reporting</p>
-                                <p class="product-feat-desc">Anonymous, confidential channels so members feel safe reaching out.</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="product-feat-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
-                            </div>
-                            <div>
-                                <p class="product-feat-title">Moderator Alerts</p>
-                                <p class="product-feat-desc">Your team gets notified instantly so no one falls through the cracks.</p>
-                            </div>
-                        </li>
-                    </ul>
-                    <a href="beacon.html#notify" class="btn-secondary" style="display: inline-block;">Get Notified</a>
+                <!-- Admin -->
+                <div class="product-tile">
+                    <img src="admin-rosecure.svg" alt="Admin" class="product-tile-icon">
+                    <h3 class="product-tile-name">Admin</h3>
+                    <span class="product-tile-badge badge--blue">COMING SOON</span>
+                    <p class="product-tile-desc">A complete server management system. Manage roles, members, and automated moderation workflows — all from one bot.</p>
+                    <a href="admin.html" class="product-tile-link">
+                        Learn more
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+                <!-- Discover -->
+                <div class="product-tile">
+                    <img src="rosecure-discover.svg" alt="Discover" class="product-tile-icon">
+                    <h3 class="product-tile-name">Discover</h3>
+                    <span class="product-tile-badge badge--green">COMING SOON</span>
+                    <p class="product-tile-desc">Server analytics and insights for administrators. Track growth, activity trends, and performance across your community.</p>
+                    <a href="discover.html" class="product-tile-link">
+                        Learn more
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
                 </div>
             </div>
         </div>
