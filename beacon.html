@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RoSecure Beacon — community mental health safety system that ensures your members get the support they need in a crisis.">
+    <meta name="theme-color" content="#1f4dff">
+    <title>Beacon - RoSecure</title>
+    <link rel="icon" type="image/png" href="rosecurelogo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0d0d12;
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ---- HEADER ---- */
+        .header-wrapper {
+            position: fixed;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            max-width: 90%; width: auto;
+        }
+        .header {
+            display: flex; align-items: center; justify-content: center;
+            gap: 32px; padding: 12px 24px;
+            background: rgba(10,10,15,0.9);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            white-space: nowrap;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-img { width: 28px; height: 28px; border-radius: 6px; }
+        .logo-text { font-size: 15px; font-weight: 600; color: #fff; }
+        .nav { display: flex; gap: 4px; }
+        .nav-link {
+            padding: 8px 14px; color: rgba(255,255,255,0.6);
+            text-decoration: none; font-size: 13px; font-weight: 500;
+            border-radius: 50px; transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active { color: #fff; background: rgba(255,255,255,0.1); }
+        .header-right { display: flex; align-items: center; gap: 8px; }
+        .discord-btn {
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.05); border-radius: 50%;
+            color: rgba(255,255,255,0.7); transition: all 0.2s;
+        }
+        .discord-btn:hover { background: rgba(88,101,242,0.2); color: #5865F2; }
+        .github-btn {
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.05); border-radius: 50%;
+            color: rgba(255,255,255,0.7); transition: all 0.2s; text-decoration: none;
+        }
+        .github-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+        .mobile-menu-btn {
+            display: none; width: 36px; height: 36px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px; cursor: pointer; align-items: center; justify-content: center;
+            padding: 0; color: rgba(255,255,255,0.7); transition: all 0.2s; flex-shrink: 0;
+        }
+        .mobile-menu-btn svg { width: 18px; height: 18px; }
+        .mobile-nav {
+            display: none; position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 400px;
+            background: rgba(10,10,15,0.95); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 16px; z-index: 999; flex-direction: column; gap: 4px;
+        }
+        .mobile-nav.open { display: flex; }
+        .mobile-nav a {
+            padding: 12px 16px; color: rgba(255,255,255,0.7); text-decoration: none;
+            font-size: 14px; font-weight: 500; border-radius: 12px; transition: all 0.2s;
+        }
+        .mobile-nav a:hover, .mobile-nav a.active { background: rgba(255,255,255,0.08); color: #fff; }
+
+        /* ---- BUTTONS ---- */
+        .btn-primary {
+            padding: 14px 28px; background: #fff; border: 1px solid #fff;
+            border-radius: 50px; color: #0d0d12; font-size: 14px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s; display: inline-block;
+        }
+        .btn-primary:hover { background: rgba(255,255,255,0.88); }
+        .btn-secondary {
+            padding: 14px 28px; background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50px; color: #fff; font-size: 14px; font-weight: 500;
+            text-decoration: none; transition: all 0.2s; display: inline-block;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+        .btn-blue {
+            padding: 14px 28px;
+            background: #1f4dff; border: 1px solid #1f4dff;
+            border-radius: 50px; color: #fff; font-size: 14px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s; display: inline-block;
+        }
+        .btn-blue:hover { background: #1a3ed4; border-color: #1a3ed4; }
+
+        /* ---- ANIMATIONS ---- */
+        .animate-on-scroll {
+            opacity: 0; transition: all 1s cubic-bezier(0.16,1,0.3,1);
+            transform-style: preserve-3d; perspective: 1000px;
+        }
+        .animate-from-bottom { transform: translateY(40px); }
+        .animate-tilt-left {
+            transform: perspective(1000px) rotateY(12deg) rotateX(4deg) translateX(-30px) scale(0.96);
+            transform-origin: right center;
+        }
+        .animate-tilt-right {
+            transform: perspective(1000px) rotateY(-12deg) rotateX(4deg) translateX(30px) scale(0.96);
+            transform-origin: left center;
+        }
+        .animate-tilt-up {
+            transform: perspective(1000px) rotateX(8deg) translateY(50px) scale(0.96);
+            transform-origin: center bottom;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: perspective(1000px) rotateY(0) rotateX(0) translateX(0) translateY(0) scale(1);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        /* ---- HERO ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center;
+            padding: 160px 32px 100px;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute;
+            top: -200px; left: -200px;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(31,77,255,0.18) 0%, transparent 60%);
+            filter: blur(80px); pointer-events: none;
+        }
+        .hero::after {
+            content: ''; position: absolute;
+            top: -100px; right: -200px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(100,60,180,0.12) 0%, transparent 60%);
+            filter: blur(80px); pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 14px 6px 8px;
+            background: rgba(31,77,255,0.12);
+            border: 1px solid rgba(31,77,255,0.3);
+            border-radius: 50px; margin-bottom: 32px;
+        }
+        .hero-badge-dot {
+            width: 20px; height: 20px;
+            display: flex; align-items: center; justify-content: center;
+            background: #1f4dff; border-radius: 50%;
+        }
+        .hero-badge-dot svg { width: 11px; height: 11px; color: #fff; }
+        .hero-badge-text {
+            font-size: 12px; font-weight: 600;
+            color: #7da4ff; letter-spacing: 0.3px;
+        }
+        .hero-title {
+            font-size: 56px; font-weight: 700;
+            line-height: 1.1; letter-spacing: -1.5px;
+            margin-bottom: 24px; color: #fff;
+        }
+        .hero-title span { color: rgba(255,255,255,0.45); }
+        .hero-desc {
+            font-size: 17px; line-height: 1.8;
+            color: #fff; max-width: 620px; margin: 0 auto 48px;
+        }
+        .hero-pills {
+            display: flex; flex-wrap: wrap; gap: 10px;
+            justify-content: center; margin-bottom: 48px;
+        }
+        .hero-pill {
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50px; font-size: 13px; font-weight: 500; color: #fff;
+        }
+        .hero-pill svg { width: 14px; height: 14px; color: #7da4ff; flex-shrink: 0; }
+        .hero-buttons { display: flex; gap: 12px; justify-content: center; }
+
+        /* ---- STATS BAR ---- */
+        .stats-bar {
+            padding: 64px 48px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .stats-bar-inner {
+            max-width: 900px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(3,1fr);
+            gap: 0;
+        }
+        .stat-item {
+            text-align: center; padding: 0 32px;
+            border-right: 1px solid rgba(255,255,255,0.06);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-number {
+            font-size: 48px; font-weight: 700;
+            letter-spacing: -2px; color: #fff; line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-number span { color: #7da4ff; }
+        .stat-label { font-size: 14px; color: #fff; line-height: 1.5; max-width: 180px; margin: 0 auto; }
+
+        /* ---- SECTION SHARED ---- */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+        }
+
+        /* ---- FEATURE SPLIT SECTIONS ---- */
+        .feat-section {
+            padding: 120px 48px;
+            position: relative;
+        }
+        .feat-container {
+            max-width: 1040px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: center;
+        }
+        .feat-container.reverse { direction: rtl; }
+        .feat-container.reverse > * { direction: ltr; }
+        .feat-label {
+            font-size: 11px; font-weight: 600;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px;
+        }
+        .feat-title {
+            font-size: 36px; font-weight: 600;
+            color: #fff; letter-spacing: -0.5px;
+            line-height: 1.2; margin-bottom: 20px;
+        }
+        .feat-desc {
+            font-size: 15px; color: #fff;
+            line-height: 1.8; margin-bottom: 36px;
+        }
+        .feat-list { list-style: none; }
+        .feat-list li {
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .feat-list li:last-child { border-bottom: none; padding-bottom: 0; }
+        .feat-list-icon {
+            width: 32px; height: 32px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(31,77,255,0.12);
+            border-radius: 8px; border: 1px solid rgba(31,77,255,0.2);
+        }
+        .feat-list-icon svg { width: 16px; height: 16px; color: #7da4ff; }
+        .feat-list-body {}
+        .feat-list-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+        .feat-list-desc { font-size: 13px; color: #fff; line-height: 1.55; }
+
+        /* Visual panels (right column) */
+        .feat-visual {
+            background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px; padding: 40px 36px;
+        }
+        .feat-visual-stat {
+            text-align: center; margin-bottom: 36px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .feat-visual-stat-num {
+            font-size: 64px; font-weight: 700;
+            letter-spacing: -3px; color: #fff; line-height: 1;
+        }
+        .feat-visual-stat-num span { color: #7da4ff; }
+        .feat-visual-stat-label { font-size: 14px; color: #fff; margin-top: 8px; }
+        .feat-visual-items { display: flex; flex-direction: column; gap: 14px; }
+        .feat-visual-item {
+            display: flex; align-items: center; gap: 14px;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+        }
+        .feat-visual-item-icon {
+            width: 40px; height: 40px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.06);
+            border-radius: 10px; border: 1px solid rgba(255,255,255,0.09);
+        }
+        .feat-visual-item-icon svg { width: 20px; height: 20px; color: rgba(255,255,255,0.8); }
+        .feat-visual-item-text { font-size: 13px; font-weight: 500; color: #fff; }
+        .feat-visual-item-sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+        /* Alert preview */
+        .alert-preview {
+            border-radius: 16px; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .alert-header {
+            background: rgba(31,77,255,0.15);
+            border-bottom: 1px solid rgba(31,77,255,0.2);
+            padding: 12px 16px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .alert-header-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: #1f4dff;
+            box-shadow: 0 0 8px rgba(31,77,255,0.6);
+        }
+        .alert-header-label { font-size: 11px; font-weight: 700; color: #7da4ff; letter-spacing: 1px; text-transform: uppercase; }
+        .alert-header-time { margin-left: auto; font-size: 11px; color: rgba(255,255,255,0.4); }
+        .alert-body { padding: 16px; background: rgba(255,255,255,0.02); }
+        .alert-row { display: flex; gap: 10px; margin-bottom: 12px; }
+        .alert-row:last-child { margin-bottom: 0; }
+        .alert-row-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35); width: 80px; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.5px; padding-top: 1px; }
+        .alert-row-value { font-size: 13px; color: #fff; line-height: 1.5; }
+        .alert-severity {
+            display: inline-block; padding: 2px 10px;
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 50px; font-size: 11px; font-weight: 600; color: #f87171;
+        }
+
+        /* ---- QUOTE SECTION ---- */
+        .quotes-section {
+            padding: 120px 48px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .quotes-container { max-width: 1040px; margin: 0 auto; }
+        .quotes-header { text-align: center; margin-bottom: 64px; }
+        .quotes-label {
+            font-size: 11px; font-weight: 600;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;
+        }
+        .quotes-title {
+            font-size: 36px; font-weight: 600;
+            color: #fff; letter-spacing: -0.5px;
+        }
+        .quotes-grid {
+            display: grid; grid-template-columns: repeat(3,1fr); gap: 20px;
+        }
+        .quote-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px; padding: 32px 28px;
+            transition: border-color 0.2s;
+        }
+        .quote-card:hover { border-color: rgba(255,255,255,0.14); }
+        .quote-mark {
+            width: 32px; height: 32px; margin-bottom: 20px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(31,77,255,0.12); border-radius: 8px;
+            border: 1px solid rgba(31,77,255,0.2);
+        }
+        .quote-mark svg { width: 16px; height: 16px; color: #7da4ff; }
+        .quote-text {
+            font-size: 15px; color: #fff;
+            line-height: 1.75; margin-bottom: 24px;
+            font-style: italic;
+        }
+        .quote-author { display: flex; align-items: center; gap: 12px; }
+        .quote-author-icon {
+            width: 36px; height: 36px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.06); border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .quote-author-icon svg { width: 18px; height: 18px; color: rgba(255,255,255,0.6); }
+        .quote-author-name { font-size: 13px; font-weight: 600; color: #fff; }
+        .quote-author-role { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+        /* ---- FAQ ---- */
+        .faq-section {
+            padding: 120px 48px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .faq-container { max-width: 720px; margin: 0 auto; }
+        .faq-header { text-align: center; margin-bottom: 64px; }
+        .faq-label {
+            font-size: 11px; font-weight: 600;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;
+        }
+        .faq-title {
+            font-size: 36px; font-weight: 600;
+            color: #fff; letter-spacing: -0.5px;
+        }
+        .faq-item {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .faq-question {
+            width: 100%; background: none; border: none;
+            padding: 24px 0; display: flex; align-items: center;
+            justify-content: space-between; gap: 16px;
+            cursor: pointer; text-align: left;
+        }
+        .faq-question-text {
+            font-size: 16px; font-weight: 600; color: #fff;
+        }
+        .faq-icon {
+            width: 28px; height: 28px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.06); border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.3s;
+        }
+        .faq-icon svg { width: 14px; height: 14px; color: #fff; transition: transform 0.3s; }
+        .faq-item.open .faq-icon { background: rgba(31,77,255,0.15); border-color: rgba(31,77,255,0.3); }
+        .faq-item.open .faq-icon svg { transform: rotate(45deg); color: #7da4ff; }
+        .faq-answer {
+            overflow: hidden; max-height: 0; transition: max-height 0.4s ease;
+        }
+        .faq-answer-inner {
+            padding: 0 0 24px;
+            font-size: 15px; color: #fff; line-height: 1.75;
+        }
+        .faq-item.open .faq-answer { max-height: 300px; }
+
+        /* ---- NOTIFY CTA ---- */
+        .notify-section {
+            padding: 120px 48px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            position: relative; overflow: hidden;
+        }
+        .notify-section::before {
+            content: ''; position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 800px; height: 400px;
+            background: radial-gradient(ellipse, rgba(31,77,255,0.1) 0%, transparent 65%);
+            filter: blur(40px); pointer-events: none;
+        }
+        .notify-content { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
+        .notify-badge {
+            display: inline-block; padding: 4px 14px; margin-bottom: 24px;
+            background: rgba(31,77,255,0.12); border: 1px solid rgba(31,77,255,0.3);
+            border-radius: 50px; font-size: 11px; font-weight: 600; color: #7da4ff; letter-spacing: 0.5px;
+        }
+        .notify-title {
+            font-size: 44px; font-weight: 700;
+            letter-spacing: -1.5px; color: #fff;
+            line-height: 1.1; margin-bottom: 16px;
+        }
+        .notify-desc {
+            font-size: 16px; color: #fff;
+            line-height: 1.75; margin-bottom: 40px;
+        }
+        .notify-form {
+            display: flex; gap: 8px; max-width: 420px; margin: 0 auto;
+        }
+        .notify-input {
+            flex: 1; padding: 14px 18px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px; color: #fff; font-size: 14px;
+            font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s;
+        }
+        .notify-input::placeholder { color: rgba(255,255,255,0.35); }
+        .notify-input:focus { border-color: rgba(255,255,255,0.25); }
+        .notify-btn {
+            padding: 14px 24px; background: #fff; border: 1px solid #fff;
+            border-radius: 50px; color: #0d0d12; font-size: 14px; font-weight: 600;
+            cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; white-space: nowrap;
+        }
+        .notify-btn:hover { background: rgba(255,255,255,0.88); }
+
+        /* ---- CTA SECTION ---- */
+        .cta-section {
+            padding: 80px 48px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .cta-title { font-size: 28px; font-weight: 600; margin-bottom: 12px; }
+        .cta-text { font-size: 15px; color: rgba(255,255,255,0.5); margin-bottom: 32px; }
+        .cta-buttons { display: flex; gap: 12px; justify-content: center; }
+
+        /* ---- FOOTER ---- */
+        .footer { padding: 80px 48px 40px; border-top: 1px solid rgba(255,255,255,0.06); }
+        .footer-container { max-width: 1200px; margin: 0 auto; }
+        .footer-main {
+            display: grid; grid-template-columns: 280px repeat(4,1fr);
+            gap: 48px; margin-bottom: 64px;
+        }
+        .footer-brand { display: flex; align-items: center; gap: 12px; }
+        .footer-brand img { width: 48px; height: 48px; border-radius: 10px; }
+        .footer-brand-text { font-size: 20px; font-weight: 700; }
+        .footer-column h4 {
+            font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.4);
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 12px; }
+        .footer-column a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .footer-column a:hover { color: #fff; }
+        .footer-bottom { padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06); }
+        .footer-copyright { font-size: 13px; color: rgba(255,255,255,0.4); max-width: 500px; line-height: 1.6; }
+
+        /* ---- MODAL ---- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+            z-index: 2000; align-items: center; justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            text-align: center; max-width: 400px; width: 90%;
+            padding: 44px 36px;
+            background: rgba(18,18,24,0.95);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            animation: modalIn 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; color: #fff; }
+        .modal-text { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7; margin-bottom: 24px; }
+        .modal-close {
+            padding: 10px 24px; background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 50px; color: #fff; font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .modal-close:hover { background: rgba(255,255,255,0.15); }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 1024px) {
+            .footer-main { grid-template-columns: repeat(3,1fr); }
+            .quotes-grid { grid-template-columns: repeat(2,1fr); }
+        }
+        @media (max-width: 768px) {
+            .header-wrapper { width: 92%; max-width: 92%; top: 12px; }
+            .header { gap: 12px; padding: 10px 16px; justify-content: space-between; }
+            .nav { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .mobile-nav { top: 72px; width: 92%; }
+            .hero { padding: 130px 20px 80px; }
+            .hero-title { font-size: 36px; }
+            .hero-desc { font-size: 15px; }
+            .hero-pills { gap: 8px; }
+            .hero-buttons { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; }
+            .btn-primary, .btn-secondary, .btn-blue { width: 100%; text-align: center; }
+            .stats-bar { padding: 48px 20px; }
+            .stats-bar-inner { grid-template-columns: 1fr; gap: 32px; }
+            .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 0 0 32px; }
+            .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+            .feat-section { padding: 72px 20px; }
+            .feat-container { grid-template-columns: 1fr; gap: 40px; }
+            .feat-container.reverse { direction: ltr; }
+            .feat-title { font-size: 28px; }
+            .quotes-section { padding: 72px 20px; }
+            .quotes-grid { grid-template-columns: 1fr; }
+            .faq-section { padding: 72px 20px; }
+            .notify-section { padding: 80px 20px; }
+            .notify-title { font-size: 32px; }
+            .notify-form { flex-direction: column; }
+            .notify-input, .notify-btn { width: 100%; }
+            .cta-section { padding: 60px 20px; }
+            .cta-buttons { flex-direction: column; }
+            .footer { padding: 60px 20px 30px; }
+            .footer-main { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-wrapper">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <img src="rosecurelogo.png" alt="RoSecure" class="logo-img">
+                <span class="logo-text">RoSecure</span>
+            </a>
+            <nav class="nav">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="volunteer.html" class="nav-link">Volunteer</a>
+                <a href="donate.html" class="nav-link">Donate</a>
+                <a href="#" class="nav-link" onclick="event.preventDefault();document.getElementById('constructionModal').classList.add('open')">Dashboard</a>
+            </nav>
+            <div class="header-right">
+                <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="discord-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.947 2.418-2.157 2.418z"/></svg>
+                </a>
+                <a href="https://github.com/mrarch0" target="_blank" class="github-btn" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <button class="mobile-menu-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+            </div>
+        </header>
+    </div>
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="about.html">About</a>
+        <a href="volunteer.html">Volunteer</a>
+        <a href="donate.html">Donate</a>
+        <a href="#" onclick="event.preventDefault();document.getElementById('constructionModal').classList.add('open')">Dashboard</a>
+        <a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord</a>
+        <a href="https://github.com/mrarch0" target="_blank">GitHub</a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content animate-on-scroll animate-from-bottom">
+            <div class="hero-badge">
+                <div class="hero-badge-dot">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <span class="hero-badge-text">Beacon by RoSecure — Coming Soon</span>
+            </div>
+            <h1 class="hero-title">Safeguard your community<br><span>from harm.</span></h1>
+            <p class="hero-desc">Beacon is your essential safety net — providing continuous, trusted oversight that supports member wellbeing and reduces risk in your server. Get a verifiable, consistent, and scalable response system across every community you run.</p>
+            <div class="hero-pills">
+                <div class="hero-pill">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                    Instant crisis detection
+                </div>
+                <div class="hero-pill">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Drastically fewer false positives
+                </div>
+                <div class="hero-pill">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Customizable escalation workflows
+                </div>
+            </div>
+            <div class="hero-buttons">
+                <a href="#notify" class="btn-blue">Get Notified at Launch</a>
+                <a href="index.html#products" class="btn-secondary">Back to Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="stats-bar-inner">
+            <div class="stat-item animate-on-scroll animate-from-bottom">
+                <div class="stat-number"><span>24</span>/7</div>
+                <p class="stat-label">Continuous monitoring across your entire community</p>
+            </div>
+            <div class="stat-item animate-on-scroll animate-from-bottom delay-1">
+                <div class="stat-number">&lt;<span>60</span>s</div>
+                <p class="stat-label">Alert delivery time from detection to moderator notification</p>
+            </div>
+            <div class="stat-item animate-on-scroll animate-from-bottom delay-2">
+                <div class="stat-number"><span>0</span></div>
+                <p class="stat-label">Prior experience required — Beacon handles the heavy lifting</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEATURE 1: Moderator Efficiency -->
+    <section class="feat-section">
+        <div class="feat-container animate-on-scroll animate-tilt-left">
+            <div>
+                <p class="feat-label">For moderators</p>
+                <h2 class="feat-title">Maximize moderator efficiency.</h2>
+                <p class="feat-desc">Powerful AI filters irrelevant activity, ensuring your moderation team dedicates their time to verifiable, high-risk situations — not noise. Spend less time guessing, more time acting.</p>
+                <ul class="feat-list">
+                    <li>
+                        <div class="feat-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        </div>
+                        <div class="feat-list-body">
+                            <p class="feat-list-title">AI-driven triage</p>
+                            <p class="feat-list-desc">Alerts are scored by severity so your team always knows what to handle first.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feat-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                        </div>
+                        <div class="feat-list-body">
+                            <p class="feat-list-title">Multi-channel routing</p>
+                            <p class="feat-list-desc">Route alerts to specific moderators, roles, or channels based on severity and time of day.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feat-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        </div>
+                        <div class="feat-list-body">
+                            <p class="feat-list-title">Alert history dashboard</p>
+                            <p class="feat-list-desc">Full audit trail of every alert, action taken, and outcome for accountability.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="feat-visual">
+                <div class="feat-visual-stat">
+                    <div class="feat-visual-stat-num">87<span>%</span></div>
+                    <p class="feat-visual-stat-label">reduction in time spent on false positive alerts</p>
+                </div>
+                <div class="feat-visual-items">
+                    <div class="feat-visual-item">
+                        <div class="feat-visual-item-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <div>
+                            <p class="feat-visual-item-text">Crisis Detection</p>
+                            <p class="feat-visual-item-sub">Real-time, cross-platform</p>
+                        </div>
+                    </div>
+                    <div class="feat-visual-item">
+                        <div class="feat-visual-item-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div>
+                            <p class="feat-visual-item-text">Safe Escalation</p>
+                            <p class="feat-visual-item-sub">Defined paths, every time</p>
+                        </div>
+                    </div>
+                    <div class="feat-visual-item">
+                        <div class="feat-visual-item-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        </div>
+                        <div>
+                            <p class="feat-visual-item-text">Live Monitoring</p>
+                            <p class="feat-visual-item-sub">Continuous, silent, automatic</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- FEATURE 2: Actionable Context -->
+    <section class="feat-section">
+        <div class="feat-container reverse animate-on-scroll animate-tilt-right">
+            <div>
+                <p class="feat-label">Actionable context</p>
+                <h2 class="feat-title">Everything you need to act, instantly.</h2>
+                <p class="feat-desc">Alerts provide complete, time-stamped detail of the concerning activity — enabling responders to intervene quickly and confidently. No guesswork. No delay. Just clear information when it matters most.</p>
+                <ul class="feat-list">
+                    <li>
+                        <div class="feat-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        </div>
+                        <div class="feat-list-body">
+                            <p class="feat-list-title">Time-stamped activity logs</p>
+                            <p class="feat-list-desc">Full context of what was said, when, and in which channel — all in one view.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feat-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        </div>
+                        <div class="feat-list-body">
+                            <p class="feat-list-title">Severity scoring</p>
+                            <p class="feat-list-desc">Each alert is rated low, medium, or high so you always know how urgently to respond.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feat-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <div class="feat-list-body">
+                            <p class="feat-list-title">Member history</p>
+                            <p class="feat-list-desc">See prior flags and patterns for the member in question before you respond.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Alert preview mockup -->
+            <div>
+                <div class="alert-preview">
+                    <div class="alert-header">
+                        <div class="alert-header-dot"></div>
+                        <span class="alert-header-label">Beacon Alert</span>
+                        <span class="alert-header-time">Just now</span>
+                    </div>
+                    <div class="alert-body">
+                        <div class="alert-row">
+                            <span class="alert-row-label">Severity</span>
+                            <span class="alert-row-value"><span class="alert-severity">High Risk</span></span>
+                        </div>
+                        <div class="alert-row">
+                            <span class="alert-row-label">Member</span>
+                            <span class="alert-row-value">Community member in #general</span>
+                        </div>
+                        <div class="alert-row">
+                            <span class="alert-row-label">Detected</span>
+                            <span class="alert-row-value">Distress language patterns identified across 3 messages in the last 12 minutes.</span>
+                        </div>
+                        <div class="alert-row">
+                            <span class="alert-row-label">Action</span>
+                            <span class="alert-row-value">Moderator notified. Crisis resources queued for delivery.</span>
+                        </div>
+                        <div class="alert-row">
+                            <span class="alert-row-label">Prior flags</span>
+                            <span class="alert-row-value">1 previous low-severity alert (14 days ago)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- FEATURE 3: Customizable Workflows -->
+    <section class="feat-section">
+        <div class="feat-container animate-on-scroll animate-tilt-left">
+            <div>
+                <p class="feat-label">For server admins</p>
+                <h2 class="feat-title">Customizable control for complex workflows.</h2>
+                <p class="feat-desc">Beacon is built for scale — with customized alert workflows that meet your server's structure and requirements. You define the escalation paths, by moderator, alert severity, or time of day, ensuring a consistent, appropriate, auditable response every time.</p>
+                <ul class="feat-list">
+                    <li>
+                        <div class="feat-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div class="feat-list-body">
+                            <p class="feat-list-title">Time-of-day routing</p>
+                            <p class="feat-list-desc">Different on-call moderators for different hours. Beacon routes accordingly.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feat-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        </div>
+                        <div class="feat-list-body">
+                            <p class="feat-list-title">API & webhook support</p>
+                            <p class="feat-list-desc">Push alerts into your own tools, bots, or dashboards via webhook.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feat-list-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        </div>
+                        <div class="feat-list-body">
+                            <p class="feat-list-title">Resource library</p>
+                            <p class="feat-list-desc">Customize which mental health resources Beacon sends to members based on alert type.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="feat-visual">
+                <div class="feat-visual-items">
+                    <div class="feat-visual-item">
+                        <div class="feat-visual-item-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <div>
+                            <p class="feat-visual-item-text">High Severity</p>
+                            <p class="feat-visual-item-sub">Lead moderator + DM in &lt;60s</p>
+                        </div>
+                    </div>
+                    <div class="feat-visual-item">
+                        <div class="feat-visual-item-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        </div>
+                        <div>
+                            <p class="feat-visual-item-text">Medium Severity</p>
+                            <p class="feat-visual-item-sub">Alert channel post + role ping</p>
+                        </div>
+                    </div>
+                    <div class="feat-visual-item">
+                        <div class="feat-visual-item-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        </div>
+                        <div>
+                            <p class="feat-visual-item-text">Low Severity</p>
+                            <p class="feat-visual-item-sub">Logged silently for review</p>
+                        </div>
+                    </div>
+                    <div class="feat-visual-item">
+                        <div class="feat-visual-item-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div>
+                            <p class="feat-visual-item-text">After Hours</p>
+                            <p class="feat-visual-item-sub">On-call backup moderator notified</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUOTES -->
+    <section class="quotes-section">
+        <div class="quotes-container">
+            <div class="quotes-header animate-on-scroll animate-from-bottom">
+                <p class="quotes-label">Community voices</p>
+                <h2 class="quotes-title">What server owners are saying.</h2>
+            </div>
+            <div class="quotes-grid">
+                <div class="quote-card animate-on-scroll animate-from-bottom delay-1">
+                    <div class="quote-mark">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+                    </div>
+                    <p class="quote-text">"We had a member going through a really tough time and nobody noticed until Beacon flagged it. We were able to reach out immediately. I genuinely don't know what would have happened otherwise."</p>
+                    <div class="quote-author">
+                        <div class="quote-author-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <div>
+                            <p class="quote-author-name">Server Admin, Gaming Community</p>
+                            <p class="quote-author-role">Beta tester · 12,000 members</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="quote-card animate-on-scroll animate-from-bottom delay-2">
+                    <div class="quote-mark">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+                    </div>
+                    <p class="quote-text">"My moderators can't watch every channel 24 hours a day. Beacon does that for us. The alerts are accurate enough that my team actually trusts them — which matters more than anything."</p>
+                    <div class="quote-author">
+                        <div class="quote-author-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <div>
+                            <p class="quote-author-name">Community Lead, Roblox Group</p>
+                            <p class="quote-author-role">Beta tester · 4,800 members</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="quote-card animate-on-scroll animate-from-bottom delay-3">
+                    <div class="quote-mark">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+                    </div>
+                    <p class="quote-text">"It's the reason we can keep a large community without a full-time moderation staff. Beacon catches what humans miss — quietly, reliably, every single time."</p>
+                    <div class="quote-author">
+                        <div class="quote-author-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <div>
+                            <p class="quote-author-name">Server Owner, Support Community</p>
+                            <p class="quote-author-role">Beta tester · 31,000 members</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header animate-on-scroll animate-from-bottom">
+                <p class="faq-label">Questions</p>
+                <h2 class="faq-title">What people ask about Beacon.</h2>
+            </div>
+            <div class="animate-on-scroll animate-from-bottom">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span class="faq-question-text">Can we customize the alert workflow and escalation based on severity or time of day?</span>
+                        <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Yes. Beacon allows granular customization of escalation lists and notification rules based on alert severity, the specific channel or role, and the time of day — ensuring compliance with your community's internal safety guidelines.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span class="faq-question-text">What types of activity does Beacon actually analyze for risk?</span>
+                        <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Beacon analyzes message patterns across your Discord server — including message content, frequency, behavioral shifts, and contextual signals. It's trained to detect distress language, crisis indicators, and patterns consistent with self-harm or mental health crises, while minimizing false positives.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span class="faq-question-text">How does the AI reduce false positive alerts?</span>
+                        <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Beacon's model analyzes context — not just individual words or phrases. It looks at the full conversation window, member history, and behavioral patterns over time. This means it understands the difference between someone expressing frustration casually and someone who is genuinely at risk.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span class="faq-question-text">Is Beacon free?</span>
+                        <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">Beacon is currently in development. Pricing hasn't been finalized yet — sign up below to be notified at launch and get early access details. RoSecure's core security tools will always remain free. Beacon may launch under a separate model given the infrastructure required to support it.</div></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span class="faq-question-text">When does Beacon launch?</span>
+                        <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    </button>
+                    <div class="faq-answer"><div class="faq-answer-inner">We're currently in private development. Sign up below to be among the first to know when Beacon opens for early access. We'll also be sharing more details in our Discord.</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOTIFY CTA -->
+    <section class="notify-section" id="notify">
+        <div class="notify-content animate-on-scroll animate-from-bottom">
+            <div class="notify-badge">COMING SOON</div>
+            <h2 class="notify-title">Be the first to know.</h2>
+            <p class="notify-desc">Beacon is in development. Drop your email and we'll reach out when early access opens — no spam, just one email when it's ready.</p>
+            <form class="notify-form" onsubmit="handleNotify(event)">
+                <input type="email" class="notify-input" placeholder="your@email.com" required>
+                <button type="submit" class="notify-btn">Notify Me</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- STILL HAVE QUESTIONS CTA -->
+    <section class="cta-section">
+        <h2 class="cta-title">Still have questions?</h2>
+        <p class="cta-text">Use the live chat widget, email us at hello@rosecure.org, or open a ticket on Discord.</p>
+        <div class="cta-buttons">
+            <a href="https://discord.gg/mbXQCEJS58" target="_blank" class="btn-primary">Discord Support</a>
+            <a href="mailto:hello@rosecure.org" class="btn-secondary">Email Us</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <img src="rosecurelogo.png" alt="RoSecure">
+                    <span class="footer-brand-text">RoSecure Technologies</span>
+                </div>
+                <div class="footer-column">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="volunteer.html">Volunteer</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="moderation.html">Moderation</a></li>
+                        <li><a href="transparency.html">Transparency</a></li>
+                        <li><a href="docs.html">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/mbXQCEJS58" target="_blank">Discord Server</a></li>
+                        <li><a href="mailto:hello@rosecure.org">Email Support</a></li>
+                        <li><a href="https://rosecurestatus.betteruptime.com/" target="_blank">System Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="eula.html">EULA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    &copy; 2026 RoSecure Technologies. All Rights Reserved.<br>
+                    Not affiliated with Discord Inc. or Roblox Corporation.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="constructionModal" onclick="if(event.target===this)this.classList.remove('open')">
+        <div class="modal">
+            <h2 class="modal-title">Dashboard Coming Soon</h2>
+            <p class="modal-text">The dashboard is currently being built and will be available soon.</p>
+            <button class="modal-close" onclick="document.getElementById('constructionModal').classList.remove('open')">Got it</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6969a0e8a0ad53197e361dd5/1jf29p49d';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+
+    <script>
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        // FAQ accordion
+        function toggleFaq(btn) {
+            const item = btn.closest('.faq-item');
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+            if (!isOpen) item.classList.add('open');
+        }
+
+        // Notify form
+        function handleNotify(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('.notify-btn');
+            btn.textContent = "You're on the list.";
+            btn.disabled = true;
+            btn.style.opacity = '0.6';
+        }
+    </script>
+</body>
+</html>
